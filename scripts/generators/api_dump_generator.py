@@ -359,6 +359,7 @@ class ApiDumpGenerator(BaseGenerator):
             if command.name not in BLOCKING_API_CALLS:
                 self.write(f'''
                     std::lock_guard<std::mutex> lg(ApiDumpInstance::current().outputMutex());
+                    ApiDumpInstance::current().startApiTimer();
                     dump_function_head(ApiDumpInstance::current(), "{command.name}", "{command_param_usage_text(command)}", "{command.returnType}");
                      if constexpr (Format == ApiDumpFormat::Text) {{
                         if(ApiDumpInstance::current().settings().shouldPreDump() && ApiDumpInstance::current().shouldDumpOutput()) {{
@@ -445,6 +446,7 @@ class ApiDumpGenerator(BaseGenerator):
                 self.write('std::lock_guard<std::mutex> lg(ApiDumpInstance::current().outputMutex());')
                 if command.name in ['vkDebugMarkerSetObjectNameEXT', 'vkSetDebugUtilsObjectNameEXT']:
                     self.write('ApiDumpInstance::current().update_object_name_map(pNameInfo);')
+                self.write('ApiDumpInstance::current().startApiTimer();')
                 self.write(f'''
                     dump_function_head(ApiDumpInstance::current(), "{command.name}", "{command_param_usage_text(command)}", "{command.returnType}");
                     if constexpr (Format == ApiDumpFormat::Text) {{
@@ -453,6 +455,8 @@ class ApiDumpGenerator(BaseGenerator):
                             dump_params_{command.name}<Format>(ApiDumpInstance::current(), {command_param_usage_text(command)});
                         }}
                     }}''')
+            if command.name in BLOCKING_API_CALLS:
+                self.write("ApiDumpInstance::current().startApiTimer();")
 
             return_str = f'{command.returnType} result = ' if command.returnType != 'void' else ''
             self.write(f'{return_str}device_dispatch_table({command.params[0].name})->{command.name[2:]}({command_param_usage_text(command)});')
@@ -473,6 +477,8 @@ class ApiDumpGenerator(BaseGenerator):
                     self.write(f'dump_return_value<Format>(ApiDumpInstance::current().settings(), "{command.returnType}", result, dump_return_value_{command.returnType}<Format>);')
                 else:
                     self.write(f'dump_return_value<Format>(ApiDumpInstance::current().settings(), "{command.returnType}", result);')
+            self.write("auto api_duration = ApiDumpInstance::current().getApiDuration();")
+            self.write("if (ApiDumpInstance::current().settings().showApiDuration()) ApiDumpInstance::current().settings().stream() << \"API Duration: \" << api_duration.count() << \" us\" << std::endl;")
 
             self.write(f'''dump_pre_function_formatting<Format>(ApiDumpInstance::current().settings());
                 dump_params_{command.name}<Format>(ApiDumpInstance::current(), {command_param_usage_text(command)});

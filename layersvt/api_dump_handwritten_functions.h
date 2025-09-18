@@ -32,6 +32,7 @@ extern "C" {
 VKAPI_ATTR VkResult VKAPI_CALL vkCreateInstance(const VkInstanceCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator,
                                                 VkInstance* pInstance) {
     std::lock_guard<std::mutex> lg(ApiDumpInstance::current().outputMutex());
+    ApiDumpInstance::current().startApiTimer();
     ApiDumpInstance::current().initLayerSettings(pCreateInfo, pAllocator);
     dump_function_head(ApiDumpInstance::current(), "vkCreateInstance", "pCreateInfo, pAllocator, pInstance", "VkResult");
     if (ApiDumpInstance::current().settings().shouldPreDump() &&

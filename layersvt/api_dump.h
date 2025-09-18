@@ -113,6 +113,7 @@ EXPORT_FUNCTION VKAPI_ATTR PFN_vkVoidFunction VKAPI_CALL vkGetDeviceProcAddr(VkD
 #define kSettingsKeyUseSpaces "use_spaces"
 #define kSettingsKeyShowShader "show_shader"
 #define kSettingsKeyShowThreadAndFrame "show_thread_and_frame"
+#define kSettingsKeyShowApiDuration "show_api_duration"
 
 // We want to dump all extensions even beta extensions.
 #ifndef VK_ENABLE_BETA_EXTENSIONS
@@ -519,6 +520,8 @@ class ApiDumpSettings {
 
     bool showThreadAndFrame() const { return show_thread_and_frame; }
 
+    bool showApiDuration() const { return show_api_duration; }
+
     // The const cast is necessary because everyone who 'writes' to the stream necessarily must be able to modify it.
     // Since basically every function in this struct is const, we have to work around that.
     std::ostream &stream() const { return output_stream; }
@@ -664,6 +667,11 @@ class ApiDumpSettings {
             vkuGetLayerSettingValue(layerSettingSet, kSettingsKeyShowThreadAndFrame, show_thread_and_frame);
         }
 
+        show_api_duration = false;
+        if (vkuHasLayerSetting(layerSettingSet, kSettingsKeyShowApiDuration)) {
+            vkuGetLayerSettingValue(layerSettingSet, kSettingsKeyShowApiDuration, show_api_duration);
+        }
+
         std::string cond_range_string;
         if (vkuHasLayerSetting(layerSettingSet, kSettingsKeyOutputRange)) {
             vkuGetLayerSettingValue(layerSettingSet, kSettingsKeyOutputRange, cond_range_string);
@@ -780,6 +788,9 @@ class ApiDumpSettings {
                         ".time {"
                             "color: #888;"
                         "}"
+                        ".duration {"
+                            "color: #ffa;"
+                        "}"
                         "</style>"
                     "</head>"
                     "<body>"
@@ -829,6 +840,7 @@ class ApiDumpSettings {
     bool use_spaces;
     bool show_shader;
     bool show_thread_and_frame;
+    bool show_api_duration;
 
     bool use_conditional_output = false;
     ConditionalFrameOutput condFrameOutput;
@@ -985,6 +997,15 @@ class ApiDumpInstance {
         return std::chrono::duration_cast<std::chrono::microseconds>(now - program_start);
     }
 
+    void startApiTimer() {
+        api_start_time = std::chrono::high_resolution_clock::now();
+    }
+
+    std::chrono::microseconds getApiDuration() const {
+        auto end_time = std::chrono::high_resolution_clock::now();
+        return std::chrono::duration_cast<std::chrono::microseconds>(end_time - api_start_time);
+    }
+
     static ApiDumpInstance &current() {
         // Because ApiDumpInstance is a static variable in a static function, there will only be one instance of it.
         // Additionally, the object will be constructed on the *first* call to current(), rather than at process startup time.
@@ -1031,6 +1052,7 @@ class ApiDumpInstance {
     bool first_func_call_on_frame = true;
 
     std::chrono::system_clock::time_point program_start;
+    std::chrono::high_resolution_clock::time_point api_start_time;
 
     // Store the VkInstance handle so we don't use null in the call to
     // vkGetInstanceProcAddr(instance_handle, "vkCreateDevice");
@@ -1639,7 +1661,7 @@ void dump_post_function_formatting(const ApiDumpSettings &settings) {
 //==================================== Function Head Helpers ======================================//
 
 inline void dump_text_function_head(ApiDumpInstance &dump_inst, const char *funcName, const char *funcNamedParams,
-                                    const char *funcReturn) {
+                                    const char *funcReturn, std::chrono::microseconds duration = std::chrono::microseconds::zero()) {
     const ApiDumpSettings &settings(dump_inst.settings());
     if (settings.showThreadAndFrame()) {
         settings.stream() << "Thread " << dump_inst.threadID() << ", Frame " << dump_inst.frameCount();
@@ -1650,7 +1672,13 @@ inline void dump_text_function_head(ApiDumpInstance &dump_inst, const char *func
     if (settings.showTimestamp()) {
         settings.stream() << "Time " << dump_inst.current_time_since_start().count() << " us";
     }
-    if (settings.showTimestamp() || settings.showThreadAndFrame()) {
+    if (settings.showApiDuration() && duration.count() > 0) {
+        if (settings.showTimestamp() || settings.showThreadAndFrame()) {
+            settings.stream() << ", ";
+        }
+        settings.stream() << "Duration " << duration.count() << " us";
+    }
+    if (settings.showTimestamp() || settings.showThreadAndFrame() || (settings.showApiDuration() && duration.count() > 0)) {
         settings.stream() << ":\n";
     }
     settings.stream() << funcName << "(" << funcNamedParams << ") returns " << funcReturn;
@@ -1661,13 +1689,15 @@ inline void dump_text_function_head(ApiDumpInstance &dump_inst, const char *func
 }
 
 inline void dump_html_function_head(ApiDumpInstance &dump_inst, const char *funcName, const char *funcNamedParams,
-                                    const char *funcReturn) {
+                                    const char *funcReturn, std::chrono::microseconds duration = std::chrono::microseconds::zero()) {
     const ApiDumpSettings &settings(dump_inst.settings());
     if (settings.showThreadAndFrame()) {
         settings.stream() << "<div class='thd'>Thread: " << dump_inst.threadID() << "</div>";
     }
     if (settings.showTimestamp())
         settings.stream() << "<div class='time'>Time: " << dump_inst.current_time_since_start().count() << " us</div>";
+    if (settings.showApiDuration() && duration.count() > 0)
+        settings.stream() << "<div class='duration'>Duration: " << duration.count() << " us</div>";
     settings.stream() << "<details class='fn'><summary>";
     settings.stream() << "<div class='var'>" << funcName << "(" << funcNamedParams << ")</div>";
     if (settings.showType()) {
@@ -1676,7 +1706,7 @@ inline void dump_html_function_head(ApiDumpInstance &dump_inst, const char *func
     flush(settings);
 }
 
-inline void dump_json_function_head(ApiDumpInstance &dump_inst, const char *funcName, const char *funcReturn) {
+inline void dump_json_function_head(ApiDumpInstance &dump_inst, const char *funcName, const char *funcReturn, std::chrono::microseconds duration = std::chrono::microseconds::zero()) {
     const ApiDumpSettings &settings(dump_inst.settings());
 
     if (!dump_inst.firstFunctionCallOnFrame()) {
@@ -1696,6 +1726,12 @@ inline void dump_json_function_head(ApiDumpInstance &dump_inst, const char *func
     if (settings.showTimestamp()) {
         dump_separate_members<ApiDumpFormat::Json>(settings);
         dump_json_key_value(settings, 3, "time", dump_inst.current_time_since_start().count(), " us");
+    }
+
+    // Display API duration
+    if (settings.showApiDuration() && duration.count() > 0) {
+        dump_separate_members<ApiDumpFormat::Json>(settings);
+        dump_json_key_value(settings, 3, "duration", duration.count(), " us");
     }
 
     // Display return type
@@ -1719,17 +1755,17 @@ inline void dump_json_UNUSED(const ApiDumpSettings &settings, const char *type_s
 //==================================== Common Helpers ======================================//
 
 inline void dump_function_head(ApiDumpInstance &dump_inst, const char *funcName, const char *funcNamedParams,
-                               const char *funcReturn) {
+                               const char *funcReturn, std::chrono::microseconds duration = std::chrono::microseconds::zero()) {
     if (dump_inst.shouldDumpOutput()) {
         switch (dump_inst.settings().format()) {
             case ApiDumpFormat::Text:
-                dump_text_function_head(dump_inst, funcName, funcNamedParams, funcReturn);
+                dump_text_function_head(dump_inst, funcName, funcNamedParams, funcReturn, duration);
                 break;
             case ApiDumpFormat::Html:
-                dump_html_function_head(dump_inst, funcName, funcNamedParams, funcReturn);
+                dump_html_function_head(dump_inst, funcName, funcNamedParams, funcReturn, duration);
                 break;
             case ApiDumpFormat::Json:
-                dump_json_function_head(dump_inst, funcName, funcReturn);
+                dump_json_function_head(dump_inst, funcName, funcReturn, duration);
                 break;
         }
     }

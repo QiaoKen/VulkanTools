@@ -135,3 +135,9 @@ lunarg_screenshot.dir =
 # the swapchain object.
 lunarg_screenshot.format = USE_SWAPCHAIN_COLORSPACE
 
+
+# Show API Duration
+# =====================
+# <LayerIdentifier>.show_api_duration
+# Show the duration of each API call in microseconds
+lunarg_api_dump.show_api_duration = false
