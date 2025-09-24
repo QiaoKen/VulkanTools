@@ -141,3 +141,9 @@ lunarg_screenshot.format = USE_SWAPCHAIN_COLORSPACE
 # <LayerIdentifier>.show_api_duration
 # Show the duration of each API call in microseconds
 lunarg_api_dump.show_api_duration = false
+
+# API Duration Only Mode
+# =====================
+# <LayerIdentifier>.api_duration_only
+# When enabled, only output function names and API durations, skipping all parameter and return value details
+lunarg_api_dump.api_duration_only = false

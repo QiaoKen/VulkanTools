@@ -60,6 +60,12 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateInstance(const VkInstanceCreateInfo* pCre
 
     // Output the API dump
     if (ApiDumpInstance::current().shouldDumpOutput()) {
+    if (ApiDumpInstance::current().settings().apiDurationOnly()) {
+        auto api_duration = ApiDumpInstance::current().getApiDuration();
+        if (ApiDumpInstance::current().settings().showApiDuration() || ApiDumpInstance::current().settings().apiDurationOnly()) {
+        ApiDumpInstance::current().settings().stream() << "vkCreateRenderPass - API Duration: " << api_duration.count() << " us" << std::endl;
+        }
+        } else {
         switch (ApiDumpInstance::current().settings().format()) {
             case ApiDumpFormat::Text:
                 dump_return_value<ApiDumpFormat::Text>(ApiDumpInstance::current().settings(), "VkResult", result,
@@ -84,6 +90,7 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateInstance(const VkInstanceCreateInfo* pCre
                 break;
         }
         flush(ApiDumpInstance::current().settings());
+        }
     }
 
     return result;
@@ -124,12 +131,19 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateDevice(VkPhysicalDevice physicalDevice, c
 
     // Output the API dump
     if (ApiDumpInstance::current().shouldDumpOutput()) {
-        dump_return_value<Format>(ApiDumpInstance::current().settings(), "VkResult", result, dump_return_value_VkResult<Format>);
-        dump_pre_function_formatting<Format>(ApiDumpInstance::current().settings());
-        dump_params_vkCreateDevice<Format>(ApiDumpInstance::current(), physicalDevice, pCreateInfo, pAllocator, pDevice);
-        dump_post_function_formatting<Format>(ApiDumpInstance::current().settings());
+        if (ApiDumpInstance::current().settings().apiDurationOnly()) {
+        auto api_duration = ApiDumpInstance::current().getApiDuration();
+        if (ApiDumpInstance::current().settings().showApiDuration() || ApiDumpInstance::current().settings().apiDurationOnly()) {
+        ApiDumpInstance::current().settings().stream() << "vkCreateRenderPass - API Duration: " << api_duration.count() << " us" << std::endl;
+        }
+        } else {
+            dump_return_value<Format>(ApiDumpInstance::current().settings(), "VkResult", result, dump_return_value_VkResult<Format>);
+            dump_pre_function_formatting<Format>(ApiDumpInstance::current().settings());
+            dump_params_vkCreateDevice<Format>(ApiDumpInstance::current(), physicalDevice, pCreateInfo, pAllocator, pDevice);
+            dump_post_function_formatting<Format>(ApiDumpInstance::current().settings());
 
-        flush(ApiDumpInstance::current().settings());
+            flush(ApiDumpInstance::current().settings());
+        }
     }
     return result;
 }

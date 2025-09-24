@@ -114,6 +114,7 @@ EXPORT_FUNCTION VKAPI_ATTR PFN_vkVoidFunction VKAPI_CALL vkGetDeviceProcAddr(VkD
 #define kSettingsKeyShowShader "show_shader"
 #define kSettingsKeyShowThreadAndFrame "show_thread_and_frame"
 #define kSettingsKeyShowApiDuration "show_api_duration"
+#define kSettingsKeyApiDurationOnly "api_duration_only"
 
 // We want to dump all extensions even beta extensions.
 #ifndef VK_ENABLE_BETA_EXTENSIONS
@@ -522,6 +523,8 @@ class ApiDumpSettings {
 
     bool showApiDuration() const { return show_api_duration; }
 
+    bool apiDurationOnly() const { return api_duration_only; }
+
     // The const cast is necessary because everyone who 'writes' to the stream necessarily must be able to modify it.
     // Since basically every function in this struct is const, we have to work around that.
     std::ostream &stream() const { return output_stream; }
@@ -670,6 +673,11 @@ class ApiDumpSettings {
         show_api_duration = false;
         if (vkuHasLayerSetting(layerSettingSet, kSettingsKeyShowApiDuration)) {
             vkuGetLayerSettingValue(layerSettingSet, kSettingsKeyShowApiDuration, show_api_duration);
+        }
+
+        api_duration_only = false;
+        if (vkuHasLayerSetting(layerSettingSet, kSettingsKeyApiDurationOnly)) {
+            vkuGetLayerSettingValue(layerSettingSet, kSettingsKeyApiDurationOnly, api_duration_only);
         }
 
         std::string cond_range_string;
@@ -841,6 +849,7 @@ class ApiDumpSettings {
     bool show_shader;
     bool show_thread_and_frame;
     bool show_api_duration;
+    bool api_duration_only;
 
     bool use_conditional_output = false;
     ConditionalFrameOutput condFrameOutput;

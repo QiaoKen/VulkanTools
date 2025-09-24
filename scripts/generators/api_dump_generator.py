@@ -415,6 +415,12 @@ class ApiDumpGenerator(BaseGenerator):
                 self.write('(*pToolCount)++;')
 
             self.write('if (ApiDumpInstance::current().shouldDumpOutput()) {')
+            self.write('if (ApiDumpInstance::current().settings().apiDurationOnly()) {')
+            self.write('auto api_duration = ApiDumpInstance::current().getApiDuration();')
+            self.write('if (ApiDumpInstance::current().settings().showApiDuration() || ApiDumpInstance::current().settings().apiDurationOnly()) {')
+            self.write(f'ApiDumpInstance::current().settings().stream() << "{command.name} - API Duration: " << api_duration.count() << " us" << std::endl;')
+            self.write('}')
+            self.write('} else {')
             if command.returnType != 'void':
                 if self.get_unaliased_type(command.returnType) in self.vulkan_defined_types:
                     self.write(f'dump_return_value<Format>(ApiDumpInstance::current().settings(), "{command.returnType}", result, dump_return_value_{command.returnType}<Format>);')
@@ -425,6 +431,7 @@ class ApiDumpGenerator(BaseGenerator):
                 dump_post_function_formatting<Format>(ApiDumpInstance::current().settings());
                 flush(ApiDumpInstance::current().settings());
             }}''')
+            self.write('}')
             if command.returnType != 'void':
                 self.write('return result;')
             self.write('}')
@@ -471,6 +478,12 @@ class ApiDumpGenerator(BaseGenerator):
                 self.write('destroy_device_dispatch_table(get_dispatch_key(device));')
 
             self.write('if (ApiDumpInstance::current().shouldDumpOutput()) {')
+            self.write('if (ApiDumpInstance::current().settings().apiDurationOnly()) {')
+            self.write('auto api_duration = ApiDumpInstance::current().getApiDuration();')
+            self.write('if (ApiDumpInstance::current().settings().showApiDuration() || ApiDumpInstance::current().settings().apiDurationOnly()) {')
+            self.write(f'ApiDumpInstance::current().settings().stream() << "{command.name} - API Duration: " << api_duration.count() << " us" << std::endl;')
+            self.write('}')
+            self.write('} else {')
             if command.returnType != 'void':
                 return_type = self.get_unaliased_type(command.returnType)
                 if return_type in self.vulkan_defined_types or return_type == 'VkDeviceAddress':
@@ -485,6 +498,7 @@ class ApiDumpGenerator(BaseGenerator):
                 dump_post_function_formatting<Format>(ApiDumpInstance::current().settings());
                 flush(ApiDumpInstance::current().settings());
             }}''')
+            self.write('}')
 
             if command.name == 'vkQueuePresentKHR':
                 self.write('ApiDumpInstance::current().nextFrame();')
