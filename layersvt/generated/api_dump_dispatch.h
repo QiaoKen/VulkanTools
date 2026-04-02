@@ -3324,6 +3324,7 @@ dump_pre_function_formatting<Format>(ApiDumpInstance::current().settings());
                 flush(ApiDumpInstance::current().settings());
             }
 }
+ApiDumpInstance::current().nextFrame();
 return result;
 }
 template<ApiDumpFormat Format>
@@ -9602,7 +9603,6 @@ dump_pre_function_formatting<Format>(ApiDumpInstance::current().settings());
                 flush(ApiDumpInstance::current().settings());
             }
 }
-ApiDumpInstance::current().nextFrame();
 return result;
 }
 template<ApiDumpFormat Format>
