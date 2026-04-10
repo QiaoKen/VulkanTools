@@ -29,6 +29,11 @@
 
 #include "generated/api_dump_implementation.h"
 
+// Forward declarations for the VK_ARM_draw_state_bundle pfn cache defined in
+// api_dump_handwritten_dispatch.cpp.
+void arm_dsb_cache_pfn(VkDevice device, PFN_vkGetDeviceProcAddr next_gdpa);
+void arm_dsb_erase_pfn(VkDevice device);
+
 // ---- VK_ARM_draw_state_bundle handwritten dumpers ----
 
 template <ApiDumpFormat Format>
@@ -219,6 +224,9 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateDevice(VkPhysicalDevice physicalDevice, c
     VkResult result = fpCreateDevice(physicalDevice, pCreateInfo, pAllocator, pDevice);
     if (result == VK_SUCCESS) {
         initDeviceTable(*pDevice, fpGetDeviceProcAddr);
+        // Cache the real vkCmdDrawStateBundleARM pointer from the next layer so
+        // that the api_dump stub can call through without needing a VkDevice handle.
+        arm_dsb_cache_pfn(*pDevice, fpGetDeviceProcAddr);
     }
 
     // Output the API dump

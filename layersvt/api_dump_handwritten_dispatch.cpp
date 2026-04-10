@@ -28,6 +28,39 @@
 #include "generated/api_dump_dispatch.h"
 #include "api_dump_handwritten_functions.h"
 
+#include <mutex>
+#include <unordered_map>
+
+// ---- VK_ARM_draw_state_bundle function pointer cache ----
+// Keyed by dispatch_key (the loader dispatch table pointer, shared by all
+// dispatchable objects belonging to the same VkDevice).  Populated at
+// vkCreateDevice time using the next-layer GDPA so that the stub never needs
+// to call GetDeviceProcAddr at draw time (which would require a valid VkDevice
+// handle that is not available from a VkCommandBuffer stub).
+static std::mutex g_arm_dsb_mutex;
+static std::unordered_map<dispatch_key, PFN_vkCmdDrawStateBundleARM> g_arm_dsb_pfn_map;
+
+void arm_dsb_cache_pfn(VkDevice device, PFN_vkGetDeviceProcAddr next_gdpa) {
+    auto pfn = reinterpret_cast<PFN_vkCmdDrawStateBundleARM>(
+        next_gdpa(device, "vkCmdDrawStateBundleARM"));
+    if (pfn) {
+        std::lock_guard<std::mutex> lk(g_arm_dsb_mutex);
+        g_arm_dsb_pfn_map[get_dispatch_key(device)] = pfn;
+    }
+}
+
+void arm_dsb_erase_pfn(VkDevice device) {
+    std::lock_guard<std::mutex> lk(g_arm_dsb_mutex);
+    g_arm_dsb_pfn_map.erase(get_dispatch_key(device));
+}
+
+static PFN_vkCmdDrawStateBundleARM arm_dsb_lookup_pfn(VkCommandBuffer commandBuffer) {
+    std::lock_guard<std::mutex> lk(g_arm_dsb_mutex);
+    auto it = g_arm_dsb_pfn_map.find(get_dispatch_key(commandBuffer));
+    return (it != g_arm_dsb_pfn_map.end()) ? it->second : nullptr;
+}
+// ---- end VK_ARM_draw_state_bundle function pointer cache ----
+
 // ---- VK_ARM_draw_state_bundle dispatch stub ----
 template <ApiDumpFormat Format>
 VKAPI_ATTR void VKAPI_CALL vkCmdDrawStateBundleARM(
@@ -49,9 +82,14 @@ VKAPI_ATTR void VKAPI_CALL vkCmdDrawStateBundleARM(
         }
     }
 
-    // Call through: dispatch directly via the command buffer's dispatch table,
-    // matching the pattern used by all generated api_dump stubs.
-    device_dispatch_table(commandBuffer)->CmdDrawStateBundleARM(commandBuffer, pDrawStateBundleInfo);
+    // Call through: use the function pointer cached at vkCreateDevice time.
+    // We cannot call GetDeviceProcAddr here because we only have a VkCommandBuffer
+    // (not a VkDevice), and passing VK_NULL_HANDLE or a non-VkDevice handle to
+    // downstream layers' GetDeviceProcAddr implementations causes a null-deref crash.
+    auto pfn = arm_dsb_lookup_pfn(commandBuffer);
+    if (pfn) {
+        pfn(commandBuffer, pDrawStateBundleInfo);
+    }
 
     if (ApiDumpInstance::current().shouldDumpOutput()) {
         if (ApiDumpInstance::current().settings().apiDurationOnly()) {
