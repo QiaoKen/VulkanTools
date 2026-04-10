@@ -1,0 +1,6 @@
+set(VULKAN_HEADERS_INSTALL_DIR "/code/github1/VulkanTools/Vulkan-Headers/build/install" CACHE STRING "" FORCE)
+set(VULKAN_UTILITY_LIBRARIES_INSTALL_DIR "/code/github1/VulkanTools/Vulkan-Utility-Libraries/build/install" CACHE STRING "" FORCE)
+set(VULKAN_LOADER_INSTALL_DIR "/code/github1/VulkanTools/Vulkan-Loader/build/install" CACHE STRING "" FORCE)
+set(JSONCPP_INSTALL_DIR "/code/github1/VulkanTools/jsoncpp/build/install" CACHE STRING "" FORCE)
+set(VALIJSON_INSTALL_DIR "/code/github1/VulkanTools/valijson/build/install" CACHE STRING "" FORCE)
+set(GOOGLETEST_INSTALL_DIR "/code/github1/VulkanTools/googletest/build/install" CACHE STRING "" FORCE)

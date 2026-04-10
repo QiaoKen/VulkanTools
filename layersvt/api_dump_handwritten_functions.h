@@ -21,6 +21,8 @@
  * Author: Charles Giessen <charles@lunarg.com>
  */
 
+#pragma once
+
 // Implementation file for specifically implemented functions
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
