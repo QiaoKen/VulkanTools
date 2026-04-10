@@ -26,6 +26,68 @@
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 
 #include "generated/api_dump_dispatch.h"
+#include "api_dump_handwritten_functions.h"
+
+// ---- VK_ARM_draw_state_bundle dispatch stub ----
+template <ApiDumpFormat Format>
+VKAPI_ATTR void VKAPI_CALL vkCmdDrawStateBundleARM(
+    VkCommandBuffer commandBuffer,
+    const VkDrawStateBundleInfoARM* pDrawStateBundleInfo)
+{
+    std::lock_guard<std::mutex> lg(ApiDumpInstance::current().outputMutex());
+    ApiDumpInstance::current().startApiTimer();
+
+    dump_function_head(ApiDumpInstance::current(), "vkCmdDrawStateBundleARM",
+                       "commandBuffer, pDrawStateBundleInfo", "void");
+
+    if constexpr (Format == ApiDumpFormat::Text) {
+        if (ApiDumpInstance::current().settings().shouldPreDump() &&
+            ApiDumpInstance::current().shouldDumpOutput()) {
+            dump_before_pre_dump_formatting<Format>(ApiDumpInstance::current().settings());
+            dump_params_vkCmdDrawStateBundleARM<Format>(
+                ApiDumpInstance::current(), commandBuffer, pDrawStateBundleInfo);
+        }
+    }
+
+    // Call through: look up the real function pointer via GetDeviceProcAddr
+    auto pfn = reinterpret_cast<PFN_vkCmdDrawStateBundleARM>(
+        device_dispatch_table(commandBuffer)->GetDeviceProcAddr(
+            VK_NULL_HANDLE, "vkCmdDrawStateBundleARM"));
+    if (pfn) {
+        pfn(commandBuffer, pDrawStateBundleInfo);
+    }
+
+    if (ApiDumpInstance::current().shouldDumpOutput()) {
+        if (ApiDumpInstance::current().settings().apiDurationOnly()) {
+            auto api_duration = ApiDumpInstance::current().getApiDuration();
+            if (ApiDumpInstance::current().settings().showApiDuration() ||
+                ApiDumpInstance::current().settings().apiDurationOnly()) {
+                ApiDumpInstance::current().settings().stream()
+                    << "vkCmdDrawStateBundleARM - API Duration: "
+                    << api_duration.count() << " us" << std::endl;
+            }
+        } else {
+            auto api_duration = ApiDumpInstance::current().getApiDuration();
+            if (ApiDumpInstance::current().settings().showApiDuration())
+                ApiDumpInstance::current().settings().stream()
+                    << "API Duration: " << api_duration.count() << " us" << std::endl;
+            dump_pre_function_formatting<Format>(ApiDumpInstance::current().settings());
+            dump_params_vkCmdDrawStateBundleARM<Format>(
+                ApiDumpInstance::current(), commandBuffer, pDrawStateBundleInfo);
+            dump_post_function_formatting<Format>(ApiDumpInstance::current().settings());
+            flush(ApiDumpInstance::current().settings());
+        }
+    }
+}
+
+// Helper: expose vkCmdDrawStateBundleARM through GetProcAddr for all formats
+template <ApiDumpFormat Format>
+static PFN_vkVoidFunction arm_draw_state_bundle_get_proc(const char* pName) {
+    if (strcmp(pName, "vkCmdDrawStateBundleARM") == 0)
+        return reinterpret_cast<PFN_vkVoidFunction>(vkCmdDrawStateBundleARM<Format>);
+    return nullptr;
+}
+// ---- end VK_ARM_draw_state_bundle dispatch stub ----
 
 extern "C" {
 
@@ -59,6 +121,13 @@ EXPORT_FUNCTION VKAPI_ATTR PFN_vkVoidFunction VKAPI_CALL vkGetInstanceProcAddr(V
     // Make sure that device functions queried through GIPA works
     if (device_func) return device_func;
 
+    // VK_ARM_draw_state_bundle vendor extension
+    switch (ApiDumpInstance::current().settings().format()) {
+        case ApiDumpFormat::Text: { auto f = arm_draw_state_bundle_get_proc<ApiDumpFormat::Text>(pName);  if (f) return f; break; }
+        case ApiDumpFormat::Html: { auto f = arm_draw_state_bundle_get_proc<ApiDumpFormat::Html>(pName);  if (f) return f; break; }
+        case ApiDumpFormat::Json: { auto f = arm_draw_state_bundle_get_proc<ApiDumpFormat::Json>(pName);  if (f) return f; break; }
+    }
+
     // Haven't created an instance yet, exit now since there is no instance_dispatch_table
     if (instance_dispatch_table(instance)->GetInstanceProcAddr == NULL) return nullptr;
     return instance_dispatch_table(instance)->GetInstanceProcAddr(instance, pName);
@@ -78,6 +147,13 @@ EXPORT_FUNCTION VKAPI_ATTR PFN_vkVoidFunction VKAPI_CALL vkGetDeviceProcAddr(VkD
             break;
     }
     if (device_func) return device_func;
+
+    // VK_ARM_draw_state_bundle vendor extension
+    switch (ApiDumpInstance::current().settings().format()) {
+        case ApiDumpFormat::Text: { auto f = arm_draw_state_bundle_get_proc<ApiDumpFormat::Text>(pName);  if (f) return f; break; }
+        case ApiDumpFormat::Html: { auto f = arm_draw_state_bundle_get_proc<ApiDumpFormat::Html>(pName);  if (f) return f; break; }
+        case ApiDumpFormat::Json: { auto f = arm_draw_state_bundle_get_proc<ApiDumpFormat::Json>(pName);  if (f) return f; break; }
+    }
 
     // Haven't created a device yet, exit now since there is no device_dispatch_table
     if (device_dispatch_table(device)->GetDeviceProcAddr == NULL) return nullptr;

@@ -27,6 +27,96 @@
 
 #include "generated/api_dump_implementation.h"
 
+// ---- VK_ARM_draw_state_bundle handwritten dumpers ----
+
+template <ApiDumpFormat Format>
+void dump_VkDrawStateBundleInfoARM(const VkDrawStateBundleInfoARM* pInfo,
+                                   const ApiDumpSettings& settings,
+                                   const char* type_string,
+                                   const char* var_name,
+                                   int indent) {
+    if (!pInfo) {
+        dump_type<Format, const void*>(nullptr, settings, type_string, var_name, indent);
+        return;
+    }
+    const VkDrawStateBundleInfoARM& info = *pInfo;
+    dump_pre_params_formatting<Format>(settings);
+    dump_type<Format, VkStructureType>(info.sType,   settings, "VkStructureType",           "sType",   indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, VkDrawStateBundleFlagsARM>(info.flags, settings, "VkDrawStateBundleFlagsARM", "flags", indent);
+    dump_separate_members<Format>(settings);
+    dump_VkPipeline<Format>(info.pipeline,           settings, "VkPipeline",                "pipeline", indent);
+    dump_separate_members<Format>(settings);
+    dump_VkPipelineLayout<Format>(info.layout,       settings, "VkPipelineLayout",          "layout",   indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.firstSet,       settings, "uint32_t",                  "firstSet", indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.descriptorSetCount, settings, "uint32_t",              "descriptorSetCount", indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.dynamicOffsetCount, settings, "uint32_t",              "dynamicOffsetCount", indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.pushConstantOffset, settings, "uint32_t",              "pushConstantOffset", indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.pushConstantSize,   settings, "uint32_t",              "pushConstantSize",   indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.firstViewport,  settings, "uint32_t",                  "firstViewport", indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.viewportCount,  settings, "uint32_t",                  "viewportCount", indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.firstScissor,   settings, "uint32_t",                  "firstScissor",  indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.scissorCount,   settings, "uint32_t",                  "scissorCount",  indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.firstBinding,   settings, "uint32_t",                  "firstBinding",  indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.vertexBindingCount, settings, "uint32_t",              "vertexBindingCount", indent);
+    dump_separate_members<Format>(settings);
+    dump_VkBuffer<Format>(info.indexBuffer,          settings, "VkBuffer",                  "indexBuffer",   indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, VkDeviceSize>(info.indexOffset, settings, "VkDeviceSize",             "indexOffset",   indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, VkDeviceSize>(info.indexSize,  settings, "VkDeviceSize",              "indexSize",     indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, VkIndexType>(info.indexType,   settings, "VkIndexType",               "indexType",     indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.vertexCount,    settings, "uint32_t",                  "vertexCount",   indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.instanceCount,  settings, "uint32_t",                  "instanceCount", indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.firstVertex,    settings, "uint32_t",                  "firstVertex",   indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.firstInstance,  settings, "uint32_t",                  "firstInstance", indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.indexCount,     settings, "uint32_t",                  "indexCount",    indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, uint32_t>(info.firstIndex,     settings, "uint32_t",                  "firstIndex",    indent);
+    dump_separate_members<Format>(settings);
+    dump_type<Format, int32_t>(info.vertexOffset,    settings, "int32_t",                   "vertexOffset",  indent);
+    dump_post_params_formatting<Format>(settings);
+    flush(settings);
+}
+
+template <ApiDumpFormat Format>
+void dump_params_vkCmdDrawStateBundleARM(ApiDumpInstance& dump_inst,
+                                         VkCommandBuffer commandBuffer,
+                                         const VkDrawStateBundleInfoARM* pDrawStateBundleInfo) {
+    const ApiDumpSettings& settings(dump_inst.settings());
+    if (settings.showParams()) {
+        dump_pre_params_formatting<Format>(settings);
+        dump_VkCommandBuffer<Format>(commandBuffer, settings, "VkCommandBuffer",
+                                     "commandBuffer",
+                                     (Format == ApiDumpFormat::Json ? 4 : 1));
+        dump_separate_members<Format>(settings);
+        dump_VkDrawStateBundleInfoARM<Format>(pDrawStateBundleInfo, settings,
+                                              "const VkDrawStateBundleInfoARM*",
+                                              "pDrawStateBundleInfo",
+                                              (Format == ApiDumpFormat::Json ? 4 : 1));
+        dump_post_params_formatting<Format>(settings);
+        flush(settings);
+    }
+}
+// ---- end VK_ARM_draw_state_bundle handwritten dumpers ----
+
 extern "C" {
 
 VKAPI_ATTR VkResult VKAPI_CALL vkCreateInstance(const VkInstanceCreateInfo* pCreateInfo, const VkAllocationCallbacks* pAllocator,

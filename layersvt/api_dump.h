@@ -42,6 +42,75 @@
 #include "vk_video/vulkan_video_codec_av1std.h"
 #include "vk_video/vulkan_video_codec_av1std_decode.h"
 
+// ---- VK_ARM_draw_state_bundle (vendor extension, not in vk.xml) ----
+#define VK_ARM_DRAW_STATE_BUNDLE_EXTENSION_NAME "VK_ARM_draw_state_bundle"
+
+typedef VkFlags VkDrawStateBundleFlagsARM;
+typedef enum VkDrawStateBundleFlagBitsARM {
+    VK_DRAW_STATE_BUNDLE_BIND_PIPELINE_BIT_ARM        = 0x00000001,
+    VK_DRAW_STATE_BUNDLE_BIND_DESCRIPTOR_SETS_BIT_ARM = 0x00000002,
+    VK_DRAW_STATE_BUNDLE_PUSH_CONSTANTS_BIT_ARM       = 0x00000004,
+    VK_DRAW_STATE_BUNDLE_SET_VIEWPORT_BIT_ARM         = 0x00000008,
+    VK_DRAW_STATE_BUNDLE_SET_SCISSOR_BIT_ARM          = 0x00000010,
+    VK_DRAW_STATE_BUNDLE_BIND_VERTEX_BUFFERS_BIT_ARM  = 0x00000020,
+    VK_DRAW_STATE_BUNDLE_BIND_INDEX_BUFFER_BIT_ARM    = 0x00000040,
+    VK_DRAW_STATE_BUNDLE_DRAW_INDEXED_BIT_ARM         = 0x00000080,
+    VK_DRAW_STATE_BUNDLE_DRAW_BIT_ARM                 = 0x00000100,
+} VkDrawStateBundleFlagBitsARM;
+
+typedef struct VkDrawStateBundleInfoARM {
+    VkStructureType            sType;
+    const void*                pNext;
+    VkDrawStateBundleFlagsARM  flags;
+    // Pipeline
+    VkPipeline                 pipeline;
+    // Descriptor sets
+    VkPipelineLayout           layout;
+    uint32_t                   firstSet;
+    uint32_t                   descriptorSetCount;
+    const VkDescriptorSet*     pDescriptorSets;
+    uint32_t                   dynamicOffsetCount;
+    const uint32_t*            pDynamicOffsets;
+    // Push constants
+    uint32_t                   pushConstantOffset;
+    uint32_t                   pushConstantSize;
+    const void*                pPushConstants;
+    // Viewports
+    uint32_t                   firstViewport;
+    uint32_t                   viewportCount;
+    const VkViewport*          pViewports;
+    // Scissors
+    uint32_t                   firstScissor;
+    uint32_t                   scissorCount;
+    const VkRect2D*            pScissors;
+    // Vertex buffers
+    uint32_t                   firstBinding;
+    uint32_t                   vertexBindingCount;
+    const VkBuffer*            pVertexBuffers;
+    const VkDeviceSize*        pVertexOffsets;
+    const VkDeviceSize*        pVertexSizes;
+    const VkDeviceSize*        pVertexStrides;
+    // Index buffer
+    VkBuffer                   indexBuffer;
+    VkDeviceSize               indexOffset;
+    VkDeviceSize               indexSize;
+    VkIndexType                indexType;
+    // Draw parameters (non-indexed)
+    uint32_t                   vertexCount;
+    uint32_t                   instanceCount;
+    uint32_t                   firstVertex;
+    uint32_t                   firstInstance;
+    // Draw parameters (indexed)
+    uint32_t                   indexCount;
+    uint32_t                   firstIndex;
+    int32_t                    vertexOffset;
+} VkDrawStateBundleInfoARM;
+
+typedef void (VKAPI_PTR *PFN_vkCmdDrawStateBundleARM)(
+    VkCommandBuffer                commandBuffer,
+    const VkDrawStateBundleInfoARM* pDrawStateBundleInfo);
+// ---- end VK_ARM_draw_state_bundle ----
+
 #include <string.h>
 #include <stdint.h>
 
