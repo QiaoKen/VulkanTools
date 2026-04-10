@@ -49,13 +49,9 @@ VKAPI_ATTR void VKAPI_CALL vkCmdDrawStateBundleARM(
         }
     }
 
-    // Call through: look up the real function pointer via GetDeviceProcAddr
-    auto pfn = reinterpret_cast<PFN_vkCmdDrawStateBundleARM>(
-        device_dispatch_table(commandBuffer)->GetDeviceProcAddr(
-            VK_NULL_HANDLE, "vkCmdDrawStateBundleARM"));
-    if (pfn) {
-        pfn(commandBuffer, pDrawStateBundleInfo);
-    }
+    // Call through: dispatch directly via the command buffer's dispatch table,
+    // matching the pattern used by all generated api_dump stubs.
+    device_dispatch_table(commandBuffer)->CmdDrawStateBundleARM(commandBuffer, pDrawStateBundleInfo);
 
     if (ApiDumpInstance::current().shouldDumpOutput()) {
         if (ApiDumpInstance::current().settings().apiDurationOnly()) {
