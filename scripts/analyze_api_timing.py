@@ -196,19 +196,19 @@ def print_per_frame_summary(events: List[Event], top: int):
         fevents = frames[frame_idx]
         if not fevents:
             continue
-        print(f"\n=== Frame {frame_idx} ===")
+        total_us = sum(e.duration_us for e in fevents)
+        print(f"\n=== Frame {frame_idx}  (total={format_us(total_us)}, {len(fevents)} calls) ===")
 
         # Aggregate per API for the frame
         agg = aggregate_by_function(fevents)
-        total_us = sum(e.duration_us for e in fevents)
         rows = sorted(((fn, a.total_us, a.count, a.avg_us) for fn, a in agg.items()), key=lambda x: x[1], reverse=True)
-        print("-- Per-API aggregate (top) --")
+        print(f"-- Top {top} APIs by total duration --")
         for rank, (fn, tsum, cnt, avg) in enumerate(rows[:top], start=1):
             pct = (tsum / total_us * 100.0) if total_us > 0 else 0.0
             print(f"{rank:2d}. {fn:35s} total={format_us(tsum):>9}  count={cnt:6d}  avg={format_us(avg):>9}  ({pct:5.1f}%)")
 
         # Slowest individual calls in the frame
-        print("-- Slowest individual calls (top) --")
+        print(f"-- Top {top} slowest individual calls --")
         slow = sorted(fevents, key=lambda e: e.duration_us, reverse=True)[:top]
         for rank, e in enumerate(slow, start=1):
             print(f"{rank:2d}. {e.func:35s}  {format_us(e.duration_us):>9}  (line {e.line_no})")
