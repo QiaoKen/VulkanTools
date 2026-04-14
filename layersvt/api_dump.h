@@ -115,6 +115,7 @@ typedef void (VKAPI_PTR *PFN_vkCmdDrawStateBundleARM)(
 #include <stdint.h>
 
 #include <algorithm>
+#include <atomic>
 #include <cassert>
 #include <chrono>
 #include <fstream>
@@ -184,6 +185,7 @@ EXPORT_FUNCTION VKAPI_ATTR PFN_vkVoidFunction VKAPI_CALL vkGetDeviceProcAddr(VkD
 #define kSettingsKeyShowThreadAndFrame "show_thread_and_frame"
 #define kSettingsKeyShowApiDuration "show_api_duration"
 #define kSettingsKeyApiDurationOnly "api_duration_only"
+#define kSettingsKeyStatMode "stat_mode"
 
 // We want to dump all extensions even beta extensions.
 #ifndef VK_ENABLE_BETA_EXTENSIONS
@@ -594,6 +596,10 @@ class ApiDumpSettings {
 
     bool apiDurationOnly() const { return api_duration_only; }
 
+    // stat_mode: accumulate per-API CPU timing without any I/O per call.
+    // Results are printed to stderr on process exit.
+    bool statMode() const { return stat_mode; }
+
     // The const cast is necessary because everyone who 'writes' to the stream necessarily must be able to modify it.
     // Since basically every function in this struct is const, we have to work around that.
     std::ostream &stream() const { return output_stream; }
@@ -747,6 +753,11 @@ class ApiDumpSettings {
         api_duration_only = false;
         if (vkuHasLayerSetting(layerSettingSet, kSettingsKeyApiDurationOnly)) {
             vkuGetLayerSettingValue(layerSettingSet, kSettingsKeyApiDurationOnly, api_duration_only);
+        }
+
+        stat_mode = false;
+        if (vkuHasLayerSetting(layerSettingSet, kSettingsKeyStatMode)) {
+            vkuGetLayerSettingValue(layerSettingSet, kSettingsKeyStatMode, stat_mode);
         }
 
         std::string cond_range_string;
@@ -919,6 +930,7 @@ class ApiDumpSettings {
     bool show_thread_and_frame;
     bool show_api_duration;
     bool api_duration_only;
+    bool stat_mode = false;
 
     bool use_conditional_output = false;
     ConditionalFrameOutput condFrameOutput;
@@ -928,6 +940,12 @@ class ApiDumpSettings {
 
 class ApiDumpInstance {
    public:
+    // Per-API call statistics entry (lock-free accumulation)
+    struct ApiCallStat {
+        std::atomic<uint64_t> total_ns{0};
+        std::atomic<uint64_t> count{0};
+    };
+
     ApiDumpInstance() noexcept : frame_count(0) { program_start = std::chrono::system_clock::now(); }
     // Can't copy or move this type
     ApiDumpInstance(const ApiDumpInstance &) = delete;
@@ -937,6 +955,47 @@ class ApiDumpInstance {
 
     ~ApiDumpInstance() {
         if (!first_func_call_on_frame) settings().closeFrameOutput();
+        if (settings().statMode()) dumpApiStats();
+    }
+
+    // Record a single API call's CPU duration (nanoseconds) into the stats table.
+    // This is lock-free: uses per-entry atomics, no mutex needed.
+    void recordApiStat(const char* name, uint64_t duration_ns) {
+        std::lock_guard<std::mutex> lg(stat_mutex);
+        auto& entry = stat_map[name];
+        entry.total_ns.fetch_add(duration_ns, std::memory_order_relaxed);
+        entry.count.fetch_add(1, std::memory_order_relaxed);
+    }
+
+    // Print accumulated stats to stderr, sorted by total time descending.
+    void dumpApiStats() const {
+        // Collect into a sortable vector
+        std::vector<std::pair<std::string, std::pair<uint64_t,uint64_t>>> rows;
+        {
+            std::lock_guard<std::mutex> lg(stat_mutex);
+            for (const auto& kv : stat_map) {
+                rows.push_back({kv.first,
+                    {kv.second.total_ns.load(std::memory_order_relaxed),
+                     kv.second.count.load(std::memory_order_relaxed)}});
+            }
+        }
+        std::sort(rows.begin(), rows.end(),
+            [](const auto& a, const auto& b){ return a.second.first > b.second.first; });
+
+        fprintf(stderr, "\n=== api_dump stat_mode: per-API CPU timing (CLOCK_THREAD_CPUTIME_ID) ===\n");
+        fprintf(stderr, "%-60s %12s %10s %12s\n", "API", "total_us", "calls", "avg_ns");
+        fprintf(stderr, "%s\n", std::string(98, '-').c_str());
+        for (const auto& row : rows) {
+            uint64_t total_ns = row.second.first;
+            uint64_t cnt      = row.second.second;
+            uint64_t avg_ns   = cnt > 0 ? total_ns / cnt : 0;
+            fprintf(stderr, "%-60s %12.1f %10llu %12llu\n",
+                row.first.c_str(),
+                total_ns / 1000.0,
+                (unsigned long long)cnt,
+                (unsigned long long)avg_ns);
+        }
+        fprintf(stderr, "=== end api_dump stats ===\n\n");
     }
 
     void initLayerSettings(const VkInstanceCreateInfo *pCreateInfo, const VkAllocationCallbacks *pAllocator) {
@@ -1131,6 +1190,10 @@ class ApiDumpInstance {
 
     std::chrono::system_clock::time_point program_start;
     std::chrono::high_resolution_clock::time_point api_start_time;
+
+    // stat_mode: per-API accumulation table (lock-free per entry, mutex only for map insertion)
+    mutable std::mutex stat_mutex;
+    std::unordered_map<const char*, ApiCallStat> stat_map;
 
     // Store the VkInstance handle so we don't use null in the call to
     // vkGetInstanceProcAddr(instance_handle, "vkCreateDevice");

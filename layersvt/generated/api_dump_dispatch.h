@@ -39,6 +39,14 @@ VKAPI_ATTR void VKAPI_CALL vkDestroyInstance(VkInstance instance, const VkAlloca
                         }
                     }
 auto dispatch_key = get_dispatch_key(instance);
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(instance)->DestroyInstance(instance, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyInstance", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(instance)->DestroyInstance(instance, pAllocator);
 destroy_instance_dispatch_table(dispatch_key);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
@@ -68,6 +76,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkEnumeratePhysicalDevices(VkInstance instance, u
                             dump_params_vkEnumeratePhysicalDevices<Format>(ApiDumpInstance::current(), instance, pPhysicalDeviceCount, pPhysicalDevices);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->EnumeratePhysicalDevices(instance, pPhysicalDeviceCount, pPhysicalDevices);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkEnumeratePhysicalDevices", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->EnumeratePhysicalDevices(instance, pPhysicalDeviceCount, pPhysicalDevices);
 
                     if (pPhysicalDeviceCount != nullptr && pPhysicalDevices != nullptr) {
@@ -104,6 +120,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceFeatures(VkPhysicalDevice physical
                             dump_params_vkGetPhysicalDeviceFeatures<Format>(ApiDumpInstance::current(), physicalDevice, pFeatures);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceFeatures(physicalDevice, pFeatures);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceFeatures", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceFeatures(physicalDevice, pFeatures);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -132,6 +156,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceFormatProperties(VkPhysicalDevice 
                             dump_params_vkGetPhysicalDeviceFormatProperties<Format>(ApiDumpInstance::current(), physicalDevice, format, pFormatProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceFormatProperties(physicalDevice, format, pFormatProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceFormatProperties", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceFormatProperties(physicalDevice, format, pFormatProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -160,6 +192,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceImageFormatProperties(VkPhysic
                             dump_params_vkGetPhysicalDeviceImageFormatProperties<Format>(ApiDumpInstance::current(), physicalDevice, format, type, tiling, usage, flags, pImageFormatProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceImageFormatProperties(physicalDevice, format, type, tiling, usage, flags, pImageFormatProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceImageFormatProperties", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceImageFormatProperties(physicalDevice, format, type, tiling, usage, flags, pImageFormatProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -190,6 +230,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceProperties(VkPhysicalDevice physic
                             dump_params_vkGetPhysicalDeviceProperties<Format>(ApiDumpInstance::current(), physicalDevice, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceProperties(physicalDevice, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceProperties", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceProperties(physicalDevice, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -218,6 +266,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceQueueFamilyProperties(VkPhysicalDe
                             dump_params_vkGetPhysicalDeviceQueueFamilyProperties<Format>(ApiDumpInstance::current(), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceQueueFamilyProperties(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceQueueFamilyProperties", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceQueueFamilyProperties(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -246,6 +302,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceMemoryProperties(VkPhysicalDevice 
                             dump_params_vkGetPhysicalDeviceMemoryProperties<Format>(ApiDumpInstance::current(), physicalDevice, pMemoryProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceMemoryProperties(physicalDevice, pMemoryProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceMemoryProperties", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceMemoryProperties(physicalDevice, pMemoryProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -274,6 +338,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceSparseImageFormatProperties(VkPhys
                             dump_params_vkGetPhysicalDeviceSparseImageFormatProperties<Format>(ApiDumpInstance::current(), physicalDevice, format, type, samples, usage, tiling, pPropertyCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSparseImageFormatProperties(physicalDevice, format, type, samples, usage, tiling, pPropertyCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceSparseImageFormatProperties", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSparseImageFormatProperties(physicalDevice, format, type, samples, usage, tiling, pPropertyCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -302,6 +374,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkEnumeratePhysicalDeviceGroups(VkInstance instan
                             dump_params_vkEnumeratePhysicalDeviceGroups<Format>(ApiDumpInstance::current(), instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->EnumeratePhysicalDeviceGroups(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkEnumeratePhysicalDeviceGroups", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->EnumeratePhysicalDeviceGroups(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -332,6 +412,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceFeatures2(VkPhysicalDevice physica
                             dump_params_vkGetPhysicalDeviceFeatures2<Format>(ApiDumpInstance::current(), physicalDevice, pFeatures);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceFeatures2(physicalDevice, pFeatures);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceFeatures2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceFeatures2(physicalDevice, pFeatures);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -360,6 +448,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceProperties2(VkPhysicalDevice physi
                             dump_params_vkGetPhysicalDeviceProperties2<Format>(ApiDumpInstance::current(), physicalDevice, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceProperties2(physicalDevice, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceProperties2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceProperties2(physicalDevice, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -388,6 +484,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceFormatProperties2(VkPhysicalDevice
                             dump_params_vkGetPhysicalDeviceFormatProperties2<Format>(ApiDumpInstance::current(), physicalDevice, format, pFormatProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceFormatProperties2(physicalDevice, format, pFormatProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceFormatProperties2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceFormatProperties2(physicalDevice, format, pFormatProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -416,6 +520,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceImageFormatProperties2(VkPhysi
                             dump_params_vkGetPhysicalDeviceImageFormatProperties2<Format>(ApiDumpInstance::current(), physicalDevice, pImageFormatInfo, pImageFormatProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceImageFormatProperties2(physicalDevice, pImageFormatInfo, pImageFormatProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceImageFormatProperties2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceImageFormatProperties2(physicalDevice, pImageFormatInfo, pImageFormatProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -446,6 +558,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceQueueFamilyProperties2(VkPhysicalD
                             dump_params_vkGetPhysicalDeviceQueueFamilyProperties2<Format>(ApiDumpInstance::current(), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceQueueFamilyProperties2(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceQueueFamilyProperties2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceQueueFamilyProperties2(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -474,6 +594,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceMemoryProperties2(VkPhysicalDevice
                             dump_params_vkGetPhysicalDeviceMemoryProperties2<Format>(ApiDumpInstance::current(), physicalDevice, pMemoryProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceMemoryProperties2(physicalDevice, pMemoryProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceMemoryProperties2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceMemoryProperties2(physicalDevice, pMemoryProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -502,6 +630,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceSparseImageFormatProperties2(VkPhy
                             dump_params_vkGetPhysicalDeviceSparseImageFormatProperties2<Format>(ApiDumpInstance::current(), physicalDevice, pFormatInfo, pPropertyCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSparseImageFormatProperties2(physicalDevice, pFormatInfo, pPropertyCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceSparseImageFormatProperties2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSparseImageFormatProperties2(physicalDevice, pFormatInfo, pPropertyCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -530,6 +666,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceExternalBufferProperties(VkPhysica
                             dump_params_vkGetPhysicalDeviceExternalBufferProperties<Format>(ApiDumpInstance::current(), physicalDevice, pExternalBufferInfo, pExternalBufferProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalBufferProperties(physicalDevice, pExternalBufferInfo, pExternalBufferProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceExternalBufferProperties", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalBufferProperties(physicalDevice, pExternalBufferInfo, pExternalBufferProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -558,6 +702,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceExternalFenceProperties(VkPhysical
                             dump_params_vkGetPhysicalDeviceExternalFenceProperties<Format>(ApiDumpInstance::current(), physicalDevice, pExternalFenceInfo, pExternalFenceProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalFenceProperties(physicalDevice, pExternalFenceInfo, pExternalFenceProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceExternalFenceProperties", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalFenceProperties(physicalDevice, pExternalFenceInfo, pExternalFenceProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -586,6 +738,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceExternalSemaphoreProperties(VkPhys
                             dump_params_vkGetPhysicalDeviceExternalSemaphoreProperties<Format>(ApiDumpInstance::current(), physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalSemaphoreProperties(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceExternalSemaphoreProperties", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalSemaphoreProperties(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -614,6 +774,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceToolProperties(VkPhysicalDevic
                             dump_params_vkGetPhysicalDeviceToolProperties<Format>(ApiDumpInstance::current(), physicalDevice, pToolCount, pToolProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceToolProperties(physicalDevice, pToolCount, pToolProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceToolProperties", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceToolProperties(physicalDevice, pToolCount, pToolProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -644,6 +812,14 @@ VKAPI_ATTR void VKAPI_CALL vkDestroySurfaceKHR(VkInstance instance, VkSurfaceKHR
                             dump_params_vkDestroySurfaceKHR<Format>(ApiDumpInstance::current(), instance, surface, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(instance)->DestroySurfaceKHR(instance, surface, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroySurfaceKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(instance)->DestroySurfaceKHR(instance, surface, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -672,6 +848,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceSurfaceSupportKHR(VkPhysicalDe
                             dump_params_vkGetPhysicalDeviceSurfaceSupportKHR<Format>(ApiDumpInstance::current(), physicalDevice, queueFamilyIndex, surface, pSupported);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfaceSupportKHR(physicalDevice, queueFamilyIndex, surface, pSupported);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceSurfaceSupportKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfaceSupportKHR(physicalDevice, queueFamilyIndex, surface, pSupported);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -702,6 +886,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceSurfaceCapabilitiesKHR(VkPhysi
                             dump_params_vkGetPhysicalDeviceSurfaceCapabilitiesKHR<Format>(ApiDumpInstance::current(), physicalDevice, surface, pSurfaceCapabilities);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice, surface, pSurfaceCapabilities);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceSurfaceCapabilitiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice, surface, pSurfaceCapabilities);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -732,6 +924,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceSurfaceFormatsKHR(VkPhysicalDe
                             dump_params_vkGetPhysicalDeviceSurfaceFormatsKHR<Format>(ApiDumpInstance::current(), physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceSurfaceFormatsKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -762,6 +962,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceSurfacePresentModesKHR(VkPhysi
                             dump_params_vkGetPhysicalDeviceSurfacePresentModesKHR<Format>(ApiDumpInstance::current(), physicalDevice, surface, pPresentModeCount, pPresentModes);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, pPresentModeCount, pPresentModes);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceSurfacePresentModesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, pPresentModeCount, pPresentModes);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -792,6 +1000,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDevicePresentRectanglesKHR(VkPhysica
                             dump_params_vkGetPhysicalDevicePresentRectanglesKHR<Format>(ApiDumpInstance::current(), physicalDevice, surface, pRectCount, pRects);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDevicePresentRectanglesKHR(physicalDevice, surface, pRectCount, pRects);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDevicePresentRectanglesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDevicePresentRectanglesKHR(physicalDevice, surface, pRectCount, pRects);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -822,6 +1038,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceDisplayPropertiesKHR(VkPhysica
                             dump_params_vkGetPhysicalDeviceDisplayPropertiesKHR<Format>(ApiDumpInstance::current(), physicalDevice, pPropertyCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceDisplayPropertiesKHR(physicalDevice, pPropertyCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceDisplayPropertiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceDisplayPropertiesKHR(physicalDevice, pPropertyCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -852,6 +1076,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceDisplayPlanePropertiesKHR(VkPh
                             dump_params_vkGetPhysicalDeviceDisplayPlanePropertiesKHR<Format>(ApiDumpInstance::current(), physicalDevice, pPropertyCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceDisplayPlanePropertiesKHR(physicalDevice, pPropertyCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceDisplayPlanePropertiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceDisplayPlanePropertiesKHR(physicalDevice, pPropertyCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -882,6 +1114,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetDisplayPlaneSupportedDisplaysKHR(VkPhysicalD
                             dump_params_vkGetDisplayPlaneSupportedDisplaysKHR<Format>(ApiDumpInstance::current(), physicalDevice, planeIndex, pDisplayCount, pDisplays);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetDisplayPlaneSupportedDisplaysKHR(physicalDevice, planeIndex, pDisplayCount, pDisplays);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDisplayPlaneSupportedDisplaysKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetDisplayPlaneSupportedDisplaysKHR(physicalDevice, planeIndex, pDisplayCount, pDisplays);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -912,6 +1152,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetDisplayModePropertiesKHR(VkPhysicalDevice ph
                             dump_params_vkGetDisplayModePropertiesKHR<Format>(ApiDumpInstance::current(), physicalDevice, display, pPropertyCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetDisplayModePropertiesKHR(physicalDevice, display, pPropertyCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDisplayModePropertiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetDisplayModePropertiesKHR(physicalDevice, display, pPropertyCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -942,6 +1190,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateDisplayModeKHR(VkPhysicalDevice physicalD
                             dump_params_vkCreateDisplayModeKHR<Format>(ApiDumpInstance::current(), physicalDevice, display, pCreateInfo, pAllocator, pMode);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->CreateDisplayModeKHR(physicalDevice, display, pCreateInfo, pAllocator, pMode);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateDisplayModeKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->CreateDisplayModeKHR(physicalDevice, display, pCreateInfo, pAllocator, pMode);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -972,6 +1228,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetDisplayPlaneCapabilitiesKHR(VkPhysicalDevice
                             dump_params_vkGetDisplayPlaneCapabilitiesKHR<Format>(ApiDumpInstance::current(), physicalDevice, mode, planeIndex, pCapabilities);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetDisplayPlaneCapabilitiesKHR(physicalDevice, mode, planeIndex, pCapabilities);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDisplayPlaneCapabilitiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetDisplayPlaneCapabilitiesKHR(physicalDevice, mode, planeIndex, pCapabilities);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1002,6 +1266,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateDisplayPlaneSurfaceKHR(VkInstance instanc
                             dump_params_vkCreateDisplayPlaneSurfaceKHR<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateDisplayPlaneSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateDisplayPlaneSurfaceKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateDisplayPlaneSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1033,6 +1305,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateXlibSurfaceKHR(VkInstance instance, const
                             dump_params_vkCreateXlibSurfaceKHR<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateXlibSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateXlibSurfaceKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateXlibSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1063,6 +1343,14 @@ VKAPI_ATTR VkBool32 VKAPI_CALL vkGetPhysicalDeviceXlibPresentationSupportKHR(VkP
                             dump_params_vkGetPhysicalDeviceXlibPresentationSupportKHR<Format>(ApiDumpInstance::current(), physicalDevice, queueFamilyIndex, dpy, visualID);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkBool32 result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceXlibPresentationSupportKHR(physicalDevice, queueFamilyIndex, dpy, visualID);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceXlibPresentationSupportKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkBool32 result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceXlibPresentationSupportKHR(physicalDevice, queueFamilyIndex, dpy, visualID);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1095,6 +1383,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateXcbSurfaceKHR(VkInstance instance, const 
                             dump_params_vkCreateXcbSurfaceKHR<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateXcbSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateXcbSurfaceKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateXcbSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1125,6 +1421,14 @@ VKAPI_ATTR VkBool32 VKAPI_CALL vkGetPhysicalDeviceXcbPresentationSupportKHR(VkPh
                             dump_params_vkGetPhysicalDeviceXcbPresentationSupportKHR<Format>(ApiDumpInstance::current(), physicalDevice, queueFamilyIndex, connection, visual_id);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkBool32 result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceXcbPresentationSupportKHR(physicalDevice, queueFamilyIndex, connection, visual_id);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceXcbPresentationSupportKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkBool32 result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceXcbPresentationSupportKHR(physicalDevice, queueFamilyIndex, connection, visual_id);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1157,6 +1461,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateWaylandSurfaceKHR(VkInstance instance, co
                             dump_params_vkCreateWaylandSurfaceKHR<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateWaylandSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateWaylandSurfaceKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateWaylandSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1187,6 +1499,14 @@ VKAPI_ATTR VkBool32 VKAPI_CALL vkGetPhysicalDeviceWaylandPresentationSupportKHR(
                             dump_params_vkGetPhysicalDeviceWaylandPresentationSupportKHR<Format>(ApiDumpInstance::current(), physicalDevice, queueFamilyIndex, display);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkBool32 result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceWaylandPresentationSupportKHR(physicalDevice, queueFamilyIndex, display);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceWaylandPresentationSupportKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkBool32 result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceWaylandPresentationSupportKHR(physicalDevice, queueFamilyIndex, display);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1219,6 +1539,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateAndroidSurfaceKHR(VkInstance instance, co
                             dump_params_vkCreateAndroidSurfaceKHR<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateAndroidSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateAndroidSurfaceKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateAndroidSurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1251,6 +1579,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateWin32SurfaceKHR(VkInstance instance, cons
                             dump_params_vkCreateWin32SurfaceKHR<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateWin32SurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateWin32SurfaceKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateWin32SurfaceKHR(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1281,6 +1617,14 @@ VKAPI_ATTR VkBool32 VKAPI_CALL vkGetPhysicalDeviceWin32PresentationSupportKHR(Vk
                             dump_params_vkGetPhysicalDeviceWin32PresentationSupportKHR<Format>(ApiDumpInstance::current(), physicalDevice, queueFamilyIndex);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkBool32 result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceWin32PresentationSupportKHR(physicalDevice, queueFamilyIndex);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceWin32PresentationSupportKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkBool32 result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceWin32PresentationSupportKHR(physicalDevice, queueFamilyIndex);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1312,6 +1656,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceVideoCapabilitiesKHR(VkPhysica
                             dump_params_vkGetPhysicalDeviceVideoCapabilitiesKHR<Format>(ApiDumpInstance::current(), physicalDevice, pVideoProfile, pCapabilities);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceVideoCapabilitiesKHR(physicalDevice, pVideoProfile, pCapabilities);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceVideoCapabilitiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceVideoCapabilitiesKHR(physicalDevice, pVideoProfile, pCapabilities);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1342,6 +1694,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceVideoFormatPropertiesKHR(VkPhy
                             dump_params_vkGetPhysicalDeviceVideoFormatPropertiesKHR<Format>(ApiDumpInstance::current(), physicalDevice, pVideoFormatInfo, pVideoFormatPropertyCount, pVideoFormatProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceVideoFormatPropertiesKHR(physicalDevice, pVideoFormatInfo, pVideoFormatPropertyCount, pVideoFormatProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceVideoFormatPropertiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceVideoFormatPropertiesKHR(physicalDevice, pVideoFormatInfo, pVideoFormatPropertyCount, pVideoFormatProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1372,6 +1732,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceFeatures2KHR(VkPhysicalDevice phys
                             dump_params_vkGetPhysicalDeviceFeatures2KHR<Format>(ApiDumpInstance::current(), physicalDevice, pFeatures);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceFeatures2KHR(physicalDevice, pFeatures);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceFeatures2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceFeatures2KHR(physicalDevice, pFeatures);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1400,6 +1768,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceProperties2KHR(VkPhysicalDevice ph
                             dump_params_vkGetPhysicalDeviceProperties2KHR<Format>(ApiDumpInstance::current(), physicalDevice, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceProperties2KHR(physicalDevice, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceProperties2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceProperties2KHR(physicalDevice, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1428,6 +1804,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceFormatProperties2KHR(VkPhysicalDev
                             dump_params_vkGetPhysicalDeviceFormatProperties2KHR<Format>(ApiDumpInstance::current(), physicalDevice, format, pFormatProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceFormatProperties2KHR(physicalDevice, format, pFormatProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceFormatProperties2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceFormatProperties2KHR(physicalDevice, format, pFormatProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1456,6 +1840,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceImageFormatProperties2KHR(VkPh
                             dump_params_vkGetPhysicalDeviceImageFormatProperties2KHR<Format>(ApiDumpInstance::current(), physicalDevice, pImageFormatInfo, pImageFormatProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceImageFormatProperties2KHR(physicalDevice, pImageFormatInfo, pImageFormatProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceImageFormatProperties2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceImageFormatProperties2KHR(physicalDevice, pImageFormatInfo, pImageFormatProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1486,6 +1878,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceQueueFamilyProperties2KHR(VkPhysic
                             dump_params_vkGetPhysicalDeviceQueueFamilyProperties2KHR<Format>(ApiDumpInstance::current(), physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceQueueFamilyProperties2KHR(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceQueueFamilyProperties2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceQueueFamilyProperties2KHR(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1514,6 +1914,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceMemoryProperties2KHR(VkPhysicalDev
                             dump_params_vkGetPhysicalDeviceMemoryProperties2KHR<Format>(ApiDumpInstance::current(), physicalDevice, pMemoryProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceMemoryProperties2KHR(physicalDevice, pMemoryProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceMemoryProperties2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceMemoryProperties2KHR(physicalDevice, pMemoryProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1542,6 +1950,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceSparseImageFormatProperties2KHR(Vk
                             dump_params_vkGetPhysicalDeviceSparseImageFormatProperties2KHR<Format>(ApiDumpInstance::current(), physicalDevice, pFormatInfo, pPropertyCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSparseImageFormatProperties2KHR(physicalDevice, pFormatInfo, pPropertyCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceSparseImageFormatProperties2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSparseImageFormatProperties2KHR(physicalDevice, pFormatInfo, pPropertyCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1570,6 +1986,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkEnumeratePhysicalDeviceGroupsKHR(VkInstance ins
                             dump_params_vkEnumeratePhysicalDeviceGroupsKHR<Format>(ApiDumpInstance::current(), instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->EnumeratePhysicalDeviceGroupsKHR(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkEnumeratePhysicalDeviceGroupsKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->EnumeratePhysicalDeviceGroupsKHR(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1600,6 +2024,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceExternalBufferPropertiesKHR(VkPhys
                             dump_params_vkGetPhysicalDeviceExternalBufferPropertiesKHR<Format>(ApiDumpInstance::current(), physicalDevice, pExternalBufferInfo, pExternalBufferProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalBufferPropertiesKHR(physicalDevice, pExternalBufferInfo, pExternalBufferProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceExternalBufferPropertiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalBufferPropertiesKHR(physicalDevice, pExternalBufferInfo, pExternalBufferProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1628,6 +2060,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceExternalSemaphorePropertiesKHR(VkP
                             dump_params_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR<Format>(ApiDumpInstance::current(), physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalSemaphorePropertiesKHR(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceExternalSemaphorePropertiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalSemaphorePropertiesKHR(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1656,6 +2096,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceExternalFencePropertiesKHR(VkPhysi
                             dump_params_vkGetPhysicalDeviceExternalFencePropertiesKHR<Format>(ApiDumpInstance::current(), physicalDevice, pExternalFenceInfo, pExternalFenceProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalFencePropertiesKHR(physicalDevice, pExternalFenceInfo, pExternalFenceProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceExternalFencePropertiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalFencePropertiesKHR(physicalDevice, pExternalFenceInfo, pExternalFenceProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1684,6 +2132,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkEnumeratePhysicalDeviceQueueFamilyPerformanceQu
                             dump_params_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR<Format>(ApiDumpInstance::current(), physicalDevice, queueFamilyIndex, pCounterCount, pCounters, pCounterDescriptions);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->EnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR(physicalDevice, queueFamilyIndex, pCounterCount, pCounters, pCounterDescriptions);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->EnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR(physicalDevice, queueFamilyIndex, pCounterCount, pCounters, pCounterDescriptions);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1714,6 +2170,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesK
                             dump_params_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR<Format>(ApiDumpInstance::current(), physicalDevice, pPerformanceQueryCreateInfo, pNumPasses);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR(physicalDevice, pPerformanceQueryCreateInfo, pNumPasses);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR(physicalDevice, pPerformanceQueryCreateInfo, pNumPasses);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1742,6 +2206,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceSurfaceCapabilities2KHR(VkPhys
                             dump_params_vkGetPhysicalDeviceSurfaceCapabilities2KHR<Format>(ApiDumpInstance::current(), physicalDevice, pSurfaceInfo, pSurfaceCapabilities);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfaceCapabilities2KHR(physicalDevice, pSurfaceInfo, pSurfaceCapabilities);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceSurfaceCapabilities2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfaceCapabilities2KHR(physicalDevice, pSurfaceInfo, pSurfaceCapabilities);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1772,6 +2244,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceSurfaceFormats2KHR(VkPhysicalD
                             dump_params_vkGetPhysicalDeviceSurfaceFormats2KHR<Format>(ApiDumpInstance::current(), physicalDevice, pSurfaceInfo, pSurfaceFormatCount, pSurfaceFormats);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfaceFormats2KHR(physicalDevice, pSurfaceInfo, pSurfaceFormatCount, pSurfaceFormats);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceSurfaceFormats2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfaceFormats2KHR(physicalDevice, pSurfaceInfo, pSurfaceFormatCount, pSurfaceFormats);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1802,6 +2282,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceDisplayProperties2KHR(VkPhysic
                             dump_params_vkGetPhysicalDeviceDisplayProperties2KHR<Format>(ApiDumpInstance::current(), physicalDevice, pPropertyCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceDisplayProperties2KHR(physicalDevice, pPropertyCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceDisplayProperties2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceDisplayProperties2KHR(physicalDevice, pPropertyCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1832,6 +2320,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceDisplayPlaneProperties2KHR(VkP
                             dump_params_vkGetPhysicalDeviceDisplayPlaneProperties2KHR<Format>(ApiDumpInstance::current(), physicalDevice, pPropertyCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceDisplayPlaneProperties2KHR(physicalDevice, pPropertyCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceDisplayPlaneProperties2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceDisplayPlaneProperties2KHR(physicalDevice, pPropertyCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1862,6 +2358,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetDisplayModeProperties2KHR(VkPhysicalDevice p
                             dump_params_vkGetDisplayModeProperties2KHR<Format>(ApiDumpInstance::current(), physicalDevice, display, pPropertyCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetDisplayModeProperties2KHR(physicalDevice, display, pPropertyCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDisplayModeProperties2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetDisplayModeProperties2KHR(physicalDevice, display, pPropertyCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1892,6 +2396,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetDisplayPlaneCapabilities2KHR(VkPhysicalDevic
                             dump_params_vkGetDisplayPlaneCapabilities2KHR<Format>(ApiDumpInstance::current(), physicalDevice, pDisplayPlaneInfo, pCapabilities);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetDisplayPlaneCapabilities2KHR(physicalDevice, pDisplayPlaneInfo, pCapabilities);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDisplayPlaneCapabilities2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetDisplayPlaneCapabilities2KHR(physicalDevice, pDisplayPlaneInfo, pCapabilities);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1922,6 +2434,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceFragmentShadingRatesKHR(VkPhys
                             dump_params_vkGetPhysicalDeviceFragmentShadingRatesKHR<Format>(ApiDumpInstance::current(), physicalDevice, pFragmentShadingRateCount, pFragmentShadingRates);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceFragmentShadingRatesKHR(physicalDevice, pFragmentShadingRateCount, pFragmentShadingRates);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceFragmentShadingRatesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceFragmentShadingRatesKHR(physicalDevice, pFragmentShadingRateCount, pFragmentShadingRates);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1952,6 +2472,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceVideoEncodeQualityLevelPropert
                             dump_params_vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR<Format>(ApiDumpInstance::current(), physicalDevice, pQualityLevelInfo, pQualityLevelProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR(physicalDevice, pQualityLevelInfo, pQualityLevelProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR(physicalDevice, pQualityLevelInfo, pQualityLevelProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -1982,6 +2510,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR
                             dump_params_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR<Format>(ApiDumpInstance::current(), physicalDevice, pPropertyCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceCooperativeMatrixPropertiesKHR(physicalDevice, pPropertyCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceCooperativeMatrixPropertiesKHR(physicalDevice, pPropertyCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2012,6 +2548,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceCalibrateableTimeDomainsKHR(Vk
                             dump_params_vkGetPhysicalDeviceCalibrateableTimeDomainsKHR<Format>(ApiDumpInstance::current(), physicalDevice, pTimeDomainCount, pTimeDomains);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceCalibrateableTimeDomainsKHR(physicalDevice, pTimeDomainCount, pTimeDomains);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceCalibrateableTimeDomainsKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceCalibrateableTimeDomainsKHR(physicalDevice, pTimeDomainCount, pTimeDomains);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2042,6 +2586,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateDebugReportCallbackEXT(VkInstance instanc
                             dump_params_vkCreateDebugReportCallbackEXT<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pCallback);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateDebugReportCallbackEXT(instance, pCreateInfo, pAllocator, pCallback);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateDebugReportCallbackEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateDebugReportCallbackEXT(instance, pCreateInfo, pAllocator, pCallback);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2072,6 +2624,14 @@ VKAPI_ATTR void VKAPI_CALL vkDestroyDebugReportCallbackEXT(VkInstance instance, 
                             dump_params_vkDestroyDebugReportCallbackEXT<Format>(ApiDumpInstance::current(), instance, callback, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(instance)->DestroyDebugReportCallbackEXT(instance, callback, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyDebugReportCallbackEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(instance)->DestroyDebugReportCallbackEXT(instance, callback, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2100,6 +2660,14 @@ VKAPI_ATTR void VKAPI_CALL vkDebugReportMessageEXT(VkInstance instance, VkDebugR
                             dump_params_vkDebugReportMessageEXT<Format>(ApiDumpInstance::current(), instance, flags, objectType, object, location, messageCode, pLayerPrefix, pMessage);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(instance)->DebugReportMessageEXT(instance, flags, objectType, object, location, messageCode, pLayerPrefix, pMessage);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDebugReportMessageEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(instance)->DebugReportMessageEXT(instance, flags, objectType, object, location, messageCode, pLayerPrefix, pMessage);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2129,6 +2697,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateStreamDescriptorSurfaceGGP(VkInstance ins
                             dump_params_vkCreateStreamDescriptorSurfaceGGP<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateStreamDescriptorSurfaceGGP(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateStreamDescriptorSurfaceGGP", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateStreamDescriptorSurfaceGGP(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2160,6 +2736,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceExternalImageFormatPropertiesN
                             dump_params_vkGetPhysicalDeviceExternalImageFormatPropertiesNV<Format>(ApiDumpInstance::current(), physicalDevice, format, type, tiling, usage, flags, externalHandleType, pExternalImageFormatProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalImageFormatPropertiesNV(physicalDevice, format, type, tiling, usage, flags, externalHandleType, pExternalImageFormatProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceExternalImageFormatPropertiesNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalImageFormatPropertiesNV(physicalDevice, format, type, tiling, usage, flags, externalHandleType, pExternalImageFormatProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2191,6 +2775,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateViSurfaceNN(VkInstance instance, const Vk
                             dump_params_vkCreateViSurfaceNN<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateViSurfaceNN(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateViSurfaceNN", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateViSurfaceNN(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2222,6 +2814,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkReleaseDisplayEXT(VkPhysicalDevice physicalDevi
                             dump_params_vkReleaseDisplayEXT<Format>(ApiDumpInstance::current(), physicalDevice, display);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->ReleaseDisplayEXT(physicalDevice, display);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkReleaseDisplayEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->ReleaseDisplayEXT(physicalDevice, display);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2253,6 +2853,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkAcquireXlibDisplayEXT(VkPhysicalDevice physical
                             dump_params_vkAcquireXlibDisplayEXT<Format>(ApiDumpInstance::current(), physicalDevice, dpy, display);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->AcquireXlibDisplayEXT(physicalDevice, dpy, display);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkAcquireXlibDisplayEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->AcquireXlibDisplayEXT(physicalDevice, dpy, display);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2283,6 +2891,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetRandROutputDisplayEXT(VkPhysicalDevice physi
                             dump_params_vkGetRandROutputDisplayEXT<Format>(ApiDumpInstance::current(), physicalDevice, dpy, rrOutput, pDisplay);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetRandROutputDisplayEXT(physicalDevice, dpy, rrOutput, pDisplay);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetRandROutputDisplayEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetRandROutputDisplayEXT(physicalDevice, dpy, rrOutput, pDisplay);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2314,6 +2930,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceSurfaceCapabilities2EXT(VkPhys
                             dump_params_vkGetPhysicalDeviceSurfaceCapabilities2EXT<Format>(ApiDumpInstance::current(), physicalDevice, surface, pSurfaceCapabilities);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfaceCapabilities2EXT(physicalDevice, surface, pSurfaceCapabilities);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceSurfaceCapabilities2EXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfaceCapabilities2EXT(physicalDevice, surface, pSurfaceCapabilities);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2345,6 +2969,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateIOSSurfaceMVK(VkInstance instance, const 
                             dump_params_vkCreateIOSSurfaceMVK<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateIOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateIOSSurfaceMVK", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateIOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2377,6 +3009,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateMacOSSurfaceMVK(VkInstance instance, cons
                             dump_params_vkCreateMacOSSurfaceMVK<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateMacOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateMacOSSurfaceMVK", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateMacOSSurfaceMVK(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2408,6 +3048,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateDebugUtilsMessengerEXT(VkInstance instanc
                             dump_params_vkCreateDebugUtilsMessengerEXT<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pMessenger);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateDebugUtilsMessengerEXT(instance, pCreateInfo, pAllocator, pMessenger);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateDebugUtilsMessengerEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateDebugUtilsMessengerEXT(instance, pCreateInfo, pAllocator, pMessenger);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2438,6 +3086,14 @@ VKAPI_ATTR void VKAPI_CALL vkDestroyDebugUtilsMessengerEXT(VkInstance instance, 
                             dump_params_vkDestroyDebugUtilsMessengerEXT<Format>(ApiDumpInstance::current(), instance, messenger, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(instance)->DestroyDebugUtilsMessengerEXT(instance, messenger, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyDebugUtilsMessengerEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(instance)->DestroyDebugUtilsMessengerEXT(instance, messenger, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2466,6 +3122,14 @@ VKAPI_ATTR void VKAPI_CALL vkSubmitDebugUtilsMessageEXT(VkInstance instance, VkD
                             dump_params_vkSubmitDebugUtilsMessageEXT<Format>(ApiDumpInstance::current(), instance, messageSeverity, messageTypes, pCallbackData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(instance)->SubmitDebugUtilsMessageEXT(instance, messageSeverity, messageTypes, pCallbackData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkSubmitDebugUtilsMessageEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(instance)->SubmitDebugUtilsMessageEXT(instance, messageSeverity, messageTypes, pCallbackData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2494,6 +3158,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceMultisamplePropertiesEXT(VkPhysica
                             dump_params_vkGetPhysicalDeviceMultisamplePropertiesEXT<Format>(ApiDumpInstance::current(), physicalDevice, samples, pMultisampleProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceMultisamplePropertiesEXT(physicalDevice, samples, pMultisampleProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceMultisamplePropertiesEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceMultisamplePropertiesEXT(physicalDevice, samples, pMultisampleProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2522,6 +3194,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceCalibrateableTimeDomainsEXT(Vk
                             dump_params_vkGetPhysicalDeviceCalibrateableTimeDomainsEXT<Format>(ApiDumpInstance::current(), physicalDevice, pTimeDomainCount, pTimeDomains);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceCalibrateableTimeDomainsEXT(physicalDevice, pTimeDomainCount, pTimeDomains);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceCalibrateableTimeDomainsEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceCalibrateableTimeDomainsEXT(physicalDevice, pTimeDomainCount, pTimeDomains);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2553,6 +3233,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateImagePipeSurfaceFUCHSIA(VkInstance instan
                             dump_params_vkCreateImagePipeSurfaceFUCHSIA<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateImagePipeSurfaceFUCHSIA(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateImagePipeSurfaceFUCHSIA", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateImagePipeSurfaceFUCHSIA(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2585,6 +3273,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateMetalSurfaceEXT(VkInstance instance, cons
                             dump_params_vkCreateMetalSurfaceEXT<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateMetalSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateMetalSurfaceEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateMetalSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2632,6 +3328,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceToolPropertiesEXT(VkPhysicalDe
                         pToolProperties = ((*pToolCount > 1) ? &pToolProperties[1] : nullptr);
                         (*pToolCount)--;
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceToolPropertiesEXT(physicalDevice, pToolCount, pToolProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceToolPropertiesEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceToolPropertiesEXT(physicalDevice, pToolCount, pToolProperties);
 if (original_pToolProperties != nullptr) {
     pToolProperties = original_pToolProperties;
@@ -2667,6 +3371,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceCooperativeMatrixPropertiesNV(
                             dump_params_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV<Format>(ApiDumpInstance::current(), physicalDevice, pPropertyCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceCooperativeMatrixPropertiesNV(physicalDevice, pPropertyCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceCooperativeMatrixPropertiesNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceCooperativeMatrixPropertiesNV(physicalDevice, pPropertyCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2697,6 +3409,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceSupportedFramebufferMixedSampl
                             dump_params_vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV<Format>(ApiDumpInstance::current(), physicalDevice, pCombinationCount, pCombinations);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV(physicalDevice, pCombinationCount, pCombinations);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV(physicalDevice, pCombinationCount, pCombinations);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2728,6 +3448,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceSurfacePresentModes2EXT(VkPhys
                             dump_params_vkGetPhysicalDeviceSurfacePresentModes2EXT<Format>(ApiDumpInstance::current(), physicalDevice, pSurfaceInfo, pPresentModeCount, pPresentModes);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfacePresentModes2EXT(physicalDevice, pSurfaceInfo, pPresentModeCount, pPresentModes);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceSurfacePresentModes2EXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceSurfacePresentModes2EXT(physicalDevice, pSurfaceInfo, pPresentModeCount, pPresentModes);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2759,6 +3487,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateHeadlessSurfaceEXT(VkInstance instance, c
                             dump_params_vkCreateHeadlessSurfaceEXT<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateHeadlessSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateHeadlessSurfaceEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateHeadlessSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2789,6 +3525,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkAcquireDrmDisplayEXT(VkPhysicalDevice physicalD
                             dump_params_vkAcquireDrmDisplayEXT<Format>(ApiDumpInstance::current(), physicalDevice, drmFd, display);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->AcquireDrmDisplayEXT(physicalDevice, drmFd, display);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkAcquireDrmDisplayEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->AcquireDrmDisplayEXT(physicalDevice, drmFd, display);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2819,6 +3563,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetDrmDisplayEXT(VkPhysicalDevice physicalDevic
                             dump_params_vkGetDrmDisplayEXT<Format>(ApiDumpInstance::current(), physicalDevice, drmFd, connectorId, display);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetDrmDisplayEXT(physicalDevice, drmFd, connectorId, display);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDrmDisplayEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetDrmDisplayEXT(physicalDevice, drmFd, connectorId, display);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2850,6 +3602,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkAcquireWinrtDisplayNV(VkPhysicalDevice physical
                             dump_params_vkAcquireWinrtDisplayNV<Format>(ApiDumpInstance::current(), physicalDevice, display);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->AcquireWinrtDisplayNV(physicalDevice, display);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkAcquireWinrtDisplayNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->AcquireWinrtDisplayNV(physicalDevice, display);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2880,6 +3640,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetWinrtDisplayNV(VkPhysicalDevice physicalDevi
                             dump_params_vkGetWinrtDisplayNV<Format>(ApiDumpInstance::current(), physicalDevice, deviceRelativeId, pDisplay);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetWinrtDisplayNV(physicalDevice, deviceRelativeId, pDisplay);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetWinrtDisplayNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetWinrtDisplayNV(physicalDevice, deviceRelativeId, pDisplay);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2912,6 +3680,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateDirectFBSurfaceEXT(VkInstance instance, c
                             dump_params_vkCreateDirectFBSurfaceEXT<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateDirectFBSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateDirectFBSurfaceEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateDirectFBSurfaceEXT(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2942,6 +3718,14 @@ VKAPI_ATTR VkBool32 VKAPI_CALL vkGetPhysicalDeviceDirectFBPresentationSupportEXT
                             dump_params_vkGetPhysicalDeviceDirectFBPresentationSupportEXT<Format>(ApiDumpInstance::current(), physicalDevice, queueFamilyIndex, dfb);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkBool32 result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceDirectFBPresentationSupportEXT(physicalDevice, queueFamilyIndex, dfb);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceDirectFBPresentationSupportEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkBool32 result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceDirectFBPresentationSupportEXT(physicalDevice, queueFamilyIndex, dfb);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -2974,6 +3758,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateScreenSurfaceQNX(VkInstance instance, con
                             dump_params_vkCreateScreenSurfaceQNX<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateScreenSurfaceQNX(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateScreenSurfaceQNX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateScreenSurfaceQNX(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3004,6 +3796,14 @@ VKAPI_ATTR VkBool32 VKAPI_CALL vkGetPhysicalDeviceScreenPresentationSupportQNX(V
                             dump_params_vkGetPhysicalDeviceScreenPresentationSupportQNX<Format>(ApiDumpInstance::current(), physicalDevice, queueFamilyIndex, window);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkBool32 result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceScreenPresentationSupportQNX(physicalDevice, queueFamilyIndex, window);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceScreenPresentationSupportQNX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkBool32 result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceScreenPresentationSupportQNX(physicalDevice, queueFamilyIndex, window);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3035,6 +3835,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceExternalTensorPropertiesARM(VkPhys
                             dump_params_vkGetPhysicalDeviceExternalTensorPropertiesARM<Format>(ApiDumpInstance::current(), physicalDevice, pExternalTensorInfo, pExternalTensorProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalTensorPropertiesARM(physicalDevice, pExternalTensorInfo, pExternalTensorProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceExternalTensorPropertiesARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceExternalTensorPropertiesARM(physicalDevice, pExternalTensorInfo, pExternalTensorProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3063,6 +3871,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceOpticalFlowImageFormatsNV(VkPh
                             dump_params_vkGetPhysicalDeviceOpticalFlowImageFormatsNV<Format>(ApiDumpInstance::current(), physicalDevice, pOpticalFlowImageFormatInfo, pFormatCount, pImageFormatProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceOpticalFlowImageFormatsNV(physicalDevice, pOpticalFlowImageFormatInfo, pFormatCount, pImageFormatProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceOpticalFlowImageFormatsNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceOpticalFlowImageFormatsNV(physicalDevice, pOpticalFlowImageFormatInfo, pFormatCount, pImageFormatProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3093,6 +3909,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceCooperativeVectorPropertiesNV(
                             dump_params_vkGetPhysicalDeviceCooperativeVectorPropertiesNV<Format>(ApiDumpInstance::current(), physicalDevice, pPropertyCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceCooperativeVectorPropertiesNV(physicalDevice, pPropertyCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceCooperativeVectorPropertiesNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceCooperativeVectorPropertiesNV(physicalDevice, pPropertyCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3123,6 +3947,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceQueueFamilyDataGraphProperties
                             dump_params_vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM<Format>(ApiDumpInstance::current(), physicalDevice, queueFamilyIndex, pQueueFamilyDataGraphPropertyCount, pQueueFamilyDataGraphProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceQueueFamilyDataGraphPropertiesARM(physicalDevice, queueFamilyIndex, pQueueFamilyDataGraphPropertyCount, pQueueFamilyDataGraphProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceQueueFamilyDataGraphPropertiesARM(physicalDevice, queueFamilyIndex, pQueueFamilyDataGraphPropertyCount, pQueueFamilyDataGraphProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3153,6 +3985,14 @@ VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEngi
                             dump_params_vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM<Format>(ApiDumpInstance::current(), physicalDevice, pQueueFamilyDataGraphProcessingEngineInfo, pQueueFamilyDataGraphProcessingEngineProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+instance_dispatch_table(physicalDevice)->GetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM(physicalDevice, pQueueFamilyDataGraphProcessingEngineInfo, pQueueFamilyDataGraphProcessingEngineProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 instance_dispatch_table(physicalDevice)->GetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM(physicalDevice, pQueueFamilyDataGraphProcessingEngineInfo, pQueueFamilyDataGraphProcessingEngineProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3182,6 +4022,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateSurfaceOHOS(VkInstance instance, const Vk
                             dump_params_vkCreateSurfaceOHOS<Format>(ApiDumpInstance::current(), instance, pCreateInfo, pAllocator, pSurface);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(instance)->CreateSurfaceOHOS(instance, pCreateInfo, pAllocator, pSurface);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateSurfaceOHOS", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(instance)->CreateSurfaceOHOS(instance, pCreateInfo, pAllocator, pSurface);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3213,6 +4061,14 @@ VKAPI_ATTR VkResult VKAPI_CALL vkGetPhysicalDeviceCooperativeMatrixFlexibleDimen
                             dump_params_vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV<Format>(ApiDumpInstance::current(), physicalDevice, pPropertyCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV(physicalDevice, pPropertyCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = instance_dispatch_table(physicalDevice)->GetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV(physicalDevice, pPropertyCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3246,6 +4102,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyDevice<Format>(ApiDumpInstance::current(), device, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyDevice(device, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyDevice", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyDevice(device, pAllocator);
 destroy_device_dispatch_table(get_dispatch_key(device));
 if (ApiDumpInstance::current().shouldDumpOutput()) {
@@ -3277,6 +4141,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceQueue<Format>(ApiDumpInstance::current(), device, queueFamilyIndex, queueIndex, pQueue);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceQueue(device, queueFamilyIndex, queueIndex, pQueue);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceQueue", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceQueue(device, queueFamilyIndex, queueIndex, pQueue);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3307,6 +4179,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkQueueSubmit<Format>(ApiDumpInstance::current(), queue, submitCount, pSubmits, fence);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(queue)->QueueSubmit(queue, submitCount, pSubmits, fence);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkQueueSubmit", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(queue)->QueueSubmit(queue, submitCount, pSubmits, fence);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3330,6 +4210,14 @@ template<ApiDumpFormat Format>
 VKAPI_ATTR VkResult VKAPI_CALL vkQueueWaitIdle(VkQueue queue)
 {
 ApiDumpInstance::current().startApiTimer();
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(queue)->QueueWaitIdle(queue);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkQueueWaitIdle", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(queue)->QueueWaitIdle(queue);
 std::lock_guard<std::mutex> lg(ApiDumpInstance::current().outputMutex());
 dump_function_head(ApiDumpInstance::current(), "vkQueueWaitIdle", "queue", "VkResult");
@@ -3355,6 +4243,14 @@ template<ApiDumpFormat Format>
 VKAPI_ATTR VkResult VKAPI_CALL vkDeviceWaitIdle(VkDevice device)
 {
 ApiDumpInstance::current().startApiTimer();
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->DeviceWaitIdle(device);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDeviceWaitIdle", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->DeviceWaitIdle(device);
 std::lock_guard<std::mutex> lg(ApiDumpInstance::current().outputMutex());
 dump_function_head(ApiDumpInstance::current(), "vkDeviceWaitIdle", "device", "VkResult");
@@ -3389,6 +4285,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkAllocateMemory<Format>(ApiDumpInstance::current(), device, pAllocateInfo, pAllocator, pMemory);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->AllocateMemory(device, pAllocateInfo, pAllocator, pMemory);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkAllocateMemory", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->AllocateMemory(device, pAllocateInfo, pAllocator, pMemory);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3421,6 +4325,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkFreeMemory<Format>(ApiDumpInstance::current(), device, memory, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->FreeMemory(device, memory, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkFreeMemory", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->FreeMemory(device, memory, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3451,6 +4363,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkMapMemory<Format>(ApiDumpInstance::current(), device, memory, offset, size, flags, ppData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->MapMemory(device, memory, offset, size, flags, ppData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkMapMemory", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->MapMemory(device, memory, offset, size, flags, ppData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3483,6 +4403,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkUnmapMemory<Format>(ApiDumpInstance::current(), device, memory);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->UnmapMemory(device, memory);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkUnmapMemory", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->UnmapMemory(device, memory);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3513,6 +4441,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkFlushMappedMemoryRanges<Format>(ApiDumpInstance::current(), device, memoryRangeCount, pMemoryRanges);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->FlushMappedMemoryRanges(device, memoryRangeCount, pMemoryRanges);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkFlushMappedMemoryRanges", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->FlushMappedMemoryRanges(device, memoryRangeCount, pMemoryRanges);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3545,6 +4481,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkInvalidateMappedMemoryRanges<Format>(ApiDumpInstance::current(), device, memoryRangeCount, pMemoryRanges);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->InvalidateMappedMemoryRanges(device, memoryRangeCount, pMemoryRanges);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkInvalidateMappedMemoryRanges", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->InvalidateMappedMemoryRanges(device, memoryRangeCount, pMemoryRanges);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3577,6 +4521,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceMemoryCommitment<Format>(ApiDumpInstance::current(), device, memory, pCommittedMemoryInBytes);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceMemoryCommitment(device, memory, pCommittedMemoryInBytes);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceMemoryCommitment", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceMemoryCommitment(device, memory, pCommittedMemoryInBytes);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3607,6 +4559,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkBindBufferMemory<Format>(ApiDumpInstance::current(), device, buffer, memory, memoryOffset);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->BindBufferMemory(device, buffer, memory, memoryOffset);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkBindBufferMemory", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->BindBufferMemory(device, buffer, memory, memoryOffset);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3639,6 +4599,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkBindImageMemory<Format>(ApiDumpInstance::current(), device, image, memory, memoryOffset);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->BindImageMemory(device, image, memory, memoryOffset);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkBindImageMemory", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->BindImageMemory(device, image, memory, memoryOffset);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3671,6 +4639,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetBufferMemoryRequirements<Format>(ApiDumpInstance::current(), device, buffer, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetBufferMemoryRequirements(device, buffer, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetBufferMemoryRequirements", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetBufferMemoryRequirements(device, buffer, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3701,6 +4677,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageMemoryRequirements<Format>(ApiDumpInstance::current(), device, image, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetImageMemoryRequirements(device, image, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageMemoryRequirements", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetImageMemoryRequirements(device, image, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3731,6 +4715,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageSparseMemoryRequirements<Format>(ApiDumpInstance::current(), device, image, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetImageSparseMemoryRequirements(device, image, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageSparseMemoryRequirements", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetImageSparseMemoryRequirements(device, image, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3761,6 +4753,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkQueueBindSparse<Format>(ApiDumpInstance::current(), queue, bindInfoCount, pBindInfo, fence);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(queue)->QueueBindSparse(queue, bindInfoCount, pBindInfo, fence);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkQueueBindSparse", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(queue)->QueueBindSparse(queue, bindInfoCount, pBindInfo, fence);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3793,6 +4793,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateFence<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pFence);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateFence(device, pCreateInfo, pAllocator, pFence);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateFence", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateFence(device, pCreateInfo, pAllocator, pFence);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3825,6 +4833,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyFence<Format>(ApiDumpInstance::current(), device, fence, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyFence(device, fence, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyFence", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyFence(device, fence, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3855,6 +4871,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkResetFences<Format>(ApiDumpInstance::current(), device, fenceCount, pFences);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->ResetFences(device, fenceCount, pFences);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkResetFences", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->ResetFences(device, fenceCount, pFences);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3887,6 +4911,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetFenceStatus<Format>(ApiDumpInstance::current(), device, fence);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetFenceStatus(device, fence);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetFenceStatus", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetFenceStatus(device, fence);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3910,6 +4942,14 @@ template<ApiDumpFormat Format>
 VKAPI_ATTR VkResult VKAPI_CALL vkWaitForFences(VkDevice device, uint32_t fenceCount, const VkFence* pFences, VkBool32 waitAll, uint64_t timeout)
 {
 ApiDumpInstance::current().startApiTimer();
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->WaitForFences(device, fenceCount, pFences, waitAll, timeout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkWaitForFences", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->WaitForFences(device, fenceCount, pFences, waitAll, timeout);
 std::lock_guard<std::mutex> lg(ApiDumpInstance::current().outputMutex());
 dump_function_head(ApiDumpInstance::current(), "vkWaitForFences", "device, fenceCount, pFences, waitAll, timeout", "VkResult");
@@ -3944,6 +4984,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateSemaphore<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pSemaphore);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateSemaphore(device, pCreateInfo, pAllocator, pSemaphore);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateSemaphore", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateSemaphore(device, pCreateInfo, pAllocator, pSemaphore);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -3976,6 +5024,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroySemaphore<Format>(ApiDumpInstance::current(), device, semaphore, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroySemaphore(device, semaphore, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroySemaphore", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroySemaphore(device, semaphore, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4006,6 +5062,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateEvent<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pEvent);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateEvent(device, pCreateInfo, pAllocator, pEvent);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateEvent", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateEvent(device, pCreateInfo, pAllocator, pEvent);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4038,6 +5102,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyEvent<Format>(ApiDumpInstance::current(), device, event, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyEvent(device, event, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyEvent", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyEvent(device, event, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4068,6 +5140,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetEventStatus<Format>(ApiDumpInstance::current(), device, event);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetEventStatus(device, event);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetEventStatus", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetEventStatus(device, event);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4100,6 +5180,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkSetEvent<Format>(ApiDumpInstance::current(), device, event);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->SetEvent(device, event);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkSetEvent", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->SetEvent(device, event);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4132,6 +5220,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkResetEvent<Format>(ApiDumpInstance::current(), device, event);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->ResetEvent(device, event);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkResetEvent", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->ResetEvent(device, event);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4164,6 +5260,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateQueryPool<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pQueryPool);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateQueryPool(device, pCreateInfo, pAllocator, pQueryPool);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateQueryPool", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateQueryPool(device, pCreateInfo, pAllocator, pQueryPool);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4196,6 +5300,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyQueryPool<Format>(ApiDumpInstance::current(), device, queryPool, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyQueryPool(device, queryPool, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyQueryPool", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyQueryPool(device, queryPool, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4217,6 +5329,14 @@ template<ApiDumpFormat Format>
 VKAPI_ATTR VkResult VKAPI_CALL vkGetQueryPoolResults(VkDevice device, VkQueryPool queryPool, uint32_t firstQuery, uint32_t queryCount, size_t dataSize, void* pData, VkDeviceSize stride, VkQueryResultFlags flags)
 {
 ApiDumpInstance::current().startApiTimer();
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetQueryPoolResults(device, queryPool, firstQuery, queryCount, dataSize, pData, stride, flags);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetQueryPoolResults", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetQueryPoolResults(device, queryPool, firstQuery, queryCount, dataSize, pData, stride, flags);
 std::lock_guard<std::mutex> lg(ApiDumpInstance::current().outputMutex());
 dump_function_head(ApiDumpInstance::current(), "vkGetQueryPoolResults", "device, queryPool, firstQuery, queryCount, dataSize, pData, stride, flags", "VkResult");
@@ -4251,6 +5371,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateBuffer<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pBuffer);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateBuffer(device, pCreateInfo, pAllocator, pBuffer);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateBuffer", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateBuffer(device, pCreateInfo, pAllocator, pBuffer);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4283,6 +5411,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyBuffer<Format>(ApiDumpInstance::current(), device, buffer, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyBuffer(device, buffer, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyBuffer", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyBuffer(device, buffer, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4313,6 +5449,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateBufferView<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pView);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateBufferView(device, pCreateInfo, pAllocator, pView);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateBufferView", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateBufferView(device, pCreateInfo, pAllocator, pView);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4345,6 +5489,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyBufferView<Format>(ApiDumpInstance::current(), device, bufferView, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyBufferView(device, bufferView, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyBufferView", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyBufferView(device, bufferView, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4375,6 +5527,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateImage<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pImage);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateImage(device, pCreateInfo, pAllocator, pImage);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateImage", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateImage(device, pCreateInfo, pAllocator, pImage);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4407,6 +5567,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyImage<Format>(ApiDumpInstance::current(), device, image, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyImage(device, image, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyImage", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyImage(device, image, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4437,6 +5605,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageSubresourceLayout<Format>(ApiDumpInstance::current(), device, image, pSubresource, pLayout);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetImageSubresourceLayout(device, image, pSubresource, pLayout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageSubresourceLayout", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetImageSubresourceLayout(device, image, pSubresource, pLayout);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4467,6 +5643,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateImageView<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pView);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateImageView(device, pCreateInfo, pAllocator, pView);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateImageView", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateImageView(device, pCreateInfo, pAllocator, pView);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4499,6 +5683,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyImageView<Format>(ApiDumpInstance::current(), device, imageView, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyImageView(device, imageView, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyImageView", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyImageView(device, imageView, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4529,6 +5721,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateShaderModule<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pShaderModule);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateShaderModule(device, pCreateInfo, pAllocator, pShaderModule);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateShaderModule", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateShaderModule(device, pCreateInfo, pAllocator, pShaderModule);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4561,6 +5761,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyShaderModule<Format>(ApiDumpInstance::current(), device, shaderModule, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyShaderModule(device, shaderModule, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyShaderModule", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyShaderModule(device, shaderModule, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4591,6 +5799,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreatePipelineCache<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pPipelineCache);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreatePipelineCache(device, pCreateInfo, pAllocator, pPipelineCache);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreatePipelineCache", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreatePipelineCache(device, pCreateInfo, pAllocator, pPipelineCache);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4623,6 +5839,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyPipelineCache<Format>(ApiDumpInstance::current(), device, pipelineCache, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyPipelineCache(device, pipelineCache, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyPipelineCache", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyPipelineCache(device, pipelineCache, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4653,6 +5877,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetPipelineCacheData<Format>(ApiDumpInstance::current(), device, pipelineCache, pDataSize, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetPipelineCacheData(device, pipelineCache, pDataSize, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPipelineCacheData", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetPipelineCacheData(device, pipelineCache, pDataSize, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4685,6 +5917,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkMergePipelineCaches<Format>(ApiDumpInstance::current(), device, dstCache, srcCacheCount, pSrcCaches);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->MergePipelineCaches(device, dstCache, srcCacheCount, pSrcCaches);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkMergePipelineCaches", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->MergePipelineCaches(device, dstCache, srcCacheCount, pSrcCaches);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4717,6 +5957,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateGraphicsPipelines<Format>(ApiDumpInstance::current(), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateGraphicsPipelines(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateGraphicsPipelines", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateGraphicsPipelines(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4749,6 +5997,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateComputePipelines<Format>(ApiDumpInstance::current(), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateComputePipelines(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateComputePipelines", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateComputePipelines(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4781,6 +6037,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyPipeline<Format>(ApiDumpInstance::current(), device, pipeline, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyPipeline(device, pipeline, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyPipeline", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyPipeline(device, pipeline, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4811,6 +6075,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreatePipelineLayout<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pPipelineLayout);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreatePipelineLayout(device, pCreateInfo, pAllocator, pPipelineLayout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreatePipelineLayout", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreatePipelineLayout(device, pCreateInfo, pAllocator, pPipelineLayout);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4843,6 +6115,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyPipelineLayout<Format>(ApiDumpInstance::current(), device, pipelineLayout, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyPipelineLayout(device, pipelineLayout, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyPipelineLayout", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyPipelineLayout(device, pipelineLayout, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4873,6 +6153,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateSampler<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pSampler);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateSampler(device, pCreateInfo, pAllocator, pSampler);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateSampler", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateSampler(device, pCreateInfo, pAllocator, pSampler);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4905,6 +6193,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroySampler<Format>(ApiDumpInstance::current(), device, sampler, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroySampler(device, sampler, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroySampler", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroySampler(device, sampler, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4935,6 +6231,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateDescriptorSetLayout<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pSetLayout);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateDescriptorSetLayout(device, pCreateInfo, pAllocator, pSetLayout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateDescriptorSetLayout", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateDescriptorSetLayout(device, pCreateInfo, pAllocator, pSetLayout);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4967,6 +6271,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyDescriptorSetLayout<Format>(ApiDumpInstance::current(), device, descriptorSetLayout, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyDescriptorSetLayout(device, descriptorSetLayout, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyDescriptorSetLayout", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyDescriptorSetLayout(device, descriptorSetLayout, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -4997,6 +6309,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateDescriptorPool<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pDescriptorPool);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateDescriptorPool(device, pCreateInfo, pAllocator, pDescriptorPool);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateDescriptorPool", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateDescriptorPool(device, pCreateInfo, pAllocator, pDescriptorPool);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5029,6 +6349,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyDescriptorPool<Format>(ApiDumpInstance::current(), device, descriptorPool, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyDescriptorPool(device, descriptorPool, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyDescriptorPool", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyDescriptorPool(device, descriptorPool, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5059,6 +6387,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkResetDescriptorPool<Format>(ApiDumpInstance::current(), device, descriptorPool, flags);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->ResetDescriptorPool(device, descriptorPool, flags);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkResetDescriptorPool", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->ResetDescriptorPool(device, descriptorPool, flags);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5091,6 +6427,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkAllocateDescriptorSets<Format>(ApiDumpInstance::current(), device, pAllocateInfo, pDescriptorSets);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->AllocateDescriptorSets(device, pAllocateInfo, pDescriptorSets);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkAllocateDescriptorSets", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->AllocateDescriptorSets(device, pAllocateInfo, pDescriptorSets);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5123,6 +6467,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkFreeDescriptorSets<Format>(ApiDumpInstance::current(), device, descriptorPool, descriptorSetCount, pDescriptorSets);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->FreeDescriptorSets(device, descriptorPool, descriptorSetCount, pDescriptorSets);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkFreeDescriptorSets", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->FreeDescriptorSets(device, descriptorPool, descriptorSetCount, pDescriptorSets);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5155,6 +6507,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkUpdateDescriptorSets<Format>(ApiDumpInstance::current(), device, descriptorWriteCount, pDescriptorWrites, descriptorCopyCount, pDescriptorCopies);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->UpdateDescriptorSets(device, descriptorWriteCount, pDescriptorWrites, descriptorCopyCount, pDescriptorCopies);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkUpdateDescriptorSets", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->UpdateDescriptorSets(device, descriptorWriteCount, pDescriptorWrites, descriptorCopyCount, pDescriptorCopies);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5185,6 +6545,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateFramebuffer<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pFramebuffer);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateFramebuffer(device, pCreateInfo, pAllocator, pFramebuffer);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateFramebuffer", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateFramebuffer(device, pCreateInfo, pAllocator, pFramebuffer);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5217,6 +6585,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyFramebuffer<Format>(ApiDumpInstance::current(), device, framebuffer, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyFramebuffer(device, framebuffer, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyFramebuffer", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyFramebuffer(device, framebuffer, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5247,6 +6623,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateRenderPass<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pRenderPass);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateRenderPass(device, pCreateInfo, pAllocator, pRenderPass);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateRenderPass", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateRenderPass(device, pCreateInfo, pAllocator, pRenderPass);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5279,6 +6663,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyRenderPass<Format>(ApiDumpInstance::current(), device, renderPass, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyRenderPass(device, renderPass, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyRenderPass", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyRenderPass(device, renderPass, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5309,6 +6701,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetRenderAreaGranularity<Format>(ApiDumpInstance::current(), device, renderPass, pGranularity);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetRenderAreaGranularity(device, renderPass, pGranularity);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetRenderAreaGranularity", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetRenderAreaGranularity(device, renderPass, pGranularity);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5339,6 +6739,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateCommandPool<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pCommandPool);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateCommandPool(device, pCreateInfo, pAllocator, pCommandPool);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateCommandPool", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateCommandPool(device, pCreateInfo, pAllocator, pCommandPool);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5371,6 +6779,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyCommandPool<Format>(ApiDumpInstance::current(), device, commandPool, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyCommandPool(device, commandPool, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyCommandPool", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyCommandPool(device, commandPool, pAllocator);
 ApiDumpInstance::current().eraseCmdBufferPool(device, commandPool);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
@@ -5402,6 +6818,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkResetCommandPool<Format>(ApiDumpInstance::current(), device, commandPool, flags);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->ResetCommandPool(device, commandPool, flags);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkResetCommandPool", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->ResetCommandPool(device, commandPool, flags);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5434,6 +6858,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkAllocateCommandBuffers<Format>(ApiDumpInstance::current(), device, pAllocateInfo, pCommandBuffers);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->AllocateCommandBuffers(device, pAllocateInfo, pCommandBuffers);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkAllocateCommandBuffers", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->AllocateCommandBuffers(device, pAllocateInfo, pCommandBuffers);
 if(result == VK_SUCCESS)
 ApiDumpInstance::current().addCmdBuffers(
@@ -5473,6 +6905,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkFreeCommandBuffers<Format>(ApiDumpInstance::current(), device, commandPool, commandBufferCount, pCommandBuffers);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->FreeCommandBuffers(device, commandPool, commandBufferCount, pCommandBuffers);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkFreeCommandBuffers", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->FreeCommandBuffers(device, commandPool, commandBufferCount, pCommandBuffers);
 ApiDumpInstance::current().eraseCmdBuffers(device, commandPool, std::vector<VkCommandBuffer>(pCommandBuffers, pCommandBuffers + commandBufferCount));
 if (ApiDumpInstance::current().shouldDumpOutput()) {
@@ -5504,6 +6944,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkBeginCommandBuffer<Format>(ApiDumpInstance::current(), commandBuffer, pBeginInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(commandBuffer)->BeginCommandBuffer(commandBuffer, pBeginInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkBeginCommandBuffer", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(commandBuffer)->BeginCommandBuffer(commandBuffer, pBeginInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5536,6 +6984,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkEndCommandBuffer<Format>(ApiDumpInstance::current(), commandBuffer);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(commandBuffer)->EndCommandBuffer(commandBuffer);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkEndCommandBuffer", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(commandBuffer)->EndCommandBuffer(commandBuffer);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5568,6 +7024,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkResetCommandBuffer<Format>(ApiDumpInstance::current(), commandBuffer, flags);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(commandBuffer)->ResetCommandBuffer(commandBuffer, flags);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkResetCommandBuffer", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(commandBuffer)->ResetCommandBuffer(commandBuffer, flags);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5600,6 +7064,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindPipeline<Format>(ApiDumpInstance::current(), commandBuffer, pipelineBindPoint, pipeline);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindPipeline(commandBuffer, pipelineBindPoint, pipeline);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindPipeline", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindPipeline(commandBuffer, pipelineBindPoint, pipeline);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5630,6 +7102,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetViewport<Format>(ApiDumpInstance::current(), commandBuffer, firstViewport, viewportCount, pViewports);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetViewport(commandBuffer, firstViewport, viewportCount, pViewports);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetViewport", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetViewport(commandBuffer, firstViewport, viewportCount, pViewports);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5660,6 +7140,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetScissor<Format>(ApiDumpInstance::current(), commandBuffer, firstScissor, scissorCount, pScissors);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetScissor(commandBuffer, firstScissor, scissorCount, pScissors);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetScissor", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetScissor(commandBuffer, firstScissor, scissorCount, pScissors);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5690,6 +7178,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetLineWidth<Format>(ApiDumpInstance::current(), commandBuffer, lineWidth);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetLineWidth(commandBuffer, lineWidth);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetLineWidth", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetLineWidth(commandBuffer, lineWidth);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5720,6 +7216,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthBias<Format>(ApiDumpInstance::current(), commandBuffer, depthBiasConstantFactor, depthBiasClamp, depthBiasSlopeFactor);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthBias(commandBuffer, depthBiasConstantFactor, depthBiasClamp, depthBiasSlopeFactor);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthBias", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthBias(commandBuffer, depthBiasConstantFactor, depthBiasClamp, depthBiasSlopeFactor);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5750,6 +7254,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetBlendConstants<Format>(ApiDumpInstance::current(), commandBuffer, blendConstants);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetBlendConstants(commandBuffer, blendConstants);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetBlendConstants", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetBlendConstants(commandBuffer, blendConstants);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5780,6 +7292,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthBounds<Format>(ApiDumpInstance::current(), commandBuffer, minDepthBounds, maxDepthBounds);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthBounds(commandBuffer, minDepthBounds, maxDepthBounds);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthBounds", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthBounds(commandBuffer, minDepthBounds, maxDepthBounds);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5810,6 +7330,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetStencilCompareMask<Format>(ApiDumpInstance::current(), commandBuffer, faceMask, compareMask);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetStencilCompareMask(commandBuffer, faceMask, compareMask);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetStencilCompareMask", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetStencilCompareMask(commandBuffer, faceMask, compareMask);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5840,6 +7368,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetStencilWriteMask<Format>(ApiDumpInstance::current(), commandBuffer, faceMask, writeMask);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetStencilWriteMask(commandBuffer, faceMask, writeMask);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetStencilWriteMask", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetStencilWriteMask(commandBuffer, faceMask, writeMask);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5870,6 +7406,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetStencilReference<Format>(ApiDumpInstance::current(), commandBuffer, faceMask, reference);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetStencilReference(commandBuffer, faceMask, reference);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetStencilReference", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetStencilReference(commandBuffer, faceMask, reference);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5900,6 +7444,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindDescriptorSets<Format>(ApiDumpInstance::current(), commandBuffer, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindDescriptorSets(commandBuffer, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindDescriptorSets", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindDescriptorSets(commandBuffer, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5930,6 +7482,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindIndexBuffer<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset, indexType);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindIndexBuffer(commandBuffer, buffer, offset, indexType);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindIndexBuffer", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindIndexBuffer(commandBuffer, buffer, offset, indexType);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5960,6 +7520,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindVertexBuffers<Format>(ApiDumpInstance::current(), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindVertexBuffers(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindVertexBuffers", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindVertexBuffers(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -5990,6 +7558,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDraw<Format>(ApiDumpInstance::current(), commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDraw(commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDraw", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDraw(commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6020,6 +7596,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawIndexed<Format>(ApiDumpInstance::current(), commandBuffer, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawIndexed(commandBuffer, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawIndexed", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawIndexed(commandBuffer, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6050,6 +7634,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawIndirect<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset, drawCount, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawIndirect(commandBuffer, buffer, offset, drawCount, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawIndirect", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawIndirect(commandBuffer, buffer, offset, drawCount, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6080,6 +7672,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawIndexedIndirect<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset, drawCount, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawIndexedIndirect(commandBuffer, buffer, offset, drawCount, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawIndexedIndirect", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawIndexedIndirect(commandBuffer, buffer, offset, drawCount, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6110,6 +7710,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDispatch<Format>(ApiDumpInstance::current(), commandBuffer, groupCountX, groupCountY, groupCountZ);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDispatch(commandBuffer, groupCountX, groupCountY, groupCountZ);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDispatch", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDispatch(commandBuffer, groupCountX, groupCountY, groupCountZ);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6140,6 +7748,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDispatchIndirect<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDispatchIndirect(commandBuffer, buffer, offset);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDispatchIndirect", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDispatchIndirect(commandBuffer, buffer, offset);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6170,6 +7786,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyBuffer<Format>(ApiDumpInstance::current(), commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyBuffer", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6200,6 +7824,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyImage<Format>(ApiDumpInstance::current(), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyImage", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6230,6 +7862,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBlitImage<Format>(ApiDumpInstance::current(), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, filter);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBlitImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, filter);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBlitImage", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBlitImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, filter);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6260,6 +7900,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyBufferToImage<Format>(ApiDumpInstance::current(), commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, pRegions);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyBufferToImage(commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, pRegions);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyBufferToImage", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyBufferToImage(commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, pRegions);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6290,6 +7938,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyImageToBuffer<Format>(ApiDumpInstance::current(), commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, pRegions);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyImageToBuffer(commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, pRegions);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyImageToBuffer", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyImageToBuffer(commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, pRegions);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6320,6 +7976,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdUpdateBuffer<Format>(ApiDumpInstance::current(), commandBuffer, dstBuffer, dstOffset, dataSize, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdUpdateBuffer(commandBuffer, dstBuffer, dstOffset, dataSize, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdUpdateBuffer", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdUpdateBuffer(commandBuffer, dstBuffer, dstOffset, dataSize, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6350,6 +8014,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdFillBuffer<Format>(ApiDumpInstance::current(), commandBuffer, dstBuffer, dstOffset, size, data);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdFillBuffer(commandBuffer, dstBuffer, dstOffset, size, data);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdFillBuffer", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdFillBuffer(commandBuffer, dstBuffer, dstOffset, size, data);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6380,6 +8052,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdClearColorImage<Format>(ApiDumpInstance::current(), commandBuffer, image, imageLayout, pColor, rangeCount, pRanges);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdClearColorImage(commandBuffer, image, imageLayout, pColor, rangeCount, pRanges);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdClearColorImage", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdClearColorImage(commandBuffer, image, imageLayout, pColor, rangeCount, pRanges);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6410,6 +8090,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdClearDepthStencilImage<Format>(ApiDumpInstance::current(), commandBuffer, image, imageLayout, pDepthStencil, rangeCount, pRanges);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdClearDepthStencilImage(commandBuffer, image, imageLayout, pDepthStencil, rangeCount, pRanges);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdClearDepthStencilImage", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdClearDepthStencilImage(commandBuffer, image, imageLayout, pDepthStencil, rangeCount, pRanges);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6440,6 +8128,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdClearAttachments<Format>(ApiDumpInstance::current(), commandBuffer, attachmentCount, pAttachments, rectCount, pRects);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdClearAttachments(commandBuffer, attachmentCount, pAttachments, rectCount, pRects);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdClearAttachments", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdClearAttachments(commandBuffer, attachmentCount, pAttachments, rectCount, pRects);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6470,6 +8166,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdResolveImage<Format>(ApiDumpInstance::current(), commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdResolveImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdResolveImage", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdResolveImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6500,6 +8204,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetEvent<Format>(ApiDumpInstance::current(), commandBuffer, event, stageMask);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetEvent(commandBuffer, event, stageMask);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetEvent", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetEvent(commandBuffer, event, stageMask);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6530,6 +8242,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdResetEvent<Format>(ApiDumpInstance::current(), commandBuffer, event, stageMask);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdResetEvent(commandBuffer, event, stageMask);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdResetEvent", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdResetEvent(commandBuffer, event, stageMask);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6560,6 +8280,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdWaitEvents<Format>(ApiDumpInstance::current(), commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdWaitEvents(commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdWaitEvents", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdWaitEvents(commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6590,6 +8318,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPipelineBarrier<Format>(ApiDumpInstance::current(), commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPipelineBarrier(commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPipelineBarrier", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPipelineBarrier(commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6620,6 +8356,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBeginQuery<Format>(ApiDumpInstance::current(), commandBuffer, queryPool, query, flags);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBeginQuery(commandBuffer, queryPool, query, flags);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBeginQuery", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBeginQuery(commandBuffer, queryPool, query, flags);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6650,6 +8394,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdEndQuery<Format>(ApiDumpInstance::current(), commandBuffer, queryPool, query);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdEndQuery(commandBuffer, queryPool, query);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdEndQuery", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdEndQuery(commandBuffer, queryPool, query);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6680,6 +8432,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdResetQueryPool<Format>(ApiDumpInstance::current(), commandBuffer, queryPool, firstQuery, queryCount);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdResetQueryPool(commandBuffer, queryPool, firstQuery, queryCount);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdResetQueryPool", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdResetQueryPool(commandBuffer, queryPool, firstQuery, queryCount);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6710,6 +8470,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdWriteTimestamp<Format>(ApiDumpInstance::current(), commandBuffer, pipelineStage, queryPool, query);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdWriteTimestamp(commandBuffer, pipelineStage, queryPool, query);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdWriteTimestamp", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdWriteTimestamp(commandBuffer, pipelineStage, queryPool, query);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6740,6 +8508,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyQueryPoolResults<Format>(ApiDumpInstance::current(), commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyQueryPoolResults(commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyQueryPoolResults", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyQueryPoolResults(commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6770,6 +8546,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPushConstants<Format>(ApiDumpInstance::current(), commandBuffer, layout, stageFlags, offset, size, pValues);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPushConstants(commandBuffer, layout, stageFlags, offset, size, pValues);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPushConstants", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPushConstants(commandBuffer, layout, stageFlags, offset, size, pValues);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6800,6 +8584,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBeginRenderPass<Format>(ApiDumpInstance::current(), commandBuffer, pRenderPassBegin, contents);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBeginRenderPass(commandBuffer, pRenderPassBegin, contents);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBeginRenderPass", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBeginRenderPass(commandBuffer, pRenderPassBegin, contents);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6830,6 +8622,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdNextSubpass<Format>(ApiDumpInstance::current(), commandBuffer, contents);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdNextSubpass(commandBuffer, contents);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdNextSubpass", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdNextSubpass(commandBuffer, contents);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6860,6 +8660,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdEndRenderPass<Format>(ApiDumpInstance::current(), commandBuffer);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdEndRenderPass(commandBuffer);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdEndRenderPass", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdEndRenderPass(commandBuffer);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6890,6 +8698,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdExecuteCommands<Format>(ApiDumpInstance::current(), commandBuffer, commandBufferCount, pCommandBuffers);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdExecuteCommands(commandBuffer, commandBufferCount, pCommandBuffers);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdExecuteCommands", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdExecuteCommands(commandBuffer, commandBufferCount, pCommandBuffers);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6920,6 +8736,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkBindBufferMemory2<Format>(ApiDumpInstance::current(), device, bindInfoCount, pBindInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->BindBufferMemory2(device, bindInfoCount, pBindInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkBindBufferMemory2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->BindBufferMemory2(device, bindInfoCount, pBindInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6952,6 +8776,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkBindImageMemory2<Format>(ApiDumpInstance::current(), device, bindInfoCount, pBindInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->BindImageMemory2(device, bindInfoCount, pBindInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkBindImageMemory2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->BindImageMemory2(device, bindInfoCount, pBindInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -6984,6 +8816,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceGroupPeerMemoryFeatures<Format>(ApiDumpInstance::current(), device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceGroupPeerMemoryFeatures(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceGroupPeerMemoryFeatures", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceGroupPeerMemoryFeatures(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7014,6 +8854,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDeviceMask<Format>(ApiDumpInstance::current(), commandBuffer, deviceMask);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDeviceMask(commandBuffer, deviceMask);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDeviceMask", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDeviceMask(commandBuffer, deviceMask);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7044,6 +8892,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDispatchBase<Format>(ApiDumpInstance::current(), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDispatchBase(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDispatchBase", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDispatchBase(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7074,6 +8930,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageMemoryRequirements2<Format>(ApiDumpInstance::current(), device, pInfo, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetImageMemoryRequirements2(device, pInfo, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageMemoryRequirements2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetImageMemoryRequirements2(device, pInfo, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7104,6 +8968,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetBufferMemoryRequirements2<Format>(ApiDumpInstance::current(), device, pInfo, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetBufferMemoryRequirements2(device, pInfo, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetBufferMemoryRequirements2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetBufferMemoryRequirements2(device, pInfo, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7134,6 +9006,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageSparseMemoryRequirements2<Format>(ApiDumpInstance::current(), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetImageSparseMemoryRequirements2(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageSparseMemoryRequirements2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetImageSparseMemoryRequirements2(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7164,6 +9044,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkTrimCommandPool<Format>(ApiDumpInstance::current(), device, commandPool, flags);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->TrimCommandPool(device, commandPool, flags);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkTrimCommandPool", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->TrimCommandPool(device, commandPool, flags);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7194,6 +9082,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceQueue2<Format>(ApiDumpInstance::current(), device, pQueueInfo, pQueue);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceQueue2(device, pQueueInfo, pQueue);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceQueue2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceQueue2(device, pQueueInfo, pQueue);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7224,6 +9120,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateSamplerYcbcrConversion<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pYcbcrConversion);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateSamplerYcbcrConversion(device, pCreateInfo, pAllocator, pYcbcrConversion);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateSamplerYcbcrConversion", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateSamplerYcbcrConversion(device, pCreateInfo, pAllocator, pYcbcrConversion);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7256,6 +9160,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroySamplerYcbcrConversion<Format>(ApiDumpInstance::current(), device, ycbcrConversion, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroySamplerYcbcrConversion(device, ycbcrConversion, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroySamplerYcbcrConversion", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroySamplerYcbcrConversion(device, ycbcrConversion, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7286,6 +9198,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateDescriptorUpdateTemplate<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateDescriptorUpdateTemplate(device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateDescriptorUpdateTemplate", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateDescriptorUpdateTemplate(device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7318,6 +9238,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyDescriptorUpdateTemplate<Format>(ApiDumpInstance::current(), device, descriptorUpdateTemplate, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyDescriptorUpdateTemplate(device, descriptorUpdateTemplate, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyDescriptorUpdateTemplate", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyDescriptorUpdateTemplate(device, descriptorUpdateTemplate, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7348,6 +9276,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkUpdateDescriptorSetWithTemplate<Format>(ApiDumpInstance::current(), device, descriptorSet, descriptorUpdateTemplate, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->UpdateDescriptorSetWithTemplate(device, descriptorSet, descriptorUpdateTemplate, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkUpdateDescriptorSetWithTemplate", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->UpdateDescriptorSetWithTemplate(device, descriptorSet, descriptorUpdateTemplate, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7378,6 +9314,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDescriptorSetLayoutSupport<Format>(ApiDumpInstance::current(), device, pCreateInfo, pSupport);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDescriptorSetLayoutSupport(device, pCreateInfo, pSupport);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDescriptorSetLayoutSupport", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDescriptorSetLayoutSupport(device, pCreateInfo, pSupport);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7408,6 +9352,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawIndirectCount<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawIndirectCount(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawIndirectCount", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawIndirectCount(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7438,6 +9390,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawIndexedIndirectCount<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawIndexedIndirectCount(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawIndexedIndirectCount", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawIndexedIndirectCount(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7468,6 +9428,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateRenderPass2<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pRenderPass);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateRenderPass2(device, pCreateInfo, pAllocator, pRenderPass);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateRenderPass2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateRenderPass2(device, pCreateInfo, pAllocator, pRenderPass);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7500,6 +9468,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBeginRenderPass2<Format>(ApiDumpInstance::current(), commandBuffer, pRenderPassBegin, pSubpassBeginInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBeginRenderPass2(commandBuffer, pRenderPassBegin, pSubpassBeginInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBeginRenderPass2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBeginRenderPass2(commandBuffer, pRenderPassBegin, pSubpassBeginInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7530,6 +9506,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdNextSubpass2<Format>(ApiDumpInstance::current(), commandBuffer, pSubpassBeginInfo, pSubpassEndInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdNextSubpass2(commandBuffer, pSubpassBeginInfo, pSubpassEndInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdNextSubpass2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdNextSubpass2(commandBuffer, pSubpassBeginInfo, pSubpassEndInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7560,6 +9544,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdEndRenderPass2<Format>(ApiDumpInstance::current(), commandBuffer, pSubpassEndInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdEndRenderPass2(commandBuffer, pSubpassEndInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdEndRenderPass2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdEndRenderPass2(commandBuffer, pSubpassEndInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7590,6 +9582,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkResetQueryPool<Format>(ApiDumpInstance::current(), device, queryPool, firstQuery, queryCount);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->ResetQueryPool(device, queryPool, firstQuery, queryCount);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkResetQueryPool", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->ResetQueryPool(device, queryPool, firstQuery, queryCount);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7620,6 +9620,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetSemaphoreCounterValue<Format>(ApiDumpInstance::current(), device, semaphore, pValue);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetSemaphoreCounterValue(device, semaphore, pValue);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetSemaphoreCounterValue", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetSemaphoreCounterValue(device, semaphore, pValue);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7643,6 +9651,14 @@ template<ApiDumpFormat Format>
 VKAPI_ATTR VkResult VKAPI_CALL vkWaitSemaphores(VkDevice device, const VkSemaphoreWaitInfo* pWaitInfo, uint64_t timeout)
 {
 ApiDumpInstance::current().startApiTimer();
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->WaitSemaphores(device, pWaitInfo, timeout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkWaitSemaphores", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->WaitSemaphores(device, pWaitInfo, timeout);
 std::lock_guard<std::mutex> lg(ApiDumpInstance::current().outputMutex());
 dump_function_head(ApiDumpInstance::current(), "vkWaitSemaphores", "device, pWaitInfo, timeout", "VkResult");
@@ -7677,6 +9693,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkSignalSemaphore<Format>(ApiDumpInstance::current(), device, pSignalInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->SignalSemaphore(device, pSignalInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkSignalSemaphore", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->SignalSemaphore(device, pSignalInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7709,6 +9733,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetBufferDeviceAddress<Format>(ApiDumpInstance::current(), device, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkDeviceAddress result = device_dispatch_table(device)->GetBufferDeviceAddress(device, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetBufferDeviceAddress", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkDeviceAddress result = device_dispatch_table(device)->GetBufferDeviceAddress(device, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7741,6 +9773,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetBufferOpaqueCaptureAddress<Format>(ApiDumpInstance::current(), device, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+uint64_t result = device_dispatch_table(device)->GetBufferOpaqueCaptureAddress(device, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetBufferOpaqueCaptureAddress", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 uint64_t result = device_dispatch_table(device)->GetBufferOpaqueCaptureAddress(device, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7773,6 +9813,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceMemoryOpaqueCaptureAddress<Format>(ApiDumpInstance::current(), device, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+uint64_t result = device_dispatch_table(device)->GetDeviceMemoryOpaqueCaptureAddress(device, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceMemoryOpaqueCaptureAddress", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 uint64_t result = device_dispatch_table(device)->GetDeviceMemoryOpaqueCaptureAddress(device, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7805,6 +9853,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreatePrivateDataSlot<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pPrivateDataSlot);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreatePrivateDataSlot(device, pCreateInfo, pAllocator, pPrivateDataSlot);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreatePrivateDataSlot", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreatePrivateDataSlot(device, pCreateInfo, pAllocator, pPrivateDataSlot);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7837,6 +9893,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyPrivateDataSlot<Format>(ApiDumpInstance::current(), device, privateDataSlot, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyPrivateDataSlot(device, privateDataSlot, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyPrivateDataSlot", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyPrivateDataSlot(device, privateDataSlot, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7867,6 +9931,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkSetPrivateData<Format>(ApiDumpInstance::current(), device, objectType, objectHandle, privateDataSlot, data);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->SetPrivateData(device, objectType, objectHandle, privateDataSlot, data);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkSetPrivateData", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->SetPrivateData(device, objectType, objectHandle, privateDataSlot, data);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7899,6 +9971,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetPrivateData<Format>(ApiDumpInstance::current(), device, objectType, objectHandle, privateDataSlot, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetPrivateData(device, objectType, objectHandle, privateDataSlot, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPrivateData", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetPrivateData(device, objectType, objectHandle, privateDataSlot, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7929,6 +10009,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetEvent2<Format>(ApiDumpInstance::current(), commandBuffer, event, pDependencyInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetEvent2(commandBuffer, event, pDependencyInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetEvent2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetEvent2(commandBuffer, event, pDependencyInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7959,6 +10047,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdResetEvent2<Format>(ApiDumpInstance::current(), commandBuffer, event, stageMask);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdResetEvent2(commandBuffer, event, stageMask);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdResetEvent2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdResetEvent2(commandBuffer, event, stageMask);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -7989,6 +10085,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdWaitEvents2<Format>(ApiDumpInstance::current(), commandBuffer, eventCount, pEvents, pDependencyInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdWaitEvents2(commandBuffer, eventCount, pEvents, pDependencyInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdWaitEvents2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdWaitEvents2(commandBuffer, eventCount, pEvents, pDependencyInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8019,6 +10123,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPipelineBarrier2<Format>(ApiDumpInstance::current(), commandBuffer, pDependencyInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPipelineBarrier2(commandBuffer, pDependencyInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPipelineBarrier2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPipelineBarrier2(commandBuffer, pDependencyInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8049,6 +10161,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdWriteTimestamp2<Format>(ApiDumpInstance::current(), commandBuffer, stage, queryPool, query);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdWriteTimestamp2(commandBuffer, stage, queryPool, query);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdWriteTimestamp2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdWriteTimestamp2(commandBuffer, stage, queryPool, query);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8079,6 +10199,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkQueueSubmit2<Format>(ApiDumpInstance::current(), queue, submitCount, pSubmits, fence);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(queue)->QueueSubmit2(queue, submitCount, pSubmits, fence);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkQueueSubmit2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(queue)->QueueSubmit2(queue, submitCount, pSubmits, fence);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8111,6 +10239,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyBuffer2<Format>(ApiDumpInstance::current(), commandBuffer, pCopyBufferInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyBuffer2(commandBuffer, pCopyBufferInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyBuffer2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyBuffer2(commandBuffer, pCopyBufferInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8141,6 +10277,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyImage2<Format>(ApiDumpInstance::current(), commandBuffer, pCopyImageInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyImage2(commandBuffer, pCopyImageInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyImage2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyImage2(commandBuffer, pCopyImageInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8171,6 +10315,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyBufferToImage2<Format>(ApiDumpInstance::current(), commandBuffer, pCopyBufferToImageInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyBufferToImage2(commandBuffer, pCopyBufferToImageInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyBufferToImage2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyBufferToImage2(commandBuffer, pCopyBufferToImageInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8201,6 +10353,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyImageToBuffer2<Format>(ApiDumpInstance::current(), commandBuffer, pCopyImageToBufferInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyImageToBuffer2(commandBuffer, pCopyImageToBufferInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyImageToBuffer2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyImageToBuffer2(commandBuffer, pCopyImageToBufferInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8231,6 +10391,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBlitImage2<Format>(ApiDumpInstance::current(), commandBuffer, pBlitImageInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBlitImage2(commandBuffer, pBlitImageInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBlitImage2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBlitImage2(commandBuffer, pBlitImageInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8261,6 +10429,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdResolveImage2<Format>(ApiDumpInstance::current(), commandBuffer, pResolveImageInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdResolveImage2(commandBuffer, pResolveImageInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdResolveImage2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdResolveImage2(commandBuffer, pResolveImageInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8291,6 +10467,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBeginRendering<Format>(ApiDumpInstance::current(), commandBuffer, pRenderingInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBeginRendering(commandBuffer, pRenderingInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBeginRendering", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBeginRendering(commandBuffer, pRenderingInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8321,6 +10505,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdEndRendering<Format>(ApiDumpInstance::current(), commandBuffer);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdEndRendering(commandBuffer);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdEndRendering", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdEndRendering(commandBuffer);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8351,6 +10543,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetCullMode<Format>(ApiDumpInstance::current(), commandBuffer, cullMode);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetCullMode(commandBuffer, cullMode);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetCullMode", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetCullMode(commandBuffer, cullMode);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8381,6 +10581,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetFrontFace<Format>(ApiDumpInstance::current(), commandBuffer, frontFace);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetFrontFace(commandBuffer, frontFace);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetFrontFace", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetFrontFace(commandBuffer, frontFace);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8411,6 +10619,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetPrimitiveTopology<Format>(ApiDumpInstance::current(), commandBuffer, primitiveTopology);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetPrimitiveTopology(commandBuffer, primitiveTopology);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetPrimitiveTopology", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetPrimitiveTopology(commandBuffer, primitiveTopology);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8441,6 +10657,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetViewportWithCount<Format>(ApiDumpInstance::current(), commandBuffer, viewportCount, pViewports);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetViewportWithCount(commandBuffer, viewportCount, pViewports);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetViewportWithCount", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetViewportWithCount(commandBuffer, viewportCount, pViewports);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8471,6 +10695,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetScissorWithCount<Format>(ApiDumpInstance::current(), commandBuffer, scissorCount, pScissors);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetScissorWithCount(commandBuffer, scissorCount, pScissors);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetScissorWithCount", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetScissorWithCount(commandBuffer, scissorCount, pScissors);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8501,6 +10733,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindVertexBuffers2<Format>(ApiDumpInstance::current(), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindVertexBuffers2(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindVertexBuffers2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindVertexBuffers2(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8531,6 +10771,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthTestEnable<Format>(ApiDumpInstance::current(), commandBuffer, depthTestEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthTestEnable(commandBuffer, depthTestEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthTestEnable", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthTestEnable(commandBuffer, depthTestEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8561,6 +10809,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthWriteEnable<Format>(ApiDumpInstance::current(), commandBuffer, depthWriteEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthWriteEnable(commandBuffer, depthWriteEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthWriteEnable", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthWriteEnable(commandBuffer, depthWriteEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8591,6 +10847,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthCompareOp<Format>(ApiDumpInstance::current(), commandBuffer, depthCompareOp);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthCompareOp(commandBuffer, depthCompareOp);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthCompareOp", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthCompareOp(commandBuffer, depthCompareOp);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8621,6 +10885,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthBoundsTestEnable<Format>(ApiDumpInstance::current(), commandBuffer, depthBoundsTestEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthBoundsTestEnable(commandBuffer, depthBoundsTestEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthBoundsTestEnable", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthBoundsTestEnable(commandBuffer, depthBoundsTestEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8651,6 +10923,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetStencilTestEnable<Format>(ApiDumpInstance::current(), commandBuffer, stencilTestEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetStencilTestEnable(commandBuffer, stencilTestEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetStencilTestEnable", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetStencilTestEnable(commandBuffer, stencilTestEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8681,6 +10961,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetStencilOp<Format>(ApiDumpInstance::current(), commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetStencilOp(commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetStencilOp", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetStencilOp(commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8711,6 +10999,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetRasterizerDiscardEnable<Format>(ApiDumpInstance::current(), commandBuffer, rasterizerDiscardEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetRasterizerDiscardEnable(commandBuffer, rasterizerDiscardEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetRasterizerDiscardEnable", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetRasterizerDiscardEnable(commandBuffer, rasterizerDiscardEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8741,6 +11037,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthBiasEnable<Format>(ApiDumpInstance::current(), commandBuffer, depthBiasEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthBiasEnable(commandBuffer, depthBiasEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthBiasEnable", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthBiasEnable(commandBuffer, depthBiasEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8771,6 +11075,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetPrimitiveRestartEnable<Format>(ApiDumpInstance::current(), commandBuffer, primitiveRestartEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetPrimitiveRestartEnable(commandBuffer, primitiveRestartEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetPrimitiveRestartEnable", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetPrimitiveRestartEnable(commandBuffer, primitiveRestartEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8801,6 +11113,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceBufferMemoryRequirements<Format>(ApiDumpInstance::current(), device, pInfo, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceBufferMemoryRequirements(device, pInfo, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceBufferMemoryRequirements", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceBufferMemoryRequirements(device, pInfo, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8831,6 +11151,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceImageMemoryRequirements<Format>(ApiDumpInstance::current(), device, pInfo, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceImageMemoryRequirements(device, pInfo, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceImageMemoryRequirements", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceImageMemoryRequirements(device, pInfo, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8861,6 +11189,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceImageSparseMemoryRequirements<Format>(ApiDumpInstance::current(), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceImageSparseMemoryRequirements(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceImageSparseMemoryRequirements", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceImageSparseMemoryRequirements(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8891,6 +11227,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetLineStipple<Format>(ApiDumpInstance::current(), commandBuffer, lineStippleFactor, lineStipplePattern);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetLineStipple(commandBuffer, lineStippleFactor, lineStipplePattern);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetLineStipple", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetLineStipple(commandBuffer, lineStippleFactor, lineStipplePattern);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8921,6 +11265,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkMapMemory2<Format>(ApiDumpInstance::current(), device, pMemoryMapInfo, ppData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->MapMemory2(device, pMemoryMapInfo, ppData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkMapMemory2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->MapMemory2(device, pMemoryMapInfo, ppData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8953,6 +11305,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkUnmapMemory2<Format>(ApiDumpInstance::current(), device, pMemoryUnmapInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->UnmapMemory2(device, pMemoryUnmapInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkUnmapMemory2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->UnmapMemory2(device, pMemoryUnmapInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -8985,6 +11345,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindIndexBuffer2<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset, size, indexType);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindIndexBuffer2(commandBuffer, buffer, offset, size, indexType);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindIndexBuffer2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindIndexBuffer2(commandBuffer, buffer, offset, size, indexType);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9015,6 +11383,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetRenderingAreaGranularity<Format>(ApiDumpInstance::current(), device, pRenderingAreaInfo, pGranularity);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetRenderingAreaGranularity(device, pRenderingAreaInfo, pGranularity);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetRenderingAreaGranularity", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetRenderingAreaGranularity(device, pRenderingAreaInfo, pGranularity);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9045,6 +11421,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceImageSubresourceLayout<Format>(ApiDumpInstance::current(), device, pInfo, pLayout);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceImageSubresourceLayout(device, pInfo, pLayout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceImageSubresourceLayout", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceImageSubresourceLayout(device, pInfo, pLayout);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9075,6 +11459,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageSubresourceLayout2<Format>(ApiDumpInstance::current(), device, image, pSubresource, pLayout);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetImageSubresourceLayout2(device, image, pSubresource, pLayout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageSubresourceLayout2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetImageSubresourceLayout2(device, image, pSubresource, pLayout);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9105,6 +11497,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPushDescriptorSet<Format>(ApiDumpInstance::current(), commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPushDescriptorSet(commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPushDescriptorSet", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPushDescriptorSet(commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9135,6 +11535,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPushDescriptorSetWithTemplate<Format>(ApiDumpInstance::current(), commandBuffer, descriptorUpdateTemplate, layout, set, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPushDescriptorSetWithTemplate(commandBuffer, descriptorUpdateTemplate, layout, set, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPushDescriptorSetWithTemplate", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPushDescriptorSetWithTemplate(commandBuffer, descriptorUpdateTemplate, layout, set, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9165,6 +11573,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetRenderingAttachmentLocations<Format>(ApiDumpInstance::current(), commandBuffer, pLocationInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetRenderingAttachmentLocations(commandBuffer, pLocationInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetRenderingAttachmentLocations", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetRenderingAttachmentLocations(commandBuffer, pLocationInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9195,6 +11611,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetRenderingInputAttachmentIndices<Format>(ApiDumpInstance::current(), commandBuffer, pInputAttachmentIndexInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetRenderingInputAttachmentIndices(commandBuffer, pInputAttachmentIndexInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetRenderingInputAttachmentIndices", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetRenderingInputAttachmentIndices(commandBuffer, pInputAttachmentIndexInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9225,6 +11649,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindDescriptorSets2<Format>(ApiDumpInstance::current(), commandBuffer, pBindDescriptorSetsInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindDescriptorSets2(commandBuffer, pBindDescriptorSetsInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindDescriptorSets2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindDescriptorSets2(commandBuffer, pBindDescriptorSetsInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9255,6 +11687,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPushConstants2<Format>(ApiDumpInstance::current(), commandBuffer, pPushConstantsInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPushConstants2(commandBuffer, pPushConstantsInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPushConstants2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPushConstants2(commandBuffer, pPushConstantsInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9285,6 +11725,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPushDescriptorSet2<Format>(ApiDumpInstance::current(), commandBuffer, pPushDescriptorSetInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPushDescriptorSet2(commandBuffer, pPushDescriptorSetInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPushDescriptorSet2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPushDescriptorSet2(commandBuffer, pPushDescriptorSetInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9315,6 +11763,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPushDescriptorSetWithTemplate2<Format>(ApiDumpInstance::current(), commandBuffer, pPushDescriptorSetWithTemplateInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPushDescriptorSetWithTemplate2(commandBuffer, pPushDescriptorSetWithTemplateInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPushDescriptorSetWithTemplate2", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPushDescriptorSetWithTemplate2(commandBuffer, pPushDescriptorSetWithTemplateInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9345,6 +11801,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCopyMemoryToImage<Format>(ApiDumpInstance::current(), device, pCopyMemoryToImageInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CopyMemoryToImage(device, pCopyMemoryToImageInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCopyMemoryToImage", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CopyMemoryToImage(device, pCopyMemoryToImageInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9377,6 +11841,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCopyImageToMemory<Format>(ApiDumpInstance::current(), device, pCopyImageToMemoryInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CopyImageToMemory(device, pCopyImageToMemoryInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCopyImageToMemory", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CopyImageToMemory(device, pCopyImageToMemoryInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9409,6 +11881,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCopyImageToImage<Format>(ApiDumpInstance::current(), device, pCopyImageToImageInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CopyImageToImage(device, pCopyImageToImageInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCopyImageToImage", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CopyImageToImage(device, pCopyImageToImageInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9441,6 +11921,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkTransitionImageLayout<Format>(ApiDumpInstance::current(), device, transitionCount, pTransitions);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->TransitionImageLayout(device, transitionCount, pTransitions);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkTransitionImageLayout", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->TransitionImageLayout(device, transitionCount, pTransitions);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9473,6 +11961,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateSwapchainKHR<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pSwapchain);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateSwapchainKHR(device, pCreateInfo, pAllocator, pSwapchain);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateSwapchainKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateSwapchainKHR(device, pCreateInfo, pAllocator, pSwapchain);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9505,6 +12001,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroySwapchainKHR<Format>(ApiDumpInstance::current(), device, swapchain, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroySwapchainKHR(device, swapchain, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroySwapchainKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroySwapchainKHR(device, swapchain, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9535,6 +12039,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetSwapchainImagesKHR<Format>(ApiDumpInstance::current(), device, swapchain, pSwapchainImageCount, pSwapchainImages);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetSwapchainImagesKHR(device, swapchain, pSwapchainImageCount, pSwapchainImages);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetSwapchainImagesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetSwapchainImagesKHR(device, swapchain, pSwapchainImageCount, pSwapchainImages);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9558,6 +12070,14 @@ template<ApiDumpFormat Format>
 VKAPI_ATTR VkResult VKAPI_CALL vkAcquireNextImageKHR(VkDevice device, VkSwapchainKHR swapchain, uint64_t timeout, VkSemaphore semaphore, VkFence fence, uint32_t* pImageIndex)
 {
 ApiDumpInstance::current().startApiTimer();
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->AcquireNextImageKHR(device, swapchain, timeout, semaphore, fence, pImageIndex);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkAcquireNextImageKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->AcquireNextImageKHR(device, swapchain, timeout, semaphore, fence, pImageIndex);
 std::lock_guard<std::mutex> lg(ApiDumpInstance::current().outputMutex());
 dump_function_head(ApiDumpInstance::current(), "vkAcquireNextImageKHR", "device, swapchain, timeout, semaphore, fence, pImageIndex", "VkResult");
@@ -9583,6 +12103,14 @@ template<ApiDumpFormat Format>
 VKAPI_ATTR VkResult VKAPI_CALL vkQueuePresentKHR(VkQueue queue, const VkPresentInfoKHR* pPresentInfo)
 {
 ApiDumpInstance::current().startApiTimer();
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(queue)->QueuePresentKHR(queue, pPresentInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkQueuePresentKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(queue)->QueuePresentKHR(queue, pPresentInfo);
 std::lock_guard<std::mutex> lg(ApiDumpInstance::current().outputMutex());
 dump_function_head(ApiDumpInstance::current(), "vkQueuePresentKHR", "queue, pPresentInfo", "VkResult");
@@ -9618,6 +12146,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceGroupPresentCapabilitiesKHR<Format>(ApiDumpInstance::current(), device, pDeviceGroupPresentCapabilities);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetDeviceGroupPresentCapabilitiesKHR(device, pDeviceGroupPresentCapabilities);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceGroupPresentCapabilitiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetDeviceGroupPresentCapabilitiesKHR(device, pDeviceGroupPresentCapabilities);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9650,6 +12186,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceGroupSurfacePresentModesKHR<Format>(ApiDumpInstance::current(), device, surface, pModes);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetDeviceGroupSurfacePresentModesKHR(device, surface, pModes);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceGroupSurfacePresentModesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetDeviceGroupSurfacePresentModesKHR(device, surface, pModes);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9682,6 +12226,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkAcquireNextImage2KHR<Format>(ApiDumpInstance::current(), device, pAcquireInfo, pImageIndex);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->AcquireNextImage2KHR(device, pAcquireInfo, pImageIndex);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkAcquireNextImage2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->AcquireNextImage2KHR(device, pAcquireInfo, pImageIndex);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9714,6 +12266,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateSharedSwapchainsKHR<Format>(ApiDumpInstance::current(), device, swapchainCount, pCreateInfos, pAllocator, pSwapchains);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateSharedSwapchainsKHR(device, swapchainCount, pCreateInfos, pAllocator, pSwapchains);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateSharedSwapchainsKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateSharedSwapchainsKHR(device, swapchainCount, pCreateInfos, pAllocator, pSwapchains);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9746,6 +12306,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateVideoSessionKHR<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pVideoSession);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateVideoSessionKHR(device, pCreateInfo, pAllocator, pVideoSession);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateVideoSessionKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateVideoSessionKHR(device, pCreateInfo, pAllocator, pVideoSession);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9778,6 +12346,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyVideoSessionKHR<Format>(ApiDumpInstance::current(), device, videoSession, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyVideoSessionKHR(device, videoSession, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyVideoSessionKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyVideoSessionKHR(device, videoSession, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9808,6 +12384,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetVideoSessionMemoryRequirementsKHR<Format>(ApiDumpInstance::current(), device, videoSession, pMemoryRequirementsCount, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetVideoSessionMemoryRequirementsKHR(device, videoSession, pMemoryRequirementsCount, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetVideoSessionMemoryRequirementsKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetVideoSessionMemoryRequirementsKHR(device, videoSession, pMemoryRequirementsCount, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9840,6 +12424,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkBindVideoSessionMemoryKHR<Format>(ApiDumpInstance::current(), device, videoSession, bindSessionMemoryInfoCount, pBindSessionMemoryInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->BindVideoSessionMemoryKHR(device, videoSession, bindSessionMemoryInfoCount, pBindSessionMemoryInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkBindVideoSessionMemoryKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->BindVideoSessionMemoryKHR(device, videoSession, bindSessionMemoryInfoCount, pBindSessionMemoryInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9872,6 +12464,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateVideoSessionParametersKHR<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pVideoSessionParameters);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateVideoSessionParametersKHR(device, pCreateInfo, pAllocator, pVideoSessionParameters);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateVideoSessionParametersKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateVideoSessionParametersKHR(device, pCreateInfo, pAllocator, pVideoSessionParameters);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9904,6 +12504,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkUpdateVideoSessionParametersKHR<Format>(ApiDumpInstance::current(), device, videoSessionParameters, pUpdateInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->UpdateVideoSessionParametersKHR(device, videoSessionParameters, pUpdateInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkUpdateVideoSessionParametersKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->UpdateVideoSessionParametersKHR(device, videoSessionParameters, pUpdateInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9936,6 +12544,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyVideoSessionParametersKHR<Format>(ApiDumpInstance::current(), device, videoSessionParameters, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyVideoSessionParametersKHR(device, videoSessionParameters, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyVideoSessionParametersKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyVideoSessionParametersKHR(device, videoSessionParameters, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9966,6 +12582,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBeginVideoCodingKHR<Format>(ApiDumpInstance::current(), commandBuffer, pBeginInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBeginVideoCodingKHR(commandBuffer, pBeginInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBeginVideoCodingKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBeginVideoCodingKHR(commandBuffer, pBeginInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -9996,6 +12620,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdEndVideoCodingKHR<Format>(ApiDumpInstance::current(), commandBuffer, pEndCodingInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdEndVideoCodingKHR(commandBuffer, pEndCodingInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdEndVideoCodingKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdEndVideoCodingKHR(commandBuffer, pEndCodingInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10026,6 +12658,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdControlVideoCodingKHR<Format>(ApiDumpInstance::current(), commandBuffer, pCodingControlInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdControlVideoCodingKHR(commandBuffer, pCodingControlInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdControlVideoCodingKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdControlVideoCodingKHR(commandBuffer, pCodingControlInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10056,6 +12696,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDecodeVideoKHR<Format>(ApiDumpInstance::current(), commandBuffer, pDecodeInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDecodeVideoKHR(commandBuffer, pDecodeInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDecodeVideoKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDecodeVideoKHR(commandBuffer, pDecodeInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10086,6 +12734,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBeginRenderingKHR<Format>(ApiDumpInstance::current(), commandBuffer, pRenderingInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBeginRenderingKHR(commandBuffer, pRenderingInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBeginRenderingKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBeginRenderingKHR(commandBuffer, pRenderingInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10116,6 +12772,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdEndRenderingKHR<Format>(ApiDumpInstance::current(), commandBuffer);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdEndRenderingKHR(commandBuffer);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdEndRenderingKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdEndRenderingKHR(commandBuffer);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10146,6 +12810,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceGroupPeerMemoryFeaturesKHR<Format>(ApiDumpInstance::current(), device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceGroupPeerMemoryFeaturesKHR(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceGroupPeerMemoryFeaturesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceGroupPeerMemoryFeaturesKHR(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10176,6 +12848,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDeviceMaskKHR<Format>(ApiDumpInstance::current(), commandBuffer, deviceMask);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDeviceMaskKHR(commandBuffer, deviceMask);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDeviceMaskKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDeviceMaskKHR(commandBuffer, deviceMask);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10206,6 +12886,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDispatchBaseKHR<Format>(ApiDumpInstance::current(), commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDispatchBaseKHR(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDispatchBaseKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDispatchBaseKHR(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10236,6 +12924,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkTrimCommandPoolKHR<Format>(ApiDumpInstance::current(), device, commandPool, flags);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->TrimCommandPoolKHR(device, commandPool, flags);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkTrimCommandPoolKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->TrimCommandPoolKHR(device, commandPool, flags);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10267,6 +12963,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetMemoryWin32HandleKHR<Format>(ApiDumpInstance::current(), device, pGetWin32HandleInfo, pHandle);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetMemoryWin32HandleKHR(device, pGetWin32HandleInfo, pHandle);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetMemoryWin32HandleKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetMemoryWin32HandleKHR(device, pGetWin32HandleInfo, pHandle);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10299,6 +13003,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetMemoryWin32HandlePropertiesKHR<Format>(ApiDumpInstance::current(), device, handleType, handle, pMemoryWin32HandleProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetMemoryWin32HandlePropertiesKHR(device, handleType, handle, pMemoryWin32HandleProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetMemoryWin32HandlePropertiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetMemoryWin32HandlePropertiesKHR(device, handleType, handle, pMemoryWin32HandleProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10332,6 +13044,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetMemoryFdKHR<Format>(ApiDumpInstance::current(), device, pGetFdInfo, pFd);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetMemoryFdKHR(device, pGetFdInfo, pFd);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetMemoryFdKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetMemoryFdKHR(device, pGetFdInfo, pFd);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10364,6 +13084,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetMemoryFdPropertiesKHR<Format>(ApiDumpInstance::current(), device, handleType, fd, pMemoryFdProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetMemoryFdPropertiesKHR(device, handleType, fd, pMemoryFdProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetMemoryFdPropertiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetMemoryFdPropertiesKHR(device, handleType, fd, pMemoryFdProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10397,6 +13125,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkImportSemaphoreWin32HandleKHR<Format>(ApiDumpInstance::current(), device, pImportSemaphoreWin32HandleInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->ImportSemaphoreWin32HandleKHR(device, pImportSemaphoreWin32HandleInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkImportSemaphoreWin32HandleKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->ImportSemaphoreWin32HandleKHR(device, pImportSemaphoreWin32HandleInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10429,6 +13165,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetSemaphoreWin32HandleKHR<Format>(ApiDumpInstance::current(), device, pGetWin32HandleInfo, pHandle);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetSemaphoreWin32HandleKHR(device, pGetWin32HandleInfo, pHandle);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetSemaphoreWin32HandleKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetSemaphoreWin32HandleKHR(device, pGetWin32HandleInfo, pHandle);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10462,6 +13206,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkImportSemaphoreFdKHR<Format>(ApiDumpInstance::current(), device, pImportSemaphoreFdInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->ImportSemaphoreFdKHR(device, pImportSemaphoreFdInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkImportSemaphoreFdKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->ImportSemaphoreFdKHR(device, pImportSemaphoreFdInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10494,6 +13246,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetSemaphoreFdKHR<Format>(ApiDumpInstance::current(), device, pGetFdInfo, pFd);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetSemaphoreFdKHR(device, pGetFdInfo, pFd);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetSemaphoreFdKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetSemaphoreFdKHR(device, pGetFdInfo, pFd);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10526,6 +13286,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPushDescriptorSetKHR<Format>(ApiDumpInstance::current(), commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPushDescriptorSetKHR(commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPushDescriptorSetKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPushDescriptorSetKHR(commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10556,6 +13324,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPushDescriptorSetWithTemplateKHR<Format>(ApiDumpInstance::current(), commandBuffer, descriptorUpdateTemplate, layout, set, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPushDescriptorSetWithTemplateKHR(commandBuffer, descriptorUpdateTemplate, layout, set, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPushDescriptorSetWithTemplateKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPushDescriptorSetWithTemplateKHR(commandBuffer, descriptorUpdateTemplate, layout, set, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10586,6 +13362,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateDescriptorUpdateTemplateKHR<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateDescriptorUpdateTemplateKHR(device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateDescriptorUpdateTemplateKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateDescriptorUpdateTemplateKHR(device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10618,6 +13402,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyDescriptorUpdateTemplateKHR<Format>(ApiDumpInstance::current(), device, descriptorUpdateTemplate, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyDescriptorUpdateTemplateKHR(device, descriptorUpdateTemplate, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyDescriptorUpdateTemplateKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyDescriptorUpdateTemplateKHR(device, descriptorUpdateTemplate, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10648,6 +13440,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkUpdateDescriptorSetWithTemplateKHR<Format>(ApiDumpInstance::current(), device, descriptorSet, descriptorUpdateTemplate, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->UpdateDescriptorSetWithTemplateKHR(device, descriptorSet, descriptorUpdateTemplate, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkUpdateDescriptorSetWithTemplateKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->UpdateDescriptorSetWithTemplateKHR(device, descriptorSet, descriptorUpdateTemplate, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10678,6 +13478,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateRenderPass2KHR<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pRenderPass);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateRenderPass2KHR(device, pCreateInfo, pAllocator, pRenderPass);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateRenderPass2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateRenderPass2KHR(device, pCreateInfo, pAllocator, pRenderPass);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10710,6 +13518,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBeginRenderPass2KHR<Format>(ApiDumpInstance::current(), commandBuffer, pRenderPassBegin, pSubpassBeginInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBeginRenderPass2KHR(commandBuffer, pRenderPassBegin, pSubpassBeginInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBeginRenderPass2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBeginRenderPass2KHR(commandBuffer, pRenderPassBegin, pSubpassBeginInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10740,6 +13556,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdNextSubpass2KHR<Format>(ApiDumpInstance::current(), commandBuffer, pSubpassBeginInfo, pSubpassEndInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdNextSubpass2KHR(commandBuffer, pSubpassBeginInfo, pSubpassEndInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdNextSubpass2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdNextSubpass2KHR(commandBuffer, pSubpassBeginInfo, pSubpassEndInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10770,6 +13594,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdEndRenderPass2KHR<Format>(ApiDumpInstance::current(), commandBuffer, pSubpassEndInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdEndRenderPass2KHR(commandBuffer, pSubpassEndInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdEndRenderPass2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdEndRenderPass2KHR(commandBuffer, pSubpassEndInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10800,6 +13632,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetSwapchainStatusKHR<Format>(ApiDumpInstance::current(), device, swapchain);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetSwapchainStatusKHR(device, swapchain);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetSwapchainStatusKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetSwapchainStatusKHR(device, swapchain);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10833,6 +13673,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkImportFenceWin32HandleKHR<Format>(ApiDumpInstance::current(), device, pImportFenceWin32HandleInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->ImportFenceWin32HandleKHR(device, pImportFenceWin32HandleInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkImportFenceWin32HandleKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->ImportFenceWin32HandleKHR(device, pImportFenceWin32HandleInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10865,6 +13713,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetFenceWin32HandleKHR<Format>(ApiDumpInstance::current(), device, pGetWin32HandleInfo, pHandle);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetFenceWin32HandleKHR(device, pGetWin32HandleInfo, pHandle);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetFenceWin32HandleKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetFenceWin32HandleKHR(device, pGetWin32HandleInfo, pHandle);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10898,6 +13754,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkImportFenceFdKHR<Format>(ApiDumpInstance::current(), device, pImportFenceFdInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->ImportFenceFdKHR(device, pImportFenceFdInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkImportFenceFdKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->ImportFenceFdKHR(device, pImportFenceFdInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10930,6 +13794,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetFenceFdKHR<Format>(ApiDumpInstance::current(), device, pGetFdInfo, pFd);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetFenceFdKHR(device, pGetFdInfo, pFd);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetFenceFdKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetFenceFdKHR(device, pGetFdInfo, pFd);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10962,6 +13834,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkAcquireProfilingLockKHR<Format>(ApiDumpInstance::current(), device, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->AcquireProfilingLockKHR(device, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkAcquireProfilingLockKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->AcquireProfilingLockKHR(device, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -10994,6 +13874,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkReleaseProfilingLockKHR<Format>(ApiDumpInstance::current(), device);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->ReleaseProfilingLockKHR(device);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkReleaseProfilingLockKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->ReleaseProfilingLockKHR(device);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11024,6 +13912,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageMemoryRequirements2KHR<Format>(ApiDumpInstance::current(), device, pInfo, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetImageMemoryRequirements2KHR(device, pInfo, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageMemoryRequirements2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetImageMemoryRequirements2KHR(device, pInfo, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11054,6 +13950,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetBufferMemoryRequirements2KHR<Format>(ApiDumpInstance::current(), device, pInfo, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetBufferMemoryRequirements2KHR(device, pInfo, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetBufferMemoryRequirements2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetBufferMemoryRequirements2KHR(device, pInfo, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11084,6 +13988,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageSparseMemoryRequirements2KHR<Format>(ApiDumpInstance::current(), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetImageSparseMemoryRequirements2KHR(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageSparseMemoryRequirements2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetImageSparseMemoryRequirements2KHR(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11114,6 +14026,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateSamplerYcbcrConversionKHR<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pYcbcrConversion);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateSamplerYcbcrConversionKHR(device, pCreateInfo, pAllocator, pYcbcrConversion);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateSamplerYcbcrConversionKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateSamplerYcbcrConversionKHR(device, pCreateInfo, pAllocator, pYcbcrConversion);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11146,6 +14066,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroySamplerYcbcrConversionKHR<Format>(ApiDumpInstance::current(), device, ycbcrConversion, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroySamplerYcbcrConversionKHR(device, ycbcrConversion, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroySamplerYcbcrConversionKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroySamplerYcbcrConversionKHR(device, ycbcrConversion, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11176,6 +14104,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkBindBufferMemory2KHR<Format>(ApiDumpInstance::current(), device, bindInfoCount, pBindInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->BindBufferMemory2KHR(device, bindInfoCount, pBindInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkBindBufferMemory2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->BindBufferMemory2KHR(device, bindInfoCount, pBindInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11208,6 +14144,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkBindImageMemory2KHR<Format>(ApiDumpInstance::current(), device, bindInfoCount, pBindInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->BindImageMemory2KHR(device, bindInfoCount, pBindInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkBindImageMemory2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->BindImageMemory2KHR(device, bindInfoCount, pBindInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11240,6 +14184,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDescriptorSetLayoutSupportKHR<Format>(ApiDumpInstance::current(), device, pCreateInfo, pSupport);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDescriptorSetLayoutSupportKHR(device, pCreateInfo, pSupport);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDescriptorSetLayoutSupportKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDescriptorSetLayoutSupportKHR(device, pCreateInfo, pSupport);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11270,6 +14222,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawIndirectCountKHR<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawIndirectCountKHR(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawIndirectCountKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawIndirectCountKHR(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11300,6 +14260,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawIndexedIndirectCountKHR<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawIndexedIndirectCountKHR(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawIndexedIndirectCountKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawIndexedIndirectCountKHR(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11330,6 +14298,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetSemaphoreCounterValueKHR<Format>(ApiDumpInstance::current(), device, semaphore, pValue);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetSemaphoreCounterValueKHR(device, semaphore, pValue);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetSemaphoreCounterValueKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetSemaphoreCounterValueKHR(device, semaphore, pValue);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11353,6 +14329,14 @@ template<ApiDumpFormat Format>
 VKAPI_ATTR VkResult VKAPI_CALL vkWaitSemaphoresKHR(VkDevice device, const VkSemaphoreWaitInfo* pWaitInfo, uint64_t timeout)
 {
 ApiDumpInstance::current().startApiTimer();
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->WaitSemaphoresKHR(device, pWaitInfo, timeout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkWaitSemaphoresKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->WaitSemaphoresKHR(device, pWaitInfo, timeout);
 std::lock_guard<std::mutex> lg(ApiDumpInstance::current().outputMutex());
 dump_function_head(ApiDumpInstance::current(), "vkWaitSemaphoresKHR", "device, pWaitInfo, timeout", "VkResult");
@@ -11387,6 +14371,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkSignalSemaphoreKHR<Format>(ApiDumpInstance::current(), device, pSignalInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->SignalSemaphoreKHR(device, pSignalInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkSignalSemaphoreKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->SignalSemaphoreKHR(device, pSignalInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11419,6 +14411,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetFragmentShadingRateKHR<Format>(ApiDumpInstance::current(), commandBuffer, pFragmentSize, combinerOps);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetFragmentShadingRateKHR(commandBuffer, pFragmentSize, combinerOps);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetFragmentShadingRateKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetFragmentShadingRateKHR(commandBuffer, pFragmentSize, combinerOps);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11449,6 +14449,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetRenderingAttachmentLocationsKHR<Format>(ApiDumpInstance::current(), commandBuffer, pLocationInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetRenderingAttachmentLocationsKHR(commandBuffer, pLocationInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetRenderingAttachmentLocationsKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetRenderingAttachmentLocationsKHR(commandBuffer, pLocationInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11479,6 +14487,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetRenderingInputAttachmentIndicesKHR<Format>(ApiDumpInstance::current(), commandBuffer, pInputAttachmentIndexInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetRenderingInputAttachmentIndicesKHR(commandBuffer, pInputAttachmentIndexInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetRenderingInputAttachmentIndicesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetRenderingInputAttachmentIndicesKHR(commandBuffer, pInputAttachmentIndexInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11509,6 +14525,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkWaitForPresentKHR<Format>(ApiDumpInstance::current(), device, swapchain, presentId, timeout);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->WaitForPresentKHR(device, swapchain, presentId, timeout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkWaitForPresentKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->WaitForPresentKHR(device, swapchain, presentId, timeout);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11541,6 +14565,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetBufferDeviceAddressKHR<Format>(ApiDumpInstance::current(), device, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkDeviceAddress result = device_dispatch_table(device)->GetBufferDeviceAddressKHR(device, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetBufferDeviceAddressKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkDeviceAddress result = device_dispatch_table(device)->GetBufferDeviceAddressKHR(device, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11573,6 +14605,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetBufferOpaqueCaptureAddressKHR<Format>(ApiDumpInstance::current(), device, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+uint64_t result = device_dispatch_table(device)->GetBufferOpaqueCaptureAddressKHR(device, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetBufferOpaqueCaptureAddressKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 uint64_t result = device_dispatch_table(device)->GetBufferOpaqueCaptureAddressKHR(device, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11605,6 +14645,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceMemoryOpaqueCaptureAddressKHR<Format>(ApiDumpInstance::current(), device, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+uint64_t result = device_dispatch_table(device)->GetDeviceMemoryOpaqueCaptureAddressKHR(device, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceMemoryOpaqueCaptureAddressKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 uint64_t result = device_dispatch_table(device)->GetDeviceMemoryOpaqueCaptureAddressKHR(device, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11637,6 +14685,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateDeferredOperationKHR<Format>(ApiDumpInstance::current(), device, pAllocator, pDeferredOperation);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateDeferredOperationKHR(device, pAllocator, pDeferredOperation);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateDeferredOperationKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateDeferredOperationKHR(device, pAllocator, pDeferredOperation);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11669,6 +14725,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyDeferredOperationKHR<Format>(ApiDumpInstance::current(), device, operation, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyDeferredOperationKHR(device, operation, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyDeferredOperationKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyDeferredOperationKHR(device, operation, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11699,6 +14763,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeferredOperationMaxConcurrencyKHR<Format>(ApiDumpInstance::current(), device, operation);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+uint32_t result = device_dispatch_table(device)->GetDeferredOperationMaxConcurrencyKHR(device, operation);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeferredOperationMaxConcurrencyKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 uint32_t result = device_dispatch_table(device)->GetDeferredOperationMaxConcurrencyKHR(device, operation);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11731,6 +14803,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeferredOperationResultKHR<Format>(ApiDumpInstance::current(), device, operation);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetDeferredOperationResultKHR(device, operation);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeferredOperationResultKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetDeferredOperationResultKHR(device, operation);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11763,6 +14843,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDeferredOperationJoinKHR<Format>(ApiDumpInstance::current(), device, operation);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->DeferredOperationJoinKHR(device, operation);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDeferredOperationJoinKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->DeferredOperationJoinKHR(device, operation);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11795,6 +14883,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetPipelineExecutablePropertiesKHR<Format>(ApiDumpInstance::current(), device, pPipelineInfo, pExecutableCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetPipelineExecutablePropertiesKHR(device, pPipelineInfo, pExecutableCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPipelineExecutablePropertiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetPipelineExecutablePropertiesKHR(device, pPipelineInfo, pExecutableCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11827,6 +14923,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetPipelineExecutableStatisticsKHR<Format>(ApiDumpInstance::current(), device, pExecutableInfo, pStatisticCount, pStatistics);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetPipelineExecutableStatisticsKHR(device, pExecutableInfo, pStatisticCount, pStatistics);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPipelineExecutableStatisticsKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetPipelineExecutableStatisticsKHR(device, pExecutableInfo, pStatisticCount, pStatistics);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11859,6 +14963,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetPipelineExecutableInternalRepresentationsKHR<Format>(ApiDumpInstance::current(), device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetPipelineExecutableInternalRepresentationsKHR(device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPipelineExecutableInternalRepresentationsKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetPipelineExecutableInternalRepresentationsKHR(device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11891,6 +15003,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkMapMemory2KHR<Format>(ApiDumpInstance::current(), device, pMemoryMapInfo, ppData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->MapMemory2KHR(device, pMemoryMapInfo, ppData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkMapMemory2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->MapMemory2KHR(device, pMemoryMapInfo, ppData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11923,6 +15043,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkUnmapMemory2KHR<Format>(ApiDumpInstance::current(), device, pMemoryUnmapInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->UnmapMemory2KHR(device, pMemoryUnmapInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkUnmapMemory2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->UnmapMemory2KHR(device, pMemoryUnmapInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11955,6 +15083,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetEncodedVideoSessionParametersKHR<Format>(ApiDumpInstance::current(), device, pVideoSessionParametersInfo, pFeedbackInfo, pDataSize, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetEncodedVideoSessionParametersKHR(device, pVideoSessionParametersInfo, pFeedbackInfo, pDataSize, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetEncodedVideoSessionParametersKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetEncodedVideoSessionParametersKHR(device, pVideoSessionParametersInfo, pFeedbackInfo, pDataSize, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -11987,6 +15123,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdEncodeVideoKHR<Format>(ApiDumpInstance::current(), commandBuffer, pEncodeInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdEncodeVideoKHR(commandBuffer, pEncodeInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdEncodeVideoKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdEncodeVideoKHR(commandBuffer, pEncodeInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12017,6 +15161,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetEvent2KHR<Format>(ApiDumpInstance::current(), commandBuffer, event, pDependencyInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetEvent2KHR(commandBuffer, event, pDependencyInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetEvent2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetEvent2KHR(commandBuffer, event, pDependencyInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12047,6 +15199,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdResetEvent2KHR<Format>(ApiDumpInstance::current(), commandBuffer, event, stageMask);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdResetEvent2KHR(commandBuffer, event, stageMask);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdResetEvent2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdResetEvent2KHR(commandBuffer, event, stageMask);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12077,6 +15237,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdWaitEvents2KHR<Format>(ApiDumpInstance::current(), commandBuffer, eventCount, pEvents, pDependencyInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdWaitEvents2KHR(commandBuffer, eventCount, pEvents, pDependencyInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdWaitEvents2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdWaitEvents2KHR(commandBuffer, eventCount, pEvents, pDependencyInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12107,6 +15275,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPipelineBarrier2KHR<Format>(ApiDumpInstance::current(), commandBuffer, pDependencyInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPipelineBarrier2KHR(commandBuffer, pDependencyInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPipelineBarrier2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPipelineBarrier2KHR(commandBuffer, pDependencyInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12137,6 +15313,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdWriteTimestamp2KHR<Format>(ApiDumpInstance::current(), commandBuffer, stage, queryPool, query);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdWriteTimestamp2KHR(commandBuffer, stage, queryPool, query);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdWriteTimestamp2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdWriteTimestamp2KHR(commandBuffer, stage, queryPool, query);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12167,6 +15351,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkQueueSubmit2KHR<Format>(ApiDumpInstance::current(), queue, submitCount, pSubmits, fence);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(queue)->QueueSubmit2KHR(queue, submitCount, pSubmits, fence);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkQueueSubmit2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(queue)->QueueSubmit2KHR(queue, submitCount, pSubmits, fence);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12199,6 +15391,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyBuffer2KHR<Format>(ApiDumpInstance::current(), commandBuffer, pCopyBufferInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyBuffer2KHR(commandBuffer, pCopyBufferInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyBuffer2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyBuffer2KHR(commandBuffer, pCopyBufferInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12229,6 +15429,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyImage2KHR<Format>(ApiDumpInstance::current(), commandBuffer, pCopyImageInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyImage2KHR(commandBuffer, pCopyImageInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyImage2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyImage2KHR(commandBuffer, pCopyImageInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12259,6 +15467,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyBufferToImage2KHR<Format>(ApiDumpInstance::current(), commandBuffer, pCopyBufferToImageInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyBufferToImage2KHR(commandBuffer, pCopyBufferToImageInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyBufferToImage2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyBufferToImage2KHR(commandBuffer, pCopyBufferToImageInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12289,6 +15505,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyImageToBuffer2KHR<Format>(ApiDumpInstance::current(), commandBuffer, pCopyImageToBufferInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyImageToBuffer2KHR(commandBuffer, pCopyImageToBufferInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyImageToBuffer2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyImageToBuffer2KHR(commandBuffer, pCopyImageToBufferInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12319,6 +15543,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBlitImage2KHR<Format>(ApiDumpInstance::current(), commandBuffer, pBlitImageInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBlitImage2KHR(commandBuffer, pBlitImageInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBlitImage2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBlitImage2KHR(commandBuffer, pBlitImageInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12349,6 +15581,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdResolveImage2KHR<Format>(ApiDumpInstance::current(), commandBuffer, pResolveImageInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdResolveImage2KHR(commandBuffer, pResolveImageInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdResolveImage2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdResolveImage2KHR(commandBuffer, pResolveImageInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12379,6 +15619,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdTraceRaysIndirect2KHR<Format>(ApiDumpInstance::current(), commandBuffer, indirectDeviceAddress);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdTraceRaysIndirect2KHR(commandBuffer, indirectDeviceAddress);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdTraceRaysIndirect2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdTraceRaysIndirect2KHR(commandBuffer, indirectDeviceAddress);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12409,6 +15657,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceBufferMemoryRequirementsKHR<Format>(ApiDumpInstance::current(), device, pInfo, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceBufferMemoryRequirementsKHR(device, pInfo, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceBufferMemoryRequirementsKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceBufferMemoryRequirementsKHR(device, pInfo, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12439,6 +15695,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceImageMemoryRequirementsKHR<Format>(ApiDumpInstance::current(), device, pInfo, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceImageMemoryRequirementsKHR(device, pInfo, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceImageMemoryRequirementsKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceImageMemoryRequirementsKHR(device, pInfo, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12469,6 +15733,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceImageSparseMemoryRequirementsKHR<Format>(ApiDumpInstance::current(), device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceImageSparseMemoryRequirementsKHR(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceImageSparseMemoryRequirementsKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceImageSparseMemoryRequirementsKHR(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12499,6 +15771,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindIndexBuffer2KHR<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset, size, indexType);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindIndexBuffer2KHR(commandBuffer, buffer, offset, size, indexType);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindIndexBuffer2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindIndexBuffer2KHR(commandBuffer, buffer, offset, size, indexType);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12529,6 +15809,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetRenderingAreaGranularityKHR<Format>(ApiDumpInstance::current(), device, pRenderingAreaInfo, pGranularity);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetRenderingAreaGranularityKHR(device, pRenderingAreaInfo, pGranularity);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetRenderingAreaGranularityKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetRenderingAreaGranularityKHR(device, pRenderingAreaInfo, pGranularity);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12559,6 +15847,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceImageSubresourceLayoutKHR<Format>(ApiDumpInstance::current(), device, pInfo, pLayout);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceImageSubresourceLayoutKHR(device, pInfo, pLayout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceImageSubresourceLayoutKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceImageSubresourceLayoutKHR(device, pInfo, pLayout);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12589,6 +15885,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageSubresourceLayout2KHR<Format>(ApiDumpInstance::current(), device, image, pSubresource, pLayout);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetImageSubresourceLayout2KHR(device, image, pSubresource, pLayout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageSubresourceLayout2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetImageSubresourceLayout2KHR(device, image, pSubresource, pLayout);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12619,6 +15923,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkWaitForPresent2KHR<Format>(ApiDumpInstance::current(), device, swapchain, pPresentWait2Info);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->WaitForPresent2KHR(device, swapchain, pPresentWait2Info);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkWaitForPresent2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->WaitForPresent2KHR(device, swapchain, pPresentWait2Info);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12651,6 +15963,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreatePipelineBinariesKHR<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pBinaries);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreatePipelineBinariesKHR(device, pCreateInfo, pAllocator, pBinaries);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreatePipelineBinariesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreatePipelineBinariesKHR(device, pCreateInfo, pAllocator, pBinaries);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12683,6 +16003,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyPipelineBinaryKHR<Format>(ApiDumpInstance::current(), device, pipelineBinary, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyPipelineBinaryKHR(device, pipelineBinary, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyPipelineBinaryKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyPipelineBinaryKHR(device, pipelineBinary, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12713,6 +16041,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetPipelineKeyKHR<Format>(ApiDumpInstance::current(), device, pPipelineCreateInfo, pPipelineKey);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetPipelineKeyKHR(device, pPipelineCreateInfo, pPipelineKey);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPipelineKeyKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetPipelineKeyKHR(device, pPipelineCreateInfo, pPipelineKey);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12745,6 +16081,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetPipelineBinaryDataKHR<Format>(ApiDumpInstance::current(), device, pInfo, pPipelineBinaryKey, pPipelineBinaryDataSize, pPipelineBinaryData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetPipelineBinaryDataKHR(device, pInfo, pPipelineBinaryKey, pPipelineBinaryDataSize, pPipelineBinaryData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPipelineBinaryDataKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetPipelineBinaryDataKHR(device, pInfo, pPipelineBinaryKey, pPipelineBinaryDataSize, pPipelineBinaryData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12777,6 +16121,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkReleaseCapturedPipelineDataKHR<Format>(ApiDumpInstance::current(), device, pInfo, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->ReleaseCapturedPipelineDataKHR(device, pInfo, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkReleaseCapturedPipelineDataKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->ReleaseCapturedPipelineDataKHR(device, pInfo, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12809,6 +16161,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkReleaseSwapchainImagesKHR<Format>(ApiDumpInstance::current(), device, pReleaseInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->ReleaseSwapchainImagesKHR(device, pReleaseInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkReleaseSwapchainImagesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->ReleaseSwapchainImagesKHR(device, pReleaseInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12841,6 +16201,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetLineStippleKHR<Format>(ApiDumpInstance::current(), commandBuffer, lineStippleFactor, lineStipplePattern);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetLineStippleKHR(commandBuffer, lineStippleFactor, lineStipplePattern);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetLineStippleKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetLineStippleKHR(commandBuffer, lineStippleFactor, lineStipplePattern);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12871,6 +16239,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetCalibratedTimestampsKHR<Format>(ApiDumpInstance::current(), device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetCalibratedTimestampsKHR(device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetCalibratedTimestampsKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetCalibratedTimestampsKHR(device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12903,6 +16279,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindDescriptorSets2KHR<Format>(ApiDumpInstance::current(), commandBuffer, pBindDescriptorSetsInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindDescriptorSets2KHR(commandBuffer, pBindDescriptorSetsInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindDescriptorSets2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindDescriptorSets2KHR(commandBuffer, pBindDescriptorSetsInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12933,6 +16317,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPushConstants2KHR<Format>(ApiDumpInstance::current(), commandBuffer, pPushConstantsInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPushConstants2KHR(commandBuffer, pPushConstantsInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPushConstants2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPushConstants2KHR(commandBuffer, pPushConstantsInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12963,6 +16355,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPushDescriptorSet2KHR<Format>(ApiDumpInstance::current(), commandBuffer, pPushDescriptorSetInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPushDescriptorSet2KHR(commandBuffer, pPushDescriptorSetInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPushDescriptorSet2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPushDescriptorSet2KHR(commandBuffer, pPushDescriptorSetInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -12993,6 +16393,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPushDescriptorSetWithTemplate2KHR<Format>(ApiDumpInstance::current(), commandBuffer, pPushDescriptorSetWithTemplateInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPushDescriptorSetWithTemplate2KHR(commandBuffer, pPushDescriptorSetWithTemplateInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPushDescriptorSetWithTemplate2KHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPushDescriptorSetWithTemplate2KHR(commandBuffer, pPushDescriptorSetWithTemplateInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13023,6 +16431,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDescriptorBufferOffsets2EXT<Format>(ApiDumpInstance::current(), commandBuffer, pSetDescriptorBufferOffsetsInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDescriptorBufferOffsets2EXT(commandBuffer, pSetDescriptorBufferOffsetsInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDescriptorBufferOffsets2EXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDescriptorBufferOffsets2EXT(commandBuffer, pSetDescriptorBufferOffsetsInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13053,6 +16469,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindDescriptorBufferEmbeddedSamplers2EXT<Format>(ApiDumpInstance::current(), commandBuffer, pBindDescriptorBufferEmbeddedSamplersInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindDescriptorBufferEmbeddedSamplers2EXT(commandBuffer, pBindDescriptorBufferEmbeddedSamplersInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindDescriptorBufferEmbeddedSamplers2EXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindDescriptorBufferEmbeddedSamplers2EXT(commandBuffer, pBindDescriptorBufferEmbeddedSamplersInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13083,6 +16507,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDebugMarkerSetObjectTagEXT<Format>(ApiDumpInstance::current(), device, pTagInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->DebugMarkerSetObjectTagEXT(device, pTagInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDebugMarkerSetObjectTagEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->DebugMarkerSetObjectTagEXT(device, pTagInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13116,6 +16548,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDebugMarkerSetObjectNameEXT<Format>(ApiDumpInstance::current(), device, pNameInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->DebugMarkerSetObjectNameEXT(device, pNameInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDebugMarkerSetObjectNameEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->DebugMarkerSetObjectNameEXT(device, pNameInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13148,6 +16588,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDebugMarkerBeginEXT<Format>(ApiDumpInstance::current(), commandBuffer, pMarkerInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDebugMarkerBeginEXT(commandBuffer, pMarkerInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDebugMarkerBeginEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDebugMarkerBeginEXT(commandBuffer, pMarkerInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13178,6 +16626,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDebugMarkerEndEXT<Format>(ApiDumpInstance::current(), commandBuffer);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDebugMarkerEndEXT(commandBuffer);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDebugMarkerEndEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDebugMarkerEndEXT(commandBuffer);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13208,6 +16664,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDebugMarkerInsertEXT<Format>(ApiDumpInstance::current(), commandBuffer, pMarkerInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDebugMarkerInsertEXT(commandBuffer, pMarkerInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDebugMarkerInsertEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDebugMarkerInsertEXT(commandBuffer, pMarkerInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13238,6 +16702,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindTransformFeedbackBuffersEXT<Format>(ApiDumpInstance::current(), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindTransformFeedbackBuffersEXT(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindTransformFeedbackBuffersEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindTransformFeedbackBuffersEXT(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13268,6 +16740,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBeginTransformFeedbackEXT<Format>(ApiDumpInstance::current(), commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBeginTransformFeedbackEXT(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBeginTransformFeedbackEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBeginTransformFeedbackEXT(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13298,6 +16778,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdEndTransformFeedbackEXT<Format>(ApiDumpInstance::current(), commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdEndTransformFeedbackEXT(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdEndTransformFeedbackEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdEndTransformFeedbackEXT(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13328,6 +16816,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBeginQueryIndexedEXT<Format>(ApiDumpInstance::current(), commandBuffer, queryPool, query, flags, index);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBeginQueryIndexedEXT(commandBuffer, queryPool, query, flags, index);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBeginQueryIndexedEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBeginQueryIndexedEXT(commandBuffer, queryPool, query, flags, index);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13358,6 +16854,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdEndQueryIndexedEXT<Format>(ApiDumpInstance::current(), commandBuffer, queryPool, query, index);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdEndQueryIndexedEXT(commandBuffer, queryPool, query, index);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdEndQueryIndexedEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdEndQueryIndexedEXT(commandBuffer, queryPool, query, index);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13388,6 +16892,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawIndirectByteCountEXT<Format>(ApiDumpInstance::current(), commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawIndirectByteCountEXT(commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawIndirectByteCountEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawIndirectByteCountEXT(commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13418,6 +16930,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateCuModuleNVX<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pModule);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateCuModuleNVX(device, pCreateInfo, pAllocator, pModule);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateCuModuleNVX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateCuModuleNVX(device, pCreateInfo, pAllocator, pModule);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13450,6 +16970,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateCuFunctionNVX<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pFunction);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateCuFunctionNVX(device, pCreateInfo, pAllocator, pFunction);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateCuFunctionNVX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateCuFunctionNVX(device, pCreateInfo, pAllocator, pFunction);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13482,6 +17010,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyCuModuleNVX<Format>(ApiDumpInstance::current(), device, module, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyCuModuleNVX(device, module, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyCuModuleNVX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyCuModuleNVX(device, module, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13512,6 +17048,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyCuFunctionNVX<Format>(ApiDumpInstance::current(), device, function, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyCuFunctionNVX(device, function, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyCuFunctionNVX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyCuFunctionNVX(device, function, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13542,6 +17086,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCuLaunchKernelNVX<Format>(ApiDumpInstance::current(), commandBuffer, pLaunchInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCuLaunchKernelNVX(commandBuffer, pLaunchInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCuLaunchKernelNVX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCuLaunchKernelNVX(commandBuffer, pLaunchInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13572,6 +17124,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageViewHandleNVX<Format>(ApiDumpInstance::current(), device, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+uint32_t result = device_dispatch_table(device)->GetImageViewHandleNVX(device, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageViewHandleNVX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 uint32_t result = device_dispatch_table(device)->GetImageViewHandleNVX(device, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13604,6 +17164,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageViewHandle64NVX<Format>(ApiDumpInstance::current(), device, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+uint64_t result = device_dispatch_table(device)->GetImageViewHandle64NVX(device, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageViewHandle64NVX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 uint64_t result = device_dispatch_table(device)->GetImageViewHandle64NVX(device, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13636,6 +17204,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageViewAddressNVX<Format>(ApiDumpInstance::current(), device, imageView, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetImageViewAddressNVX(device, imageView, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageViewAddressNVX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetImageViewAddressNVX(device, imageView, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13668,6 +17244,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawIndirectCountAMD<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawIndirectCountAMD", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13698,6 +17282,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawIndexedIndirectCountAMD<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawIndexedIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawIndexedIndirectCountAMD", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawIndexedIndirectCountAMD(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13728,6 +17320,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetShaderInfoAMD<Format>(ApiDumpInstance::current(), device, pipeline, shaderStage, infoType, pInfoSize, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetShaderInfoAMD(device, pipeline, shaderStage, infoType, pInfoSize, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetShaderInfoAMD", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetShaderInfoAMD(device, pipeline, shaderStage, infoType, pInfoSize, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13761,6 +17361,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetMemoryWin32HandleNV<Format>(ApiDumpInstance::current(), device, memory, handleType, pHandle);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetMemoryWin32HandleNV(device, memory, handleType, pHandle);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetMemoryWin32HandleNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetMemoryWin32HandleNV(device, memory, handleType, pHandle);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13794,6 +17402,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBeginConditionalRenderingEXT<Format>(ApiDumpInstance::current(), commandBuffer, pConditionalRenderingBegin);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBeginConditionalRenderingEXT(commandBuffer, pConditionalRenderingBegin);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBeginConditionalRenderingEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBeginConditionalRenderingEXT(commandBuffer, pConditionalRenderingBegin);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13824,6 +17440,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdEndConditionalRenderingEXT<Format>(ApiDumpInstance::current(), commandBuffer);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdEndConditionalRenderingEXT(commandBuffer);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdEndConditionalRenderingEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdEndConditionalRenderingEXT(commandBuffer);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13854,6 +17478,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetViewportWScalingNV<Format>(ApiDumpInstance::current(), commandBuffer, firstViewport, viewportCount, pViewportWScalings);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetViewportWScalingNV(commandBuffer, firstViewport, viewportCount, pViewportWScalings);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetViewportWScalingNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetViewportWScalingNV(commandBuffer, firstViewport, viewportCount, pViewportWScalings);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13884,6 +17516,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDisplayPowerControlEXT<Format>(ApiDumpInstance::current(), device, display, pDisplayPowerInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->DisplayPowerControlEXT(device, display, pDisplayPowerInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDisplayPowerControlEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->DisplayPowerControlEXT(device, display, pDisplayPowerInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13916,6 +17556,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkRegisterDeviceEventEXT<Format>(ApiDumpInstance::current(), device, pDeviceEventInfo, pAllocator, pFence);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->RegisterDeviceEventEXT(device, pDeviceEventInfo, pAllocator, pFence);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkRegisterDeviceEventEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->RegisterDeviceEventEXT(device, pDeviceEventInfo, pAllocator, pFence);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13948,6 +17596,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkRegisterDisplayEventEXT<Format>(ApiDumpInstance::current(), device, display, pDisplayEventInfo, pAllocator, pFence);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->RegisterDisplayEventEXT(device, display, pDisplayEventInfo, pAllocator, pFence);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkRegisterDisplayEventEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->RegisterDisplayEventEXT(device, display, pDisplayEventInfo, pAllocator, pFence);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -13980,6 +17636,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetSwapchainCounterEXT<Format>(ApiDumpInstance::current(), device, swapchain, counter, pCounterValue);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetSwapchainCounterEXT(device, swapchain, counter, pCounterValue);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetSwapchainCounterEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetSwapchainCounterEXT(device, swapchain, counter, pCounterValue);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14012,6 +17676,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetRefreshCycleDurationGOOGLE<Format>(ApiDumpInstance::current(), device, swapchain, pDisplayTimingProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetRefreshCycleDurationGOOGLE(device, swapchain, pDisplayTimingProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetRefreshCycleDurationGOOGLE", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetRefreshCycleDurationGOOGLE(device, swapchain, pDisplayTimingProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14044,6 +17716,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetPastPresentationTimingGOOGLE<Format>(ApiDumpInstance::current(), device, swapchain, pPresentationTimingCount, pPresentationTimings);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetPastPresentationTimingGOOGLE(device, swapchain, pPresentationTimingCount, pPresentationTimings);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPastPresentationTimingGOOGLE", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetPastPresentationTimingGOOGLE(device, swapchain, pPresentationTimingCount, pPresentationTimings);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14076,6 +17756,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDiscardRectangleEXT<Format>(ApiDumpInstance::current(), commandBuffer, firstDiscardRectangle, discardRectangleCount, pDiscardRectangles);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDiscardRectangleEXT(commandBuffer, firstDiscardRectangle, discardRectangleCount, pDiscardRectangles);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDiscardRectangleEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDiscardRectangleEXT(commandBuffer, firstDiscardRectangle, discardRectangleCount, pDiscardRectangles);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14106,6 +17794,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDiscardRectangleEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, discardRectangleEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDiscardRectangleEnableEXT(commandBuffer, discardRectangleEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDiscardRectangleEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDiscardRectangleEnableEXT(commandBuffer, discardRectangleEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14136,6 +17832,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDiscardRectangleModeEXT<Format>(ApiDumpInstance::current(), commandBuffer, discardRectangleMode);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDiscardRectangleModeEXT(commandBuffer, discardRectangleMode);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDiscardRectangleModeEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDiscardRectangleModeEXT(commandBuffer, discardRectangleMode);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14166,6 +17870,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkSetHdrMetadataEXT<Format>(ApiDumpInstance::current(), device, swapchainCount, pSwapchains, pMetadata);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->SetHdrMetadataEXT(device, swapchainCount, pSwapchains, pMetadata);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkSetHdrMetadataEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->SetHdrMetadataEXT(device, swapchainCount, pSwapchains, pMetadata);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14197,6 +17909,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkSetDebugUtilsObjectNameEXT<Format>(ApiDumpInstance::current(), device, pNameInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->SetDebugUtilsObjectNameEXT(device, pNameInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkSetDebugUtilsObjectNameEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->SetDebugUtilsObjectNameEXT(device, pNameInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14229,6 +17949,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkSetDebugUtilsObjectTagEXT<Format>(ApiDumpInstance::current(), device, pTagInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->SetDebugUtilsObjectTagEXT(device, pTagInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkSetDebugUtilsObjectTagEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->SetDebugUtilsObjectTagEXT(device, pTagInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14261,6 +17989,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkQueueBeginDebugUtilsLabelEXT<Format>(ApiDumpInstance::current(), queue, pLabelInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(queue)->QueueBeginDebugUtilsLabelEXT(queue, pLabelInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkQueueBeginDebugUtilsLabelEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(queue)->QueueBeginDebugUtilsLabelEXT(queue, pLabelInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14291,6 +18027,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkQueueEndDebugUtilsLabelEXT<Format>(ApiDumpInstance::current(), queue);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(queue)->QueueEndDebugUtilsLabelEXT(queue);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkQueueEndDebugUtilsLabelEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(queue)->QueueEndDebugUtilsLabelEXT(queue);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14321,6 +18065,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkQueueInsertDebugUtilsLabelEXT<Format>(ApiDumpInstance::current(), queue, pLabelInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(queue)->QueueInsertDebugUtilsLabelEXT(queue, pLabelInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkQueueInsertDebugUtilsLabelEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(queue)->QueueInsertDebugUtilsLabelEXT(queue, pLabelInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14351,6 +18103,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBeginDebugUtilsLabelEXT<Format>(ApiDumpInstance::current(), commandBuffer, pLabelInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBeginDebugUtilsLabelEXT(commandBuffer, pLabelInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBeginDebugUtilsLabelEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBeginDebugUtilsLabelEXT(commandBuffer, pLabelInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14381,6 +18141,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdEndDebugUtilsLabelEXT<Format>(ApiDumpInstance::current(), commandBuffer);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdEndDebugUtilsLabelEXT(commandBuffer);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdEndDebugUtilsLabelEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdEndDebugUtilsLabelEXT(commandBuffer);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14411,6 +18179,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdInsertDebugUtilsLabelEXT<Format>(ApiDumpInstance::current(), commandBuffer, pLabelInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdInsertDebugUtilsLabelEXT(commandBuffer, pLabelInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdInsertDebugUtilsLabelEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdInsertDebugUtilsLabelEXT(commandBuffer, pLabelInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14442,6 +18218,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetAndroidHardwareBufferPropertiesANDROID<Format>(ApiDumpInstance::current(), device, buffer, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetAndroidHardwareBufferPropertiesANDROID(device, buffer, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetAndroidHardwareBufferPropertiesANDROID", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetAndroidHardwareBufferPropertiesANDROID(device, buffer, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14474,6 +18258,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetMemoryAndroidHardwareBufferANDROID<Format>(ApiDumpInstance::current(), device, pInfo, pBuffer);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetMemoryAndroidHardwareBufferANDROID(device, pInfo, pBuffer);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetMemoryAndroidHardwareBufferANDROID", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetMemoryAndroidHardwareBufferANDROID(device, pInfo, pBuffer);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14508,6 +18300,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateExecutionGraphPipelinesAMDX<Format>(ApiDumpInstance::current(), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateExecutionGraphPipelinesAMDX(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateExecutionGraphPipelinesAMDX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateExecutionGraphPipelinesAMDX(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14540,6 +18340,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetExecutionGraphPipelineScratchSizeAMDX<Format>(ApiDumpInstance::current(), device, executionGraph, pSizeInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetExecutionGraphPipelineScratchSizeAMDX(device, executionGraph, pSizeInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetExecutionGraphPipelineScratchSizeAMDX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetExecutionGraphPipelineScratchSizeAMDX(device, executionGraph, pSizeInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14572,6 +18380,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetExecutionGraphPipelineNodeIndexAMDX<Format>(ApiDumpInstance::current(), device, executionGraph, pNodeInfo, pNodeIndex);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetExecutionGraphPipelineNodeIndexAMDX(device, executionGraph, pNodeInfo, pNodeIndex);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetExecutionGraphPipelineNodeIndexAMDX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetExecutionGraphPipelineNodeIndexAMDX(device, executionGraph, pNodeInfo, pNodeIndex);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14604,6 +18420,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdInitializeGraphScratchMemoryAMDX<Format>(ApiDumpInstance::current(), commandBuffer, executionGraph, scratch, scratchSize);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdInitializeGraphScratchMemoryAMDX(commandBuffer, executionGraph, scratch, scratchSize);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdInitializeGraphScratchMemoryAMDX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdInitializeGraphScratchMemoryAMDX(commandBuffer, executionGraph, scratch, scratchSize);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14634,6 +18458,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDispatchGraphAMDX<Format>(ApiDumpInstance::current(), commandBuffer, scratch, scratchSize, pCountInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDispatchGraphAMDX(commandBuffer, scratch, scratchSize, pCountInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDispatchGraphAMDX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDispatchGraphAMDX(commandBuffer, scratch, scratchSize, pCountInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14664,6 +18496,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDispatchGraphIndirectAMDX<Format>(ApiDumpInstance::current(), commandBuffer, scratch, scratchSize, pCountInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDispatchGraphIndirectAMDX(commandBuffer, scratch, scratchSize, pCountInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDispatchGraphIndirectAMDX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDispatchGraphIndirectAMDX(commandBuffer, scratch, scratchSize, pCountInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14694,6 +18534,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDispatchGraphIndirectCountAMDX<Format>(ApiDumpInstance::current(), commandBuffer, scratch, scratchSize, countInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDispatchGraphIndirectCountAMDX(commandBuffer, scratch, scratchSize, countInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDispatchGraphIndirectCountAMDX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDispatchGraphIndirectCountAMDX(commandBuffer, scratch, scratchSize, countInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14725,6 +18573,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetSampleLocationsEXT<Format>(ApiDumpInstance::current(), commandBuffer, pSampleLocationsInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetSampleLocationsEXT(commandBuffer, pSampleLocationsInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetSampleLocationsEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetSampleLocationsEXT(commandBuffer, pSampleLocationsInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14755,6 +18611,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageDrmFormatModifierPropertiesEXT<Format>(ApiDumpInstance::current(), device, image, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetImageDrmFormatModifierPropertiesEXT(device, image, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageDrmFormatModifierPropertiesEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetImageDrmFormatModifierPropertiesEXT(device, image, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14787,6 +18651,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateValidationCacheEXT<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pValidationCache);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateValidationCacheEXT(device, pCreateInfo, pAllocator, pValidationCache);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateValidationCacheEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateValidationCacheEXT(device, pCreateInfo, pAllocator, pValidationCache);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14819,6 +18691,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyValidationCacheEXT<Format>(ApiDumpInstance::current(), device, validationCache, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyValidationCacheEXT(device, validationCache, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyValidationCacheEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyValidationCacheEXT(device, validationCache, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14849,6 +18729,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkMergeValidationCachesEXT<Format>(ApiDumpInstance::current(), device, dstCache, srcCacheCount, pSrcCaches);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->MergeValidationCachesEXT(device, dstCache, srcCacheCount, pSrcCaches);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkMergeValidationCachesEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->MergeValidationCachesEXT(device, dstCache, srcCacheCount, pSrcCaches);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14881,6 +18769,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetValidationCacheDataEXT<Format>(ApiDumpInstance::current(), device, validationCache, pDataSize, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetValidationCacheDataEXT(device, validationCache, pDataSize, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetValidationCacheDataEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetValidationCacheDataEXT(device, validationCache, pDataSize, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14913,6 +18809,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindShadingRateImageNV<Format>(ApiDumpInstance::current(), commandBuffer, imageView, imageLayout);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindShadingRateImageNV(commandBuffer, imageView, imageLayout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindShadingRateImageNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindShadingRateImageNV(commandBuffer, imageView, imageLayout);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14943,6 +18847,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetViewportShadingRatePaletteNV<Format>(ApiDumpInstance::current(), commandBuffer, firstViewport, viewportCount, pShadingRatePalettes);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetViewportShadingRatePaletteNV(commandBuffer, firstViewport, viewportCount, pShadingRatePalettes);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetViewportShadingRatePaletteNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetViewportShadingRatePaletteNV(commandBuffer, firstViewport, viewportCount, pShadingRatePalettes);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -14973,6 +18885,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetCoarseSampleOrderNV<Format>(ApiDumpInstance::current(), commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetCoarseSampleOrderNV(commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetCoarseSampleOrderNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetCoarseSampleOrderNV(commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15003,6 +18923,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateAccelerationStructureNV<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pAccelerationStructure);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateAccelerationStructureNV(device, pCreateInfo, pAllocator, pAccelerationStructure);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateAccelerationStructureNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateAccelerationStructureNV(device, pCreateInfo, pAllocator, pAccelerationStructure);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15035,6 +18963,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyAccelerationStructureNV<Format>(ApiDumpInstance::current(), device, accelerationStructure, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyAccelerationStructureNV(device, accelerationStructure, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyAccelerationStructureNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyAccelerationStructureNV(device, accelerationStructure, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15065,6 +19001,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetAccelerationStructureMemoryRequirementsNV<Format>(ApiDumpInstance::current(), device, pInfo, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetAccelerationStructureMemoryRequirementsNV(device, pInfo, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetAccelerationStructureMemoryRequirementsNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetAccelerationStructureMemoryRequirementsNV(device, pInfo, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15095,6 +19039,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkBindAccelerationStructureMemoryNV<Format>(ApiDumpInstance::current(), device, bindInfoCount, pBindInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->BindAccelerationStructureMemoryNV(device, bindInfoCount, pBindInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkBindAccelerationStructureMemoryNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->BindAccelerationStructureMemoryNV(device, bindInfoCount, pBindInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15127,6 +19079,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBuildAccelerationStructureNV<Format>(ApiDumpInstance::current(), commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBuildAccelerationStructureNV(commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBuildAccelerationStructureNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBuildAccelerationStructureNV(commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15157,6 +19117,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyAccelerationStructureNV<Format>(ApiDumpInstance::current(), commandBuffer, dst, src, mode);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyAccelerationStructureNV(commandBuffer, dst, src, mode);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyAccelerationStructureNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyAccelerationStructureNV(commandBuffer, dst, src, mode);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15187,6 +19155,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdTraceRaysNV<Format>(ApiDumpInstance::current(), commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdTraceRaysNV(commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdTraceRaysNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdTraceRaysNV(commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15217,6 +19193,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateRayTracingPipelinesNV<Format>(ApiDumpInstance::current(), device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateRayTracingPipelinesNV(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateRayTracingPipelinesNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateRayTracingPipelinesNV(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15249,6 +19233,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetRayTracingShaderGroupHandlesKHR<Format>(ApiDumpInstance::current(), device, pipeline, firstGroup, groupCount, dataSize, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetRayTracingShaderGroupHandlesKHR(device, pipeline, firstGroup, groupCount, dataSize, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetRayTracingShaderGroupHandlesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetRayTracingShaderGroupHandlesKHR(device, pipeline, firstGroup, groupCount, dataSize, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15281,6 +19273,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetRayTracingShaderGroupHandlesNV<Format>(ApiDumpInstance::current(), device, pipeline, firstGroup, groupCount, dataSize, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetRayTracingShaderGroupHandlesNV(device, pipeline, firstGroup, groupCount, dataSize, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetRayTracingShaderGroupHandlesNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetRayTracingShaderGroupHandlesNV(device, pipeline, firstGroup, groupCount, dataSize, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15313,6 +19313,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetAccelerationStructureHandleNV<Format>(ApiDumpInstance::current(), device, accelerationStructure, dataSize, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetAccelerationStructureHandleNV(device, accelerationStructure, dataSize, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetAccelerationStructureHandleNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetAccelerationStructureHandleNV(device, accelerationStructure, dataSize, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15345,6 +19353,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdWriteAccelerationStructuresPropertiesNV<Format>(ApiDumpInstance::current(), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdWriteAccelerationStructuresPropertiesNV(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdWriteAccelerationStructuresPropertiesNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdWriteAccelerationStructuresPropertiesNV(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15375,6 +19391,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCompileDeferredNV<Format>(ApiDumpInstance::current(), device, pipeline, shader);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CompileDeferredNV(device, pipeline, shader);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCompileDeferredNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CompileDeferredNV(device, pipeline, shader);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15407,6 +19431,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetMemoryHostPointerPropertiesEXT<Format>(ApiDumpInstance::current(), device, handleType, pHostPointer, pMemoryHostPointerProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetMemoryHostPointerPropertiesEXT(device, handleType, pHostPointer, pMemoryHostPointerProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetMemoryHostPointerPropertiesEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetMemoryHostPointerPropertiesEXT(device, handleType, pHostPointer, pMemoryHostPointerProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15439,6 +19471,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdWriteBufferMarkerAMD<Format>(ApiDumpInstance::current(), commandBuffer, pipelineStage, dstBuffer, dstOffset, marker);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdWriteBufferMarkerAMD(commandBuffer, pipelineStage, dstBuffer, dstOffset, marker);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdWriteBufferMarkerAMD", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdWriteBufferMarkerAMD(commandBuffer, pipelineStage, dstBuffer, dstOffset, marker);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15469,6 +19509,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdWriteBufferMarker2AMD<Format>(ApiDumpInstance::current(), commandBuffer, stage, dstBuffer, dstOffset, marker);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdWriteBufferMarker2AMD(commandBuffer, stage, dstBuffer, dstOffset, marker);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdWriteBufferMarker2AMD", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdWriteBufferMarker2AMD(commandBuffer, stage, dstBuffer, dstOffset, marker);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15499,6 +19547,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetCalibratedTimestampsEXT<Format>(ApiDumpInstance::current(), device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetCalibratedTimestampsEXT(device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetCalibratedTimestampsEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetCalibratedTimestampsEXT(device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15531,6 +19587,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawMeshTasksNV<Format>(ApiDumpInstance::current(), commandBuffer, taskCount, firstTask);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawMeshTasksNV(commandBuffer, taskCount, firstTask);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawMeshTasksNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawMeshTasksNV(commandBuffer, taskCount, firstTask);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15561,6 +19625,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawMeshTasksIndirectNV<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset, drawCount, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawMeshTasksIndirectNV(commandBuffer, buffer, offset, drawCount, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawMeshTasksIndirectNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawMeshTasksIndirectNV(commandBuffer, buffer, offset, drawCount, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15591,6 +19663,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawMeshTasksIndirectCountNV<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawMeshTasksIndirectCountNV(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawMeshTasksIndirectCountNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawMeshTasksIndirectCountNV(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15621,6 +19701,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetExclusiveScissorEnableNV<Format>(ApiDumpInstance::current(), commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissorEnables);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetExclusiveScissorEnableNV(commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissorEnables);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetExclusiveScissorEnableNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetExclusiveScissorEnableNV(commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissorEnables);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15651,6 +19739,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetExclusiveScissorNV<Format>(ApiDumpInstance::current(), commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetExclusiveScissorNV(commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetExclusiveScissorNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetExclusiveScissorNV(commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15681,6 +19777,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetCheckpointNV<Format>(ApiDumpInstance::current(), commandBuffer, pCheckpointMarker);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetCheckpointNV(commandBuffer, pCheckpointMarker);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetCheckpointNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetCheckpointNV(commandBuffer, pCheckpointMarker);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15711,6 +19815,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetQueueCheckpointDataNV<Format>(ApiDumpInstance::current(), queue, pCheckpointDataCount, pCheckpointData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(queue)->GetQueueCheckpointDataNV(queue, pCheckpointDataCount, pCheckpointData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetQueueCheckpointDataNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(queue)->GetQueueCheckpointDataNV(queue, pCheckpointDataCount, pCheckpointData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15741,6 +19853,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetQueueCheckpointData2NV<Format>(ApiDumpInstance::current(), queue, pCheckpointDataCount, pCheckpointData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(queue)->GetQueueCheckpointData2NV(queue, pCheckpointDataCount, pCheckpointData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetQueueCheckpointData2NV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(queue)->GetQueueCheckpointData2NV(queue, pCheckpointDataCount, pCheckpointData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15771,6 +19891,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkInitializePerformanceApiINTEL<Format>(ApiDumpInstance::current(), device, pInitializeInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->InitializePerformanceApiINTEL(device, pInitializeInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkInitializePerformanceApiINTEL", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->InitializePerformanceApiINTEL(device, pInitializeInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15803,6 +19931,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkUninitializePerformanceApiINTEL<Format>(ApiDumpInstance::current(), device);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->UninitializePerformanceApiINTEL(device);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkUninitializePerformanceApiINTEL", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->UninitializePerformanceApiINTEL(device);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15833,6 +19969,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetPerformanceMarkerINTEL<Format>(ApiDumpInstance::current(), commandBuffer, pMarkerInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(commandBuffer)->CmdSetPerformanceMarkerINTEL(commandBuffer, pMarkerInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetPerformanceMarkerINTEL", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(commandBuffer)->CmdSetPerformanceMarkerINTEL(commandBuffer, pMarkerInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15865,6 +20009,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetPerformanceStreamMarkerINTEL<Format>(ApiDumpInstance::current(), commandBuffer, pMarkerInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(commandBuffer)->CmdSetPerformanceStreamMarkerINTEL(commandBuffer, pMarkerInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetPerformanceStreamMarkerINTEL", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(commandBuffer)->CmdSetPerformanceStreamMarkerINTEL(commandBuffer, pMarkerInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15897,6 +20049,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetPerformanceOverrideINTEL<Format>(ApiDumpInstance::current(), commandBuffer, pOverrideInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(commandBuffer)->CmdSetPerformanceOverrideINTEL(commandBuffer, pOverrideInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetPerformanceOverrideINTEL", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(commandBuffer)->CmdSetPerformanceOverrideINTEL(commandBuffer, pOverrideInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15929,6 +20089,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkAcquirePerformanceConfigurationINTEL<Format>(ApiDumpInstance::current(), device, pAcquireInfo, pConfiguration);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->AcquirePerformanceConfigurationINTEL(device, pAcquireInfo, pConfiguration);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkAcquirePerformanceConfigurationINTEL", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->AcquirePerformanceConfigurationINTEL(device, pAcquireInfo, pConfiguration);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15961,6 +20129,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkReleasePerformanceConfigurationINTEL<Format>(ApiDumpInstance::current(), device, configuration);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->ReleasePerformanceConfigurationINTEL(device, configuration);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkReleasePerformanceConfigurationINTEL", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->ReleasePerformanceConfigurationINTEL(device, configuration);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -15993,6 +20169,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkQueueSetPerformanceConfigurationINTEL<Format>(ApiDumpInstance::current(), queue, configuration);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(queue)->QueueSetPerformanceConfigurationINTEL(queue, configuration);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkQueueSetPerformanceConfigurationINTEL", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(queue)->QueueSetPerformanceConfigurationINTEL(queue, configuration);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16025,6 +20209,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetPerformanceParameterINTEL<Format>(ApiDumpInstance::current(), device, parameter, pValue);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetPerformanceParameterINTEL(device, parameter, pValue);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPerformanceParameterINTEL", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetPerformanceParameterINTEL(device, parameter, pValue);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16057,6 +20249,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkSetLocalDimmingAMD<Format>(ApiDumpInstance::current(), device, swapChain, localDimmingEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->SetLocalDimmingAMD(device, swapChain, localDimmingEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkSetLocalDimmingAMD", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->SetLocalDimmingAMD(device, swapChain, localDimmingEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16087,6 +20287,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetBufferDeviceAddressEXT<Format>(ApiDumpInstance::current(), device, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkDeviceAddress result = device_dispatch_table(device)->GetBufferDeviceAddressEXT(device, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetBufferDeviceAddressEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkDeviceAddress result = device_dispatch_table(device)->GetBufferDeviceAddressEXT(device, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16120,6 +20328,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkAcquireFullScreenExclusiveModeEXT<Format>(ApiDumpInstance::current(), device, swapchain);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->AcquireFullScreenExclusiveModeEXT(device, swapchain);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkAcquireFullScreenExclusiveModeEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->AcquireFullScreenExclusiveModeEXT(device, swapchain);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16152,6 +20368,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkReleaseFullScreenExclusiveModeEXT<Format>(ApiDumpInstance::current(), device, swapchain);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->ReleaseFullScreenExclusiveModeEXT(device, swapchain);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkReleaseFullScreenExclusiveModeEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->ReleaseFullScreenExclusiveModeEXT(device, swapchain);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16184,6 +20408,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceGroupSurfacePresentModes2EXT<Format>(ApiDumpInstance::current(), device, pSurfaceInfo, pModes);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetDeviceGroupSurfacePresentModes2EXT(device, pSurfaceInfo, pModes);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceGroupSurfacePresentModes2EXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetDeviceGroupSurfacePresentModes2EXT(device, pSurfaceInfo, pModes);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16217,6 +20449,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetLineStippleEXT<Format>(ApiDumpInstance::current(), commandBuffer, lineStippleFactor, lineStipplePattern);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetLineStippleEXT(commandBuffer, lineStippleFactor, lineStipplePattern);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetLineStippleEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetLineStippleEXT(commandBuffer, lineStippleFactor, lineStipplePattern);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16247,6 +20487,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkResetQueryPoolEXT<Format>(ApiDumpInstance::current(), device, queryPool, firstQuery, queryCount);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->ResetQueryPoolEXT(device, queryPool, firstQuery, queryCount);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkResetQueryPoolEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->ResetQueryPoolEXT(device, queryPool, firstQuery, queryCount);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16277,6 +20525,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetCullModeEXT<Format>(ApiDumpInstance::current(), commandBuffer, cullMode);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetCullModeEXT(commandBuffer, cullMode);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetCullModeEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetCullModeEXT(commandBuffer, cullMode);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16307,6 +20563,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetFrontFaceEXT<Format>(ApiDumpInstance::current(), commandBuffer, frontFace);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetFrontFaceEXT(commandBuffer, frontFace);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetFrontFaceEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetFrontFaceEXT(commandBuffer, frontFace);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16337,6 +20601,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetPrimitiveTopologyEXT<Format>(ApiDumpInstance::current(), commandBuffer, primitiveTopology);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetPrimitiveTopologyEXT(commandBuffer, primitiveTopology);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetPrimitiveTopologyEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetPrimitiveTopologyEXT(commandBuffer, primitiveTopology);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16367,6 +20639,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetViewportWithCountEXT<Format>(ApiDumpInstance::current(), commandBuffer, viewportCount, pViewports);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetViewportWithCountEXT(commandBuffer, viewportCount, pViewports);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetViewportWithCountEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetViewportWithCountEXT(commandBuffer, viewportCount, pViewports);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16397,6 +20677,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetScissorWithCountEXT<Format>(ApiDumpInstance::current(), commandBuffer, scissorCount, pScissors);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetScissorWithCountEXT(commandBuffer, scissorCount, pScissors);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetScissorWithCountEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetScissorWithCountEXT(commandBuffer, scissorCount, pScissors);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16427,6 +20715,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindVertexBuffers2EXT<Format>(ApiDumpInstance::current(), commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindVertexBuffers2EXT(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindVertexBuffers2EXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindVertexBuffers2EXT(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16457,6 +20753,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthTestEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, depthTestEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthTestEnableEXT(commandBuffer, depthTestEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthTestEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthTestEnableEXT(commandBuffer, depthTestEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16487,6 +20791,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthWriteEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, depthWriteEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthWriteEnableEXT(commandBuffer, depthWriteEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthWriteEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthWriteEnableEXT(commandBuffer, depthWriteEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16517,6 +20829,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthCompareOpEXT<Format>(ApiDumpInstance::current(), commandBuffer, depthCompareOp);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthCompareOpEXT(commandBuffer, depthCompareOp);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthCompareOpEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthCompareOpEXT(commandBuffer, depthCompareOp);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16547,6 +20867,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthBoundsTestEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, depthBoundsTestEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthBoundsTestEnableEXT(commandBuffer, depthBoundsTestEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthBoundsTestEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthBoundsTestEnableEXT(commandBuffer, depthBoundsTestEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16577,6 +20905,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetStencilTestEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, stencilTestEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetStencilTestEnableEXT(commandBuffer, stencilTestEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetStencilTestEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetStencilTestEnableEXT(commandBuffer, stencilTestEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16607,6 +20943,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetStencilOpEXT<Format>(ApiDumpInstance::current(), commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetStencilOpEXT(commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetStencilOpEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetStencilOpEXT(commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16637,6 +20981,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCopyMemoryToImageEXT<Format>(ApiDumpInstance::current(), device, pCopyMemoryToImageInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CopyMemoryToImageEXT(device, pCopyMemoryToImageInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCopyMemoryToImageEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CopyMemoryToImageEXT(device, pCopyMemoryToImageInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16669,6 +21021,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCopyImageToMemoryEXT<Format>(ApiDumpInstance::current(), device, pCopyImageToMemoryInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CopyImageToMemoryEXT(device, pCopyImageToMemoryInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCopyImageToMemoryEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CopyImageToMemoryEXT(device, pCopyImageToMemoryInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16701,6 +21061,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCopyImageToImageEXT<Format>(ApiDumpInstance::current(), device, pCopyImageToImageInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CopyImageToImageEXT(device, pCopyImageToImageInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCopyImageToImageEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CopyImageToImageEXT(device, pCopyImageToImageInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16733,6 +21101,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkTransitionImageLayoutEXT<Format>(ApiDumpInstance::current(), device, transitionCount, pTransitions);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->TransitionImageLayoutEXT(device, transitionCount, pTransitions);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkTransitionImageLayoutEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->TransitionImageLayoutEXT(device, transitionCount, pTransitions);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16765,6 +21141,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageSubresourceLayout2EXT<Format>(ApiDumpInstance::current(), device, image, pSubresource, pLayout);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetImageSubresourceLayout2EXT(device, image, pSubresource, pLayout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageSubresourceLayout2EXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetImageSubresourceLayout2EXT(device, image, pSubresource, pLayout);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16795,6 +21179,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkReleaseSwapchainImagesEXT<Format>(ApiDumpInstance::current(), device, pReleaseInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->ReleaseSwapchainImagesEXT(device, pReleaseInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkReleaseSwapchainImagesEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->ReleaseSwapchainImagesEXT(device, pReleaseInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16827,6 +21219,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetGeneratedCommandsMemoryRequirementsNV<Format>(ApiDumpInstance::current(), device, pInfo, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetGeneratedCommandsMemoryRequirementsNV(device, pInfo, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetGeneratedCommandsMemoryRequirementsNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetGeneratedCommandsMemoryRequirementsNV(device, pInfo, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16857,6 +21257,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPreprocessGeneratedCommandsNV<Format>(ApiDumpInstance::current(), commandBuffer, pGeneratedCommandsInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPreprocessGeneratedCommandsNV(commandBuffer, pGeneratedCommandsInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPreprocessGeneratedCommandsNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPreprocessGeneratedCommandsNV(commandBuffer, pGeneratedCommandsInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16887,6 +21295,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdExecuteGeneratedCommandsNV<Format>(ApiDumpInstance::current(), commandBuffer, isPreprocessed, pGeneratedCommandsInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdExecuteGeneratedCommandsNV(commandBuffer, isPreprocessed, pGeneratedCommandsInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdExecuteGeneratedCommandsNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdExecuteGeneratedCommandsNV(commandBuffer, isPreprocessed, pGeneratedCommandsInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16917,6 +21333,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindPipelineShaderGroupNV<Format>(ApiDumpInstance::current(), commandBuffer, pipelineBindPoint, pipeline, groupIndex);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindPipelineShaderGroupNV(commandBuffer, pipelineBindPoint, pipeline, groupIndex);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindPipelineShaderGroupNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindPipelineShaderGroupNV(commandBuffer, pipelineBindPoint, pipeline, groupIndex);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16947,6 +21371,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateIndirectCommandsLayoutNV<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pIndirectCommandsLayout);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateIndirectCommandsLayoutNV(device, pCreateInfo, pAllocator, pIndirectCommandsLayout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateIndirectCommandsLayoutNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateIndirectCommandsLayoutNV(device, pCreateInfo, pAllocator, pIndirectCommandsLayout);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -16979,6 +21411,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyIndirectCommandsLayoutNV<Format>(ApiDumpInstance::current(), device, indirectCommandsLayout, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyIndirectCommandsLayoutNV(device, indirectCommandsLayout, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyIndirectCommandsLayoutNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyIndirectCommandsLayoutNV(device, indirectCommandsLayout, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17009,6 +21449,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthBias2EXT<Format>(ApiDumpInstance::current(), commandBuffer, pDepthBiasInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthBias2EXT(commandBuffer, pDepthBiasInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthBias2EXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthBias2EXT(commandBuffer, pDepthBiasInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17039,6 +21487,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreatePrivateDataSlotEXT<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pPrivateDataSlot);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreatePrivateDataSlotEXT(device, pCreateInfo, pAllocator, pPrivateDataSlot);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreatePrivateDataSlotEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreatePrivateDataSlotEXT(device, pCreateInfo, pAllocator, pPrivateDataSlot);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17071,6 +21527,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyPrivateDataSlotEXT<Format>(ApiDumpInstance::current(), device, privateDataSlot, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyPrivateDataSlotEXT(device, privateDataSlot, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyPrivateDataSlotEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyPrivateDataSlotEXT(device, privateDataSlot, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17101,6 +21565,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkSetPrivateDataEXT<Format>(ApiDumpInstance::current(), device, objectType, objectHandle, privateDataSlot, data);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->SetPrivateDataEXT(device, objectType, objectHandle, privateDataSlot, data);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkSetPrivateDataEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->SetPrivateDataEXT(device, objectType, objectHandle, privateDataSlot, data);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17133,6 +21605,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetPrivateDataEXT<Format>(ApiDumpInstance::current(), device, objectType, objectHandle, privateDataSlot, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetPrivateDataEXT(device, objectType, objectHandle, privateDataSlot, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPrivateDataEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetPrivateDataEXT(device, objectType, objectHandle, privateDataSlot, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17164,6 +21644,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateCudaModuleNV<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pModule);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateCudaModuleNV(device, pCreateInfo, pAllocator, pModule);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateCudaModuleNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateCudaModuleNV(device, pCreateInfo, pAllocator, pModule);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17196,6 +21684,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetCudaModuleCacheNV<Format>(ApiDumpInstance::current(), device, module, pCacheSize, pCacheData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetCudaModuleCacheNV(device, module, pCacheSize, pCacheData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetCudaModuleCacheNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetCudaModuleCacheNV(device, module, pCacheSize, pCacheData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17228,6 +21724,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateCudaFunctionNV<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pFunction);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateCudaFunctionNV(device, pCreateInfo, pAllocator, pFunction);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateCudaFunctionNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateCudaFunctionNV(device, pCreateInfo, pAllocator, pFunction);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17260,6 +21764,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyCudaModuleNV<Format>(ApiDumpInstance::current(), device, module, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyCudaModuleNV(device, module, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyCudaModuleNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyCudaModuleNV(device, module, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17290,6 +21802,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyCudaFunctionNV<Format>(ApiDumpInstance::current(), device, function, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyCudaFunctionNV(device, function, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyCudaFunctionNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyCudaFunctionNV(device, function, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17320,6 +21840,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCudaLaunchKernelNV<Format>(ApiDumpInstance::current(), commandBuffer, pLaunchInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCudaLaunchKernelNV(commandBuffer, pLaunchInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCudaLaunchKernelNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCudaLaunchKernelNV(commandBuffer, pLaunchInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17351,6 +21879,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDispatchTileQCOM<Format>(ApiDumpInstance::current(), commandBuffer, pDispatchTileInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDispatchTileQCOM(commandBuffer, pDispatchTileInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDispatchTileQCOM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDispatchTileQCOM(commandBuffer, pDispatchTileInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17381,6 +21917,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBeginPerTileExecutionQCOM<Format>(ApiDumpInstance::current(), commandBuffer, pPerTileBeginInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBeginPerTileExecutionQCOM(commandBuffer, pPerTileBeginInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBeginPerTileExecutionQCOM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBeginPerTileExecutionQCOM(commandBuffer, pPerTileBeginInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17411,6 +21955,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdEndPerTileExecutionQCOM<Format>(ApiDumpInstance::current(), commandBuffer, pPerTileEndInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdEndPerTileExecutionQCOM(commandBuffer, pPerTileEndInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdEndPerTileExecutionQCOM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdEndPerTileExecutionQCOM(commandBuffer, pPerTileEndInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17442,6 +21994,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkExportMetalObjectsEXT<Format>(ApiDumpInstance::current(), device, pMetalObjectsInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->ExportMetalObjectsEXT(device, pMetalObjectsInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkExportMetalObjectsEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->ExportMetalObjectsEXT(device, pMetalObjectsInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17473,6 +22033,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDescriptorSetLayoutSizeEXT<Format>(ApiDumpInstance::current(), device, layout, pLayoutSizeInBytes);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDescriptorSetLayoutSizeEXT(device, layout, pLayoutSizeInBytes);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDescriptorSetLayoutSizeEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDescriptorSetLayoutSizeEXT(device, layout, pLayoutSizeInBytes);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17503,6 +22071,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDescriptorSetLayoutBindingOffsetEXT<Format>(ApiDumpInstance::current(), device, layout, binding, pOffset);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDescriptorSetLayoutBindingOffsetEXT(device, layout, binding, pOffset);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDescriptorSetLayoutBindingOffsetEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDescriptorSetLayoutBindingOffsetEXT(device, layout, binding, pOffset);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17533,6 +22109,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDescriptorEXT<Format>(ApiDumpInstance::current(), device, pDescriptorInfo, dataSize, pDescriptor);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDescriptorEXT(device, pDescriptorInfo, dataSize, pDescriptor);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDescriptorEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDescriptorEXT(device, pDescriptorInfo, dataSize, pDescriptor);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17563,6 +22147,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindDescriptorBuffersEXT<Format>(ApiDumpInstance::current(), commandBuffer, bufferCount, pBindingInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindDescriptorBuffersEXT(commandBuffer, bufferCount, pBindingInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindDescriptorBuffersEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindDescriptorBuffersEXT(commandBuffer, bufferCount, pBindingInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17593,6 +22185,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDescriptorBufferOffsetsEXT<Format>(ApiDumpInstance::current(), commandBuffer, pipelineBindPoint, layout, firstSet, setCount, pBufferIndices, pOffsets);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDescriptorBufferOffsetsEXT(commandBuffer, pipelineBindPoint, layout, firstSet, setCount, pBufferIndices, pOffsets);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDescriptorBufferOffsetsEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDescriptorBufferOffsetsEXT(commandBuffer, pipelineBindPoint, layout, firstSet, setCount, pBufferIndices, pOffsets);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17623,6 +22223,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindDescriptorBufferEmbeddedSamplersEXT<Format>(ApiDumpInstance::current(), commandBuffer, pipelineBindPoint, layout, set);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindDescriptorBufferEmbeddedSamplersEXT(commandBuffer, pipelineBindPoint, layout, set);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindDescriptorBufferEmbeddedSamplersEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindDescriptorBufferEmbeddedSamplersEXT(commandBuffer, pipelineBindPoint, layout, set);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17653,6 +22261,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetBufferOpaqueCaptureDescriptorDataEXT<Format>(ApiDumpInstance::current(), device, pInfo, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetBufferOpaqueCaptureDescriptorDataEXT(device, pInfo, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetBufferOpaqueCaptureDescriptorDataEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetBufferOpaqueCaptureDescriptorDataEXT(device, pInfo, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17685,6 +22301,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageOpaqueCaptureDescriptorDataEXT<Format>(ApiDumpInstance::current(), device, pInfo, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetImageOpaqueCaptureDescriptorDataEXT(device, pInfo, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageOpaqueCaptureDescriptorDataEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetImageOpaqueCaptureDescriptorDataEXT(device, pInfo, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17717,6 +22341,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetImageViewOpaqueCaptureDescriptorDataEXT<Format>(ApiDumpInstance::current(), device, pInfo, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetImageViewOpaqueCaptureDescriptorDataEXT(device, pInfo, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetImageViewOpaqueCaptureDescriptorDataEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetImageViewOpaqueCaptureDescriptorDataEXT(device, pInfo, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17749,6 +22381,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetSamplerOpaqueCaptureDescriptorDataEXT<Format>(ApiDumpInstance::current(), device, pInfo, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetSamplerOpaqueCaptureDescriptorDataEXT(device, pInfo, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetSamplerOpaqueCaptureDescriptorDataEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetSamplerOpaqueCaptureDescriptorDataEXT(device, pInfo, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17781,6 +22421,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT<Format>(ApiDumpInstance::current(), device, pInfo, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetAccelerationStructureOpaqueCaptureDescriptorDataEXT(device, pInfo, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetAccelerationStructureOpaqueCaptureDescriptorDataEXT(device, pInfo, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17813,6 +22461,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetFragmentShadingRateEnumNV<Format>(ApiDumpInstance::current(), commandBuffer, shadingRate, combinerOps);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetFragmentShadingRateEnumNV(commandBuffer, shadingRate, combinerOps);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetFragmentShadingRateEnumNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetFragmentShadingRateEnumNV(commandBuffer, shadingRate, combinerOps);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17843,6 +22499,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceFaultInfoEXT<Format>(ApiDumpInstance::current(), device, pFaultCounts, pFaultInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetDeviceFaultInfoEXT(device, pFaultCounts, pFaultInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceFaultInfoEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetDeviceFaultInfoEXT(device, pFaultCounts, pFaultInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17875,6 +22539,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetVertexInputEXT<Format>(ApiDumpInstance::current(), commandBuffer, vertexBindingDescriptionCount, pVertexBindingDescriptions, vertexAttributeDescriptionCount, pVertexAttributeDescriptions);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetVertexInputEXT(commandBuffer, vertexBindingDescriptionCount, pVertexBindingDescriptions, vertexAttributeDescriptionCount, pVertexAttributeDescriptions);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetVertexInputEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetVertexInputEXT(commandBuffer, vertexBindingDescriptionCount, pVertexBindingDescriptions, vertexAttributeDescriptionCount, pVertexAttributeDescriptions);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17906,6 +22578,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetMemoryZirconHandleFUCHSIA<Format>(ApiDumpInstance::current(), device, pGetZirconHandleInfo, pZirconHandle);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetMemoryZirconHandleFUCHSIA(device, pGetZirconHandleInfo, pZirconHandle);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetMemoryZirconHandleFUCHSIA", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetMemoryZirconHandleFUCHSIA(device, pGetZirconHandleInfo, pZirconHandle);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17938,6 +22618,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetMemoryZirconHandlePropertiesFUCHSIA<Format>(ApiDumpInstance::current(), device, handleType, zirconHandle, pMemoryZirconHandleProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetMemoryZirconHandlePropertiesFUCHSIA(device, handleType, zirconHandle, pMemoryZirconHandleProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetMemoryZirconHandlePropertiesFUCHSIA", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetMemoryZirconHandlePropertiesFUCHSIA(device, handleType, zirconHandle, pMemoryZirconHandleProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -17970,6 +22658,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkImportSemaphoreZirconHandleFUCHSIA<Format>(ApiDumpInstance::current(), device, pImportSemaphoreZirconHandleInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->ImportSemaphoreZirconHandleFUCHSIA(device, pImportSemaphoreZirconHandleInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkImportSemaphoreZirconHandleFUCHSIA", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->ImportSemaphoreZirconHandleFUCHSIA(device, pImportSemaphoreZirconHandleInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18002,6 +22698,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetSemaphoreZirconHandleFUCHSIA<Format>(ApiDumpInstance::current(), device, pGetZirconHandleInfo, pZirconHandle);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetSemaphoreZirconHandleFUCHSIA(device, pGetZirconHandleInfo, pZirconHandle);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetSemaphoreZirconHandleFUCHSIA", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetSemaphoreZirconHandleFUCHSIA(device, pGetZirconHandleInfo, pZirconHandle);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18034,6 +22738,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateBufferCollectionFUCHSIA<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pCollection);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateBufferCollectionFUCHSIA(device, pCreateInfo, pAllocator, pCollection);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateBufferCollectionFUCHSIA", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateBufferCollectionFUCHSIA(device, pCreateInfo, pAllocator, pCollection);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18066,6 +22778,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkSetBufferCollectionImageConstraintsFUCHSIA<Format>(ApiDumpInstance::current(), device, collection, pImageConstraintsInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->SetBufferCollectionImageConstraintsFUCHSIA(device, collection, pImageConstraintsInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkSetBufferCollectionImageConstraintsFUCHSIA", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->SetBufferCollectionImageConstraintsFUCHSIA(device, collection, pImageConstraintsInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18098,6 +22818,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkSetBufferCollectionBufferConstraintsFUCHSIA<Format>(ApiDumpInstance::current(), device, collection, pBufferConstraintsInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->SetBufferCollectionBufferConstraintsFUCHSIA(device, collection, pBufferConstraintsInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkSetBufferCollectionBufferConstraintsFUCHSIA", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->SetBufferCollectionBufferConstraintsFUCHSIA(device, collection, pBufferConstraintsInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18130,6 +22858,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyBufferCollectionFUCHSIA<Format>(ApiDumpInstance::current(), device, collection, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyBufferCollectionFUCHSIA(device, collection, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyBufferCollectionFUCHSIA", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyBufferCollectionFUCHSIA(device, collection, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18160,6 +22896,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetBufferCollectionPropertiesFUCHSIA<Format>(ApiDumpInstance::current(), device, collection, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetBufferCollectionPropertiesFUCHSIA(device, collection, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetBufferCollectionPropertiesFUCHSIA", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetBufferCollectionPropertiesFUCHSIA(device, collection, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18193,6 +22937,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI<Format>(ApiDumpInstance::current(), device, renderpass, pMaxWorkgroupSize);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI(device, renderpass, pMaxWorkgroupSize);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI(device, renderpass, pMaxWorkgroupSize);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18225,6 +22977,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSubpassShadingHUAWEI<Format>(ApiDumpInstance::current(), commandBuffer);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSubpassShadingHUAWEI(commandBuffer);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSubpassShadingHUAWEI", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSubpassShadingHUAWEI(commandBuffer);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18255,6 +23015,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindInvocationMaskHUAWEI<Format>(ApiDumpInstance::current(), commandBuffer, imageView, imageLayout);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindInvocationMaskHUAWEI(commandBuffer, imageView, imageLayout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindInvocationMaskHUAWEI", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindInvocationMaskHUAWEI(commandBuffer, imageView, imageLayout);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18285,6 +23053,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetMemoryRemoteAddressNV<Format>(ApiDumpInstance::current(), device, pMemoryGetRemoteAddressInfo, pAddress);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetMemoryRemoteAddressNV(device, pMemoryGetRemoteAddressInfo, pAddress);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetMemoryRemoteAddressNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetMemoryRemoteAddressNV(device, pMemoryGetRemoteAddressInfo, pAddress);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18317,6 +23093,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetPipelinePropertiesEXT<Format>(ApiDumpInstance::current(), device, pPipelineInfo, pPipelineProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetPipelinePropertiesEXT(device, pPipelineInfo, pPipelineProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPipelinePropertiesEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetPipelinePropertiesEXT(device, pPipelineInfo, pPipelineProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18349,6 +23133,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetPatchControlPointsEXT<Format>(ApiDumpInstance::current(), commandBuffer, patchControlPoints);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetPatchControlPointsEXT(commandBuffer, patchControlPoints);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetPatchControlPointsEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetPatchControlPointsEXT(commandBuffer, patchControlPoints);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18379,6 +23171,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetRasterizerDiscardEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, rasterizerDiscardEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetRasterizerDiscardEnableEXT(commandBuffer, rasterizerDiscardEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetRasterizerDiscardEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetRasterizerDiscardEnableEXT(commandBuffer, rasterizerDiscardEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18409,6 +23209,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthBiasEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, depthBiasEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthBiasEnableEXT(commandBuffer, depthBiasEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthBiasEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthBiasEnableEXT(commandBuffer, depthBiasEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18439,6 +23247,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetLogicOpEXT<Format>(ApiDumpInstance::current(), commandBuffer, logicOp);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetLogicOpEXT(commandBuffer, logicOp);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetLogicOpEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetLogicOpEXT(commandBuffer, logicOp);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18469,6 +23285,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetPrimitiveRestartEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, primitiveRestartEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetPrimitiveRestartEnableEXT(commandBuffer, primitiveRestartEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetPrimitiveRestartEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetPrimitiveRestartEnableEXT(commandBuffer, primitiveRestartEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18499,6 +23323,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetColorWriteEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, attachmentCount, pColorWriteEnables);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetColorWriteEnableEXT(commandBuffer, attachmentCount, pColorWriteEnables);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetColorWriteEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetColorWriteEnableEXT(commandBuffer, attachmentCount, pColorWriteEnables);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18529,6 +23361,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawMultiEXT<Format>(ApiDumpInstance::current(), commandBuffer, drawCount, pVertexInfo, instanceCount, firstInstance, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawMultiEXT(commandBuffer, drawCount, pVertexInfo, instanceCount, firstInstance, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawMultiEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawMultiEXT(commandBuffer, drawCount, pVertexInfo, instanceCount, firstInstance, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18559,6 +23399,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawMultiIndexedEXT<Format>(ApiDumpInstance::current(), commandBuffer, drawCount, pIndexInfo, instanceCount, firstInstance, stride, pVertexOffset);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawMultiIndexedEXT(commandBuffer, drawCount, pIndexInfo, instanceCount, firstInstance, stride, pVertexOffset);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawMultiIndexedEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawMultiIndexedEXT(commandBuffer, drawCount, pIndexInfo, instanceCount, firstInstance, stride, pVertexOffset);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18589,6 +23437,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateMicromapEXT<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pMicromap);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateMicromapEXT(device, pCreateInfo, pAllocator, pMicromap);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateMicromapEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateMicromapEXT(device, pCreateInfo, pAllocator, pMicromap);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18621,6 +23477,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyMicromapEXT<Format>(ApiDumpInstance::current(), device, micromap, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyMicromapEXT(device, micromap, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyMicromapEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyMicromapEXT(device, micromap, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18651,6 +23515,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBuildMicromapsEXT<Format>(ApiDumpInstance::current(), commandBuffer, infoCount, pInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBuildMicromapsEXT(commandBuffer, infoCount, pInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBuildMicromapsEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBuildMicromapsEXT(commandBuffer, infoCount, pInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18681,6 +23553,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkBuildMicromapsEXT<Format>(ApiDumpInstance::current(), device, deferredOperation, infoCount, pInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->BuildMicromapsEXT(device, deferredOperation, infoCount, pInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkBuildMicromapsEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->BuildMicromapsEXT(device, deferredOperation, infoCount, pInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18713,6 +23593,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCopyMicromapEXT<Format>(ApiDumpInstance::current(), device, deferredOperation, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CopyMicromapEXT(device, deferredOperation, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCopyMicromapEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CopyMicromapEXT(device, deferredOperation, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18745,6 +23633,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCopyMicromapToMemoryEXT<Format>(ApiDumpInstance::current(), device, deferredOperation, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CopyMicromapToMemoryEXT(device, deferredOperation, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCopyMicromapToMemoryEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CopyMicromapToMemoryEXT(device, deferredOperation, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18777,6 +23673,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCopyMemoryToMicromapEXT<Format>(ApiDumpInstance::current(), device, deferredOperation, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CopyMemoryToMicromapEXT(device, deferredOperation, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCopyMemoryToMicromapEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CopyMemoryToMicromapEXT(device, deferredOperation, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18809,6 +23713,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkWriteMicromapsPropertiesEXT<Format>(ApiDumpInstance::current(), device, micromapCount, pMicromaps, queryType, dataSize, pData, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->WriteMicromapsPropertiesEXT(device, micromapCount, pMicromaps, queryType, dataSize, pData, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkWriteMicromapsPropertiesEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->WriteMicromapsPropertiesEXT(device, micromapCount, pMicromaps, queryType, dataSize, pData, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18841,6 +23753,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyMicromapEXT<Format>(ApiDumpInstance::current(), commandBuffer, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyMicromapEXT(commandBuffer, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyMicromapEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyMicromapEXT(commandBuffer, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18871,6 +23791,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyMicromapToMemoryEXT<Format>(ApiDumpInstance::current(), commandBuffer, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyMicromapToMemoryEXT(commandBuffer, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyMicromapToMemoryEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyMicromapToMemoryEXT(commandBuffer, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18901,6 +23829,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyMemoryToMicromapEXT<Format>(ApiDumpInstance::current(), commandBuffer, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyMemoryToMicromapEXT(commandBuffer, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyMemoryToMicromapEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyMemoryToMicromapEXT(commandBuffer, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18931,6 +23867,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdWriteMicromapsPropertiesEXT<Format>(ApiDumpInstance::current(), commandBuffer, micromapCount, pMicromaps, queryType, queryPool, firstQuery);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdWriteMicromapsPropertiesEXT(commandBuffer, micromapCount, pMicromaps, queryType, queryPool, firstQuery);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdWriteMicromapsPropertiesEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdWriteMicromapsPropertiesEXT(commandBuffer, micromapCount, pMicromaps, queryType, queryPool, firstQuery);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18961,6 +23905,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceMicromapCompatibilityEXT<Format>(ApiDumpInstance::current(), device, pVersionInfo, pCompatibility);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceMicromapCompatibilityEXT(device, pVersionInfo, pCompatibility);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceMicromapCompatibilityEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceMicromapCompatibilityEXT(device, pVersionInfo, pCompatibility);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -18991,6 +23943,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetMicromapBuildSizesEXT<Format>(ApiDumpInstance::current(), device, buildType, pBuildInfo, pSizeInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetMicromapBuildSizesEXT(device, buildType, pBuildInfo, pSizeInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetMicromapBuildSizesEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetMicromapBuildSizesEXT(device, buildType, pBuildInfo, pSizeInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19021,6 +23981,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawClusterHUAWEI<Format>(ApiDumpInstance::current(), commandBuffer, groupCountX, groupCountY, groupCountZ);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawClusterHUAWEI(commandBuffer, groupCountX, groupCountY, groupCountZ);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawClusterHUAWEI", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawClusterHUAWEI(commandBuffer, groupCountX, groupCountY, groupCountZ);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19051,6 +24019,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawClusterIndirectHUAWEI<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawClusterIndirectHUAWEI(commandBuffer, buffer, offset);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawClusterIndirectHUAWEI", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawClusterIndirectHUAWEI(commandBuffer, buffer, offset);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19081,6 +24057,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkSetDeviceMemoryPriorityEXT<Format>(ApiDumpInstance::current(), device, memory, priority);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->SetDeviceMemoryPriorityEXT(device, memory, priority);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkSetDeviceMemoryPriorityEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->SetDeviceMemoryPriorityEXT(device, memory, priority);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19111,6 +24095,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDescriptorSetLayoutHostMappingInfoVALVE<Format>(ApiDumpInstance::current(), device, pBindingReference, pHostMapping);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDescriptorSetLayoutHostMappingInfoVALVE(device, pBindingReference, pHostMapping);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDescriptorSetLayoutHostMappingInfoVALVE", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDescriptorSetLayoutHostMappingInfoVALVE(device, pBindingReference, pHostMapping);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19141,6 +24133,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDescriptorSetHostMappingVALVE<Format>(ApiDumpInstance::current(), device, descriptorSet, ppData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDescriptorSetHostMappingVALVE(device, descriptorSet, ppData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDescriptorSetHostMappingVALVE", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDescriptorSetHostMappingVALVE(device, descriptorSet, ppData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19171,6 +24171,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyMemoryIndirectNV<Format>(ApiDumpInstance::current(), commandBuffer, copyBufferAddress, copyCount, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyMemoryIndirectNV(commandBuffer, copyBufferAddress, copyCount, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyMemoryIndirectNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyMemoryIndirectNV(commandBuffer, copyBufferAddress, copyCount, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19201,6 +24209,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyMemoryToImageIndirectNV<Format>(ApiDumpInstance::current(), commandBuffer, copyBufferAddress, copyCount, stride, dstImage, dstImageLayout, pImageSubresources);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyMemoryToImageIndirectNV(commandBuffer, copyBufferAddress, copyCount, stride, dstImage, dstImageLayout, pImageSubresources);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyMemoryToImageIndirectNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyMemoryToImageIndirectNV(commandBuffer, copyBufferAddress, copyCount, stride, dstImage, dstImageLayout, pImageSubresources);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19231,6 +24247,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDecompressMemoryNV<Format>(ApiDumpInstance::current(), commandBuffer, decompressRegionCount, pDecompressMemoryRegions);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDecompressMemoryNV(commandBuffer, decompressRegionCount, pDecompressMemoryRegions);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDecompressMemoryNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDecompressMemoryNV(commandBuffer, decompressRegionCount, pDecompressMemoryRegions);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19261,6 +24285,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDecompressMemoryIndirectCountNV<Format>(ApiDumpInstance::current(), commandBuffer, indirectCommandsAddress, indirectCommandsCountAddress, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDecompressMemoryIndirectCountNV(commandBuffer, indirectCommandsAddress, indirectCommandsCountAddress, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDecompressMemoryIndirectCountNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDecompressMemoryIndirectCountNV(commandBuffer, indirectCommandsAddress, indirectCommandsCountAddress, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19291,6 +24323,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetPipelineIndirectMemoryRequirementsNV<Format>(ApiDumpInstance::current(), device, pCreateInfo, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetPipelineIndirectMemoryRequirementsNV(device, pCreateInfo, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPipelineIndirectMemoryRequirementsNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetPipelineIndirectMemoryRequirementsNV(device, pCreateInfo, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19321,6 +24361,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdUpdatePipelineIndirectBufferNV<Format>(ApiDumpInstance::current(), commandBuffer, pipelineBindPoint, pipeline);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdUpdatePipelineIndirectBufferNV(commandBuffer, pipelineBindPoint, pipeline);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdUpdatePipelineIndirectBufferNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdUpdatePipelineIndirectBufferNV(commandBuffer, pipelineBindPoint, pipeline);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19351,6 +24399,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetPipelineIndirectDeviceAddressNV<Format>(ApiDumpInstance::current(), device, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkDeviceAddress result = device_dispatch_table(device)->GetPipelineIndirectDeviceAddressNV(device, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPipelineIndirectDeviceAddressNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkDeviceAddress result = device_dispatch_table(device)->GetPipelineIndirectDeviceAddressNV(device, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19383,6 +24439,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthClampEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, depthClampEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthClampEnableEXT(commandBuffer, depthClampEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthClampEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthClampEnableEXT(commandBuffer, depthClampEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19413,6 +24477,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetPolygonModeEXT<Format>(ApiDumpInstance::current(), commandBuffer, polygonMode);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetPolygonModeEXT(commandBuffer, polygonMode);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetPolygonModeEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetPolygonModeEXT(commandBuffer, polygonMode);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19443,6 +24515,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetRasterizationSamplesEXT<Format>(ApiDumpInstance::current(), commandBuffer, rasterizationSamples);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetRasterizationSamplesEXT(commandBuffer, rasterizationSamples);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetRasterizationSamplesEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetRasterizationSamplesEXT(commandBuffer, rasterizationSamples);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19473,6 +24553,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetSampleMaskEXT<Format>(ApiDumpInstance::current(), commandBuffer, samples, pSampleMask);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetSampleMaskEXT(commandBuffer, samples, pSampleMask);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetSampleMaskEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetSampleMaskEXT(commandBuffer, samples, pSampleMask);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19503,6 +24591,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetAlphaToCoverageEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, alphaToCoverageEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetAlphaToCoverageEnableEXT(commandBuffer, alphaToCoverageEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetAlphaToCoverageEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetAlphaToCoverageEnableEXT(commandBuffer, alphaToCoverageEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19533,6 +24629,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetAlphaToOneEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, alphaToOneEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetAlphaToOneEnableEXT(commandBuffer, alphaToOneEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetAlphaToOneEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetAlphaToOneEnableEXT(commandBuffer, alphaToOneEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19563,6 +24667,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetLogicOpEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, logicOpEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetLogicOpEnableEXT(commandBuffer, logicOpEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetLogicOpEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetLogicOpEnableEXT(commandBuffer, logicOpEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19593,6 +24705,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetColorBlendEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, firstAttachment, attachmentCount, pColorBlendEnables);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetColorBlendEnableEXT(commandBuffer, firstAttachment, attachmentCount, pColorBlendEnables);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetColorBlendEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetColorBlendEnableEXT(commandBuffer, firstAttachment, attachmentCount, pColorBlendEnables);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19623,6 +24743,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetColorBlendEquationEXT<Format>(ApiDumpInstance::current(), commandBuffer, firstAttachment, attachmentCount, pColorBlendEquations);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetColorBlendEquationEXT(commandBuffer, firstAttachment, attachmentCount, pColorBlendEquations);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetColorBlendEquationEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetColorBlendEquationEXT(commandBuffer, firstAttachment, attachmentCount, pColorBlendEquations);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19653,6 +24781,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetColorWriteMaskEXT<Format>(ApiDumpInstance::current(), commandBuffer, firstAttachment, attachmentCount, pColorWriteMasks);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetColorWriteMaskEXT(commandBuffer, firstAttachment, attachmentCount, pColorWriteMasks);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetColorWriteMaskEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetColorWriteMaskEXT(commandBuffer, firstAttachment, attachmentCount, pColorWriteMasks);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19683,6 +24819,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetTessellationDomainOriginEXT<Format>(ApiDumpInstance::current(), commandBuffer, domainOrigin);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetTessellationDomainOriginEXT(commandBuffer, domainOrigin);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetTessellationDomainOriginEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetTessellationDomainOriginEXT(commandBuffer, domainOrigin);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19713,6 +24857,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetRasterizationStreamEXT<Format>(ApiDumpInstance::current(), commandBuffer, rasterizationStream);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetRasterizationStreamEXT(commandBuffer, rasterizationStream);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetRasterizationStreamEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetRasterizationStreamEXT(commandBuffer, rasterizationStream);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19743,6 +24895,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetConservativeRasterizationModeEXT<Format>(ApiDumpInstance::current(), commandBuffer, conservativeRasterizationMode);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetConservativeRasterizationModeEXT(commandBuffer, conservativeRasterizationMode);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetConservativeRasterizationModeEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetConservativeRasterizationModeEXT(commandBuffer, conservativeRasterizationMode);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19773,6 +24933,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetExtraPrimitiveOverestimationSizeEXT<Format>(ApiDumpInstance::current(), commandBuffer, extraPrimitiveOverestimationSize);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetExtraPrimitiveOverestimationSizeEXT(commandBuffer, extraPrimitiveOverestimationSize);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetExtraPrimitiveOverestimationSizeEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetExtraPrimitiveOverestimationSizeEXT(commandBuffer, extraPrimitiveOverestimationSize);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19803,6 +24971,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthClipEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, depthClipEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthClipEnableEXT(commandBuffer, depthClipEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthClipEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthClipEnableEXT(commandBuffer, depthClipEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19833,6 +25009,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetSampleLocationsEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, sampleLocationsEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetSampleLocationsEnableEXT(commandBuffer, sampleLocationsEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetSampleLocationsEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetSampleLocationsEnableEXT(commandBuffer, sampleLocationsEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19863,6 +25047,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetColorBlendAdvancedEXT<Format>(ApiDumpInstance::current(), commandBuffer, firstAttachment, attachmentCount, pColorBlendAdvanced);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetColorBlendAdvancedEXT(commandBuffer, firstAttachment, attachmentCount, pColorBlendAdvanced);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetColorBlendAdvancedEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetColorBlendAdvancedEXT(commandBuffer, firstAttachment, attachmentCount, pColorBlendAdvanced);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19893,6 +25085,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetProvokingVertexModeEXT<Format>(ApiDumpInstance::current(), commandBuffer, provokingVertexMode);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetProvokingVertexModeEXT(commandBuffer, provokingVertexMode);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetProvokingVertexModeEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetProvokingVertexModeEXT(commandBuffer, provokingVertexMode);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19923,6 +25123,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetLineRasterizationModeEXT<Format>(ApiDumpInstance::current(), commandBuffer, lineRasterizationMode);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetLineRasterizationModeEXT(commandBuffer, lineRasterizationMode);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetLineRasterizationModeEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetLineRasterizationModeEXT(commandBuffer, lineRasterizationMode);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19953,6 +25161,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetLineStippleEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, stippledLineEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetLineStippleEnableEXT(commandBuffer, stippledLineEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetLineStippleEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetLineStippleEnableEXT(commandBuffer, stippledLineEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -19983,6 +25199,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthClipNegativeOneToOneEXT<Format>(ApiDumpInstance::current(), commandBuffer, negativeOneToOne);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthClipNegativeOneToOneEXT(commandBuffer, negativeOneToOne);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthClipNegativeOneToOneEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthClipNegativeOneToOneEXT(commandBuffer, negativeOneToOne);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20013,6 +25237,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetViewportWScalingEnableNV<Format>(ApiDumpInstance::current(), commandBuffer, viewportWScalingEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetViewportWScalingEnableNV(commandBuffer, viewportWScalingEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetViewportWScalingEnableNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetViewportWScalingEnableNV(commandBuffer, viewportWScalingEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20043,6 +25275,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetViewportSwizzleNV<Format>(ApiDumpInstance::current(), commandBuffer, firstViewport, viewportCount, pViewportSwizzles);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetViewportSwizzleNV(commandBuffer, firstViewport, viewportCount, pViewportSwizzles);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetViewportSwizzleNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetViewportSwizzleNV(commandBuffer, firstViewport, viewportCount, pViewportSwizzles);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20073,6 +25313,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetCoverageToColorEnableNV<Format>(ApiDumpInstance::current(), commandBuffer, coverageToColorEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetCoverageToColorEnableNV(commandBuffer, coverageToColorEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetCoverageToColorEnableNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetCoverageToColorEnableNV(commandBuffer, coverageToColorEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20103,6 +25351,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetCoverageToColorLocationNV<Format>(ApiDumpInstance::current(), commandBuffer, coverageToColorLocation);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetCoverageToColorLocationNV(commandBuffer, coverageToColorLocation);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetCoverageToColorLocationNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetCoverageToColorLocationNV(commandBuffer, coverageToColorLocation);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20133,6 +25389,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetCoverageModulationModeNV<Format>(ApiDumpInstance::current(), commandBuffer, coverageModulationMode);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetCoverageModulationModeNV(commandBuffer, coverageModulationMode);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetCoverageModulationModeNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetCoverageModulationModeNV(commandBuffer, coverageModulationMode);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20163,6 +25427,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetCoverageModulationTableEnableNV<Format>(ApiDumpInstance::current(), commandBuffer, coverageModulationTableEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetCoverageModulationTableEnableNV(commandBuffer, coverageModulationTableEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetCoverageModulationTableEnableNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetCoverageModulationTableEnableNV(commandBuffer, coverageModulationTableEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20193,6 +25465,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetCoverageModulationTableNV<Format>(ApiDumpInstance::current(), commandBuffer, coverageModulationTableCount, pCoverageModulationTable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetCoverageModulationTableNV(commandBuffer, coverageModulationTableCount, pCoverageModulationTable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetCoverageModulationTableNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetCoverageModulationTableNV(commandBuffer, coverageModulationTableCount, pCoverageModulationTable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20223,6 +25503,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetShadingRateImageEnableNV<Format>(ApiDumpInstance::current(), commandBuffer, shadingRateImageEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetShadingRateImageEnableNV(commandBuffer, shadingRateImageEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetShadingRateImageEnableNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetShadingRateImageEnableNV(commandBuffer, shadingRateImageEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20253,6 +25541,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetRepresentativeFragmentTestEnableNV<Format>(ApiDumpInstance::current(), commandBuffer, representativeFragmentTestEnable);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetRepresentativeFragmentTestEnableNV(commandBuffer, representativeFragmentTestEnable);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetRepresentativeFragmentTestEnableNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetRepresentativeFragmentTestEnableNV(commandBuffer, representativeFragmentTestEnable);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20283,6 +25579,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetCoverageReductionModeNV<Format>(ApiDumpInstance::current(), commandBuffer, coverageReductionMode);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetCoverageReductionModeNV(commandBuffer, coverageReductionMode);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetCoverageReductionModeNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetCoverageReductionModeNV(commandBuffer, coverageReductionMode);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20313,6 +25617,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateTensorARM<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pTensor);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateTensorARM(device, pCreateInfo, pAllocator, pTensor);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateTensorARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateTensorARM(device, pCreateInfo, pAllocator, pTensor);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20345,6 +25657,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyTensorARM<Format>(ApiDumpInstance::current(), device, tensor, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyTensorARM(device, tensor, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyTensorARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyTensorARM(device, tensor, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20375,6 +25695,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateTensorViewARM<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pView);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateTensorViewARM(device, pCreateInfo, pAllocator, pView);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateTensorViewARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateTensorViewARM(device, pCreateInfo, pAllocator, pView);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20407,6 +25735,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyTensorViewARM<Format>(ApiDumpInstance::current(), device, tensorView, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyTensorViewARM(device, tensorView, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyTensorViewARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyTensorViewARM(device, tensorView, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20437,6 +25773,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetTensorMemoryRequirementsARM<Format>(ApiDumpInstance::current(), device, pInfo, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetTensorMemoryRequirementsARM(device, pInfo, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetTensorMemoryRequirementsARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetTensorMemoryRequirementsARM(device, pInfo, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20467,6 +25811,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkBindTensorMemoryARM<Format>(ApiDumpInstance::current(), device, bindInfoCount, pBindInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->BindTensorMemoryARM(device, bindInfoCount, pBindInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkBindTensorMemoryARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->BindTensorMemoryARM(device, bindInfoCount, pBindInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20499,6 +25851,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceTensorMemoryRequirementsARM<Format>(ApiDumpInstance::current(), device, pInfo, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceTensorMemoryRequirementsARM(device, pInfo, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceTensorMemoryRequirementsARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceTensorMemoryRequirementsARM(device, pInfo, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20529,6 +25889,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyTensorARM<Format>(ApiDumpInstance::current(), commandBuffer, pCopyTensorInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyTensorARM(commandBuffer, pCopyTensorInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyTensorARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyTensorARM(commandBuffer, pCopyTensorInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20559,6 +25927,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetTensorOpaqueCaptureDescriptorDataARM<Format>(ApiDumpInstance::current(), device, pInfo, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetTensorOpaqueCaptureDescriptorDataARM(device, pInfo, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetTensorOpaqueCaptureDescriptorDataARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetTensorOpaqueCaptureDescriptorDataARM(device, pInfo, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20591,6 +25967,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetTensorViewOpaqueCaptureDescriptorDataARM<Format>(ApiDumpInstance::current(), device, pInfo, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetTensorViewOpaqueCaptureDescriptorDataARM(device, pInfo, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetTensorViewOpaqueCaptureDescriptorDataARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetTensorViewOpaqueCaptureDescriptorDataARM(device, pInfo, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20623,6 +26007,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetShaderModuleIdentifierEXT<Format>(ApiDumpInstance::current(), device, shaderModule, pIdentifier);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetShaderModuleIdentifierEXT(device, shaderModule, pIdentifier);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetShaderModuleIdentifierEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetShaderModuleIdentifierEXT(device, shaderModule, pIdentifier);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20653,6 +26045,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetShaderModuleCreateInfoIdentifierEXT<Format>(ApiDumpInstance::current(), device, pCreateInfo, pIdentifier);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetShaderModuleCreateInfoIdentifierEXT(device, pCreateInfo, pIdentifier);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetShaderModuleCreateInfoIdentifierEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetShaderModuleCreateInfoIdentifierEXT(device, pCreateInfo, pIdentifier);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20683,6 +26083,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateOpticalFlowSessionNV<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pSession);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateOpticalFlowSessionNV(device, pCreateInfo, pAllocator, pSession);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateOpticalFlowSessionNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateOpticalFlowSessionNV(device, pCreateInfo, pAllocator, pSession);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20715,6 +26123,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyOpticalFlowSessionNV<Format>(ApiDumpInstance::current(), device, session, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyOpticalFlowSessionNV(device, session, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyOpticalFlowSessionNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyOpticalFlowSessionNV(device, session, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20745,6 +26161,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkBindOpticalFlowSessionImageNV<Format>(ApiDumpInstance::current(), device, session, bindingPoint, view, layout);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->BindOpticalFlowSessionImageNV(device, session, bindingPoint, view, layout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkBindOpticalFlowSessionImageNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->BindOpticalFlowSessionImageNV(device, session, bindingPoint, view, layout);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20777,6 +26201,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdOpticalFlowExecuteNV<Format>(ApiDumpInstance::current(), commandBuffer, session, pExecuteInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdOpticalFlowExecuteNV(commandBuffer, session, pExecuteInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdOpticalFlowExecuteNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdOpticalFlowExecuteNV(commandBuffer, session, pExecuteInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20807,6 +26239,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkAntiLagUpdateAMD<Format>(ApiDumpInstance::current(), device, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->AntiLagUpdateAMD(device, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkAntiLagUpdateAMD", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->AntiLagUpdateAMD(device, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20837,6 +26277,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateShadersEXT<Format>(ApiDumpInstance::current(), device, createInfoCount, pCreateInfos, pAllocator, pShaders);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateShadersEXT(device, createInfoCount, pCreateInfos, pAllocator, pShaders);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateShadersEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateShadersEXT(device, createInfoCount, pCreateInfos, pAllocator, pShaders);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20869,6 +26317,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyShaderEXT<Format>(ApiDumpInstance::current(), device, shader, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyShaderEXT(device, shader, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyShaderEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyShaderEXT(device, shader, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20899,6 +26355,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetShaderBinaryDataEXT<Format>(ApiDumpInstance::current(), device, shader, pDataSize, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetShaderBinaryDataEXT(device, shader, pDataSize, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetShaderBinaryDataEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetShaderBinaryDataEXT(device, shader, pDataSize, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20931,6 +26395,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindShadersEXT<Format>(ApiDumpInstance::current(), commandBuffer, stageCount, pStages, pShaders);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindShadersEXT(commandBuffer, stageCount, pStages, pShaders);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindShadersEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindShadersEXT(commandBuffer, stageCount, pStages, pShaders);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20961,6 +26433,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetDepthClampRangeEXT<Format>(ApiDumpInstance::current(), commandBuffer, depthClampMode, pDepthClampRange);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetDepthClampRangeEXT(commandBuffer, depthClampMode, pDepthClampRange);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetDepthClampRangeEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetDepthClampRangeEXT(commandBuffer, depthClampMode, pDepthClampRange);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -20991,6 +26471,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetFramebufferTilePropertiesQCOM<Format>(ApiDumpInstance::current(), device, framebuffer, pPropertiesCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetFramebufferTilePropertiesQCOM(device, framebuffer, pPropertiesCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetFramebufferTilePropertiesQCOM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetFramebufferTilePropertiesQCOM(device, framebuffer, pPropertiesCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21023,6 +26511,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDynamicRenderingTilePropertiesQCOM<Format>(ApiDumpInstance::current(), device, pRenderingInfo, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetDynamicRenderingTilePropertiesQCOM(device, pRenderingInfo, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDynamicRenderingTilePropertiesQCOM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetDynamicRenderingTilePropertiesQCOM(device, pRenderingInfo, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21055,6 +26551,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkConvertCooperativeVectorMatrixNV<Format>(ApiDumpInstance::current(), device, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->ConvertCooperativeVectorMatrixNV(device, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkConvertCooperativeVectorMatrixNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->ConvertCooperativeVectorMatrixNV(device, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21087,6 +26591,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdConvertCooperativeVectorMatrixNV<Format>(ApiDumpInstance::current(), commandBuffer, infoCount, pInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdConvertCooperativeVectorMatrixNV(commandBuffer, infoCount, pInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdConvertCooperativeVectorMatrixNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdConvertCooperativeVectorMatrixNV(commandBuffer, infoCount, pInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21117,6 +26629,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkSetLatencySleepModeNV<Format>(ApiDumpInstance::current(), device, swapchain, pSleepModeInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->SetLatencySleepModeNV(device, swapchain, pSleepModeInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkSetLatencySleepModeNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->SetLatencySleepModeNV(device, swapchain, pSleepModeInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21149,6 +26669,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkLatencySleepNV<Format>(ApiDumpInstance::current(), device, swapchain, pSleepInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->LatencySleepNV(device, swapchain, pSleepInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkLatencySleepNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->LatencySleepNV(device, swapchain, pSleepInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21181,6 +26709,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkSetLatencyMarkerNV<Format>(ApiDumpInstance::current(), device, swapchain, pLatencyMarkerInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->SetLatencyMarkerNV(device, swapchain, pLatencyMarkerInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkSetLatencyMarkerNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->SetLatencyMarkerNV(device, swapchain, pLatencyMarkerInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21211,6 +26747,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetLatencyTimingsNV<Format>(ApiDumpInstance::current(), device, swapchain, pLatencyMarkerInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetLatencyTimingsNV(device, swapchain, pLatencyMarkerInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetLatencyTimingsNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetLatencyTimingsNV(device, swapchain, pLatencyMarkerInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21241,6 +26785,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkQueueNotifyOutOfBandNV<Format>(ApiDumpInstance::current(), queue, pQueueTypeInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(queue)->QueueNotifyOutOfBandNV(queue, pQueueTypeInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkQueueNotifyOutOfBandNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(queue)->QueueNotifyOutOfBandNV(queue, pQueueTypeInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21271,6 +26823,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateDataGraphPipelinesARM<Format>(ApiDumpInstance::current(), device, deferredOperation, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateDataGraphPipelinesARM(device, deferredOperation, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateDataGraphPipelinesARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateDataGraphPipelinesARM(device, deferredOperation, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21303,6 +26863,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateDataGraphPipelineSessionARM<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pSession);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateDataGraphPipelineSessionARM(device, pCreateInfo, pAllocator, pSession);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateDataGraphPipelineSessionARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateDataGraphPipelineSessionARM(device, pCreateInfo, pAllocator, pSession);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21335,6 +26903,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDataGraphPipelineSessionBindPointRequirementsARM<Format>(ApiDumpInstance::current(), device, pInfo, pBindPointRequirementCount, pBindPointRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetDataGraphPipelineSessionBindPointRequirementsARM(device, pInfo, pBindPointRequirementCount, pBindPointRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDataGraphPipelineSessionBindPointRequirementsARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetDataGraphPipelineSessionBindPointRequirementsARM(device, pInfo, pBindPointRequirementCount, pBindPointRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21367,6 +26943,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDataGraphPipelineSessionMemoryRequirementsARM<Format>(ApiDumpInstance::current(), device, pInfo, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDataGraphPipelineSessionMemoryRequirementsARM(device, pInfo, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDataGraphPipelineSessionMemoryRequirementsARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDataGraphPipelineSessionMemoryRequirementsARM(device, pInfo, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21397,6 +26981,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkBindDataGraphPipelineSessionMemoryARM<Format>(ApiDumpInstance::current(), device, bindInfoCount, pBindInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->BindDataGraphPipelineSessionMemoryARM(device, bindInfoCount, pBindInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkBindDataGraphPipelineSessionMemoryARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->BindDataGraphPipelineSessionMemoryARM(device, bindInfoCount, pBindInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21429,6 +27021,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyDataGraphPipelineSessionARM<Format>(ApiDumpInstance::current(), device, session, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyDataGraphPipelineSessionARM(device, session, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyDataGraphPipelineSessionARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyDataGraphPipelineSessionARM(device, session, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21459,6 +27059,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDispatchDataGraphARM<Format>(ApiDumpInstance::current(), commandBuffer, session, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDispatchDataGraphARM(commandBuffer, session, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDispatchDataGraphARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDispatchDataGraphARM(commandBuffer, session, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21489,6 +27097,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDataGraphPipelineAvailablePropertiesARM<Format>(ApiDumpInstance::current(), device, pPipelineInfo, pPropertiesCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetDataGraphPipelineAvailablePropertiesARM(device, pPipelineInfo, pPropertiesCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDataGraphPipelineAvailablePropertiesARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetDataGraphPipelineAvailablePropertiesARM(device, pPipelineInfo, pPropertiesCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21521,6 +27137,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDataGraphPipelinePropertiesARM<Format>(ApiDumpInstance::current(), device, pPipelineInfo, propertiesCount, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetDataGraphPipelinePropertiesARM(device, pPipelineInfo, propertiesCount, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDataGraphPipelinePropertiesARM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetDataGraphPipelinePropertiesARM(device, pPipelineInfo, propertiesCount, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21553,6 +27177,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetAttachmentFeedbackLoopEnableEXT<Format>(ApiDumpInstance::current(), commandBuffer, aspectMask);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetAttachmentFeedbackLoopEnableEXT(commandBuffer, aspectMask);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetAttachmentFeedbackLoopEnableEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetAttachmentFeedbackLoopEnableEXT(commandBuffer, aspectMask);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21584,6 +27216,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetScreenBufferPropertiesQNX<Format>(ApiDumpInstance::current(), device, buffer, pProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetScreenBufferPropertiesQNX(device, buffer, pProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetScreenBufferPropertiesQNX", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetScreenBufferPropertiesQNX(device, buffer, pProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21617,6 +27257,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBindTileMemoryQCOM<Format>(ApiDumpInstance::current(), commandBuffer, pTileMemoryBindInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBindTileMemoryQCOM(commandBuffer, pTileMemoryBindInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBindTileMemoryQCOM", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBindTileMemoryQCOM(commandBuffer, pTileMemoryBindInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21647,6 +27295,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateExternalComputeQueueNV<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pExternalQueue);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateExternalComputeQueueNV(device, pCreateInfo, pAllocator, pExternalQueue);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateExternalComputeQueueNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateExternalComputeQueueNV(device, pCreateInfo, pAllocator, pExternalQueue);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21679,6 +27335,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyExternalComputeQueueNV<Format>(ApiDumpInstance::current(), device, externalQueue, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyExternalComputeQueueNV(device, externalQueue, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyExternalComputeQueueNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyExternalComputeQueueNV(device, externalQueue, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21709,6 +27373,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetExternalComputeQueueDataNV<Format>(ApiDumpInstance::current(), externalQueue, params, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(externalQueue)->GetExternalComputeQueueDataNV(externalQueue, params, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetExternalComputeQueueDataNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(externalQueue)->GetExternalComputeQueueDataNV(externalQueue, params, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21739,6 +27411,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetClusterAccelerationStructureBuildSizesNV<Format>(ApiDumpInstance::current(), device, pInfo, pSizeInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetClusterAccelerationStructureBuildSizesNV(device, pInfo, pSizeInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetClusterAccelerationStructureBuildSizesNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetClusterAccelerationStructureBuildSizesNV(device, pInfo, pSizeInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21769,6 +27449,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBuildClusterAccelerationStructureIndirectNV<Format>(ApiDumpInstance::current(), commandBuffer, pCommandInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBuildClusterAccelerationStructureIndirectNV(commandBuffer, pCommandInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBuildClusterAccelerationStructureIndirectNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBuildClusterAccelerationStructureIndirectNV(commandBuffer, pCommandInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21799,6 +27487,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetPartitionedAccelerationStructuresBuildSizesNV<Format>(ApiDumpInstance::current(), device, pInfo, pSizeInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetPartitionedAccelerationStructuresBuildSizesNV(device, pInfo, pSizeInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetPartitionedAccelerationStructuresBuildSizesNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetPartitionedAccelerationStructuresBuildSizesNV(device, pInfo, pSizeInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21829,6 +27525,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBuildPartitionedAccelerationStructuresNV<Format>(ApiDumpInstance::current(), commandBuffer, pBuildInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBuildPartitionedAccelerationStructuresNV(commandBuffer, pBuildInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBuildPartitionedAccelerationStructuresNV", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBuildPartitionedAccelerationStructuresNV(commandBuffer, pBuildInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21859,6 +27563,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetGeneratedCommandsMemoryRequirementsEXT<Format>(ApiDumpInstance::current(), device, pInfo, pMemoryRequirements);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetGeneratedCommandsMemoryRequirementsEXT(device, pInfo, pMemoryRequirements);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetGeneratedCommandsMemoryRequirementsEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetGeneratedCommandsMemoryRequirementsEXT(device, pInfo, pMemoryRequirements);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21889,6 +27601,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdPreprocessGeneratedCommandsEXT<Format>(ApiDumpInstance::current(), commandBuffer, pGeneratedCommandsInfo, stateCommandBuffer);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdPreprocessGeneratedCommandsEXT(commandBuffer, pGeneratedCommandsInfo, stateCommandBuffer);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdPreprocessGeneratedCommandsEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdPreprocessGeneratedCommandsEXT(commandBuffer, pGeneratedCommandsInfo, stateCommandBuffer);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21919,6 +27639,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdExecuteGeneratedCommandsEXT<Format>(ApiDumpInstance::current(), commandBuffer, isPreprocessed, pGeneratedCommandsInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdExecuteGeneratedCommandsEXT(commandBuffer, isPreprocessed, pGeneratedCommandsInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdExecuteGeneratedCommandsEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdExecuteGeneratedCommandsEXT(commandBuffer, isPreprocessed, pGeneratedCommandsInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21949,6 +27677,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateIndirectCommandsLayoutEXT<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pIndirectCommandsLayout);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateIndirectCommandsLayoutEXT(device, pCreateInfo, pAllocator, pIndirectCommandsLayout);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateIndirectCommandsLayoutEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateIndirectCommandsLayoutEXT(device, pCreateInfo, pAllocator, pIndirectCommandsLayout);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -21981,6 +27717,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyIndirectCommandsLayoutEXT<Format>(ApiDumpInstance::current(), device, indirectCommandsLayout, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyIndirectCommandsLayoutEXT(device, indirectCommandsLayout, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyIndirectCommandsLayoutEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyIndirectCommandsLayoutEXT(device, indirectCommandsLayout, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22011,6 +27755,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateIndirectExecutionSetEXT<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pIndirectExecutionSet);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateIndirectExecutionSetEXT(device, pCreateInfo, pAllocator, pIndirectExecutionSet);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateIndirectExecutionSetEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateIndirectExecutionSetEXT(device, pCreateInfo, pAllocator, pIndirectExecutionSet);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22043,6 +27795,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyIndirectExecutionSetEXT<Format>(ApiDumpInstance::current(), device, indirectExecutionSet, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyIndirectExecutionSetEXT(device, indirectExecutionSet, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyIndirectExecutionSetEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyIndirectExecutionSetEXT(device, indirectExecutionSet, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22073,6 +27833,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkUpdateIndirectExecutionSetPipelineEXT<Format>(ApiDumpInstance::current(), device, indirectExecutionSet, executionSetWriteCount, pExecutionSetWrites);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->UpdateIndirectExecutionSetPipelineEXT(device, indirectExecutionSet, executionSetWriteCount, pExecutionSetWrites);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkUpdateIndirectExecutionSetPipelineEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->UpdateIndirectExecutionSetPipelineEXT(device, indirectExecutionSet, executionSetWriteCount, pExecutionSetWrites);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22103,6 +27871,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkUpdateIndirectExecutionSetShaderEXT<Format>(ApiDumpInstance::current(), device, indirectExecutionSet, executionSetWriteCount, pExecutionSetWrites);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->UpdateIndirectExecutionSetShaderEXT(device, indirectExecutionSet, executionSetWriteCount, pExecutionSetWrites);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkUpdateIndirectExecutionSetShaderEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->UpdateIndirectExecutionSetShaderEXT(device, indirectExecutionSet, executionSetWriteCount, pExecutionSetWrites);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22134,6 +27910,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetMemoryMetalHandleEXT<Format>(ApiDumpInstance::current(), device, pGetMetalHandleInfo, pHandle);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetMemoryMetalHandleEXT(device, pGetMetalHandleInfo, pHandle);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetMemoryMetalHandleEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetMemoryMetalHandleEXT(device, pGetMetalHandleInfo, pHandle);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22166,6 +27950,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetMemoryMetalHandlePropertiesEXT<Format>(ApiDumpInstance::current(), device, handleType, pHandle, pMemoryMetalHandleProperties);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetMemoryMetalHandlePropertiesEXT(device, handleType, pHandle, pMemoryMetalHandleProperties);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetMemoryMetalHandlePropertiesEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetMemoryMetalHandlePropertiesEXT(device, handleType, pHandle, pMemoryMetalHandleProperties);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22199,6 +27991,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdEndRendering2EXT<Format>(ApiDumpInstance::current(), commandBuffer, pRenderingEndInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdEndRendering2EXT(commandBuffer, pRenderingEndInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdEndRendering2EXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdEndRendering2EXT(commandBuffer, pRenderingEndInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22229,6 +28029,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateAccelerationStructureKHR<Format>(ApiDumpInstance::current(), device, pCreateInfo, pAllocator, pAccelerationStructure);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateAccelerationStructureKHR(device, pCreateInfo, pAllocator, pAccelerationStructure);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateAccelerationStructureKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateAccelerationStructureKHR(device, pCreateInfo, pAllocator, pAccelerationStructure);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22261,6 +28069,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkDestroyAccelerationStructureKHR<Format>(ApiDumpInstance::current(), device, accelerationStructure, pAllocator);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->DestroyAccelerationStructureKHR(device, accelerationStructure, pAllocator);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkDestroyAccelerationStructureKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->DestroyAccelerationStructureKHR(device, accelerationStructure, pAllocator);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22291,6 +28107,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBuildAccelerationStructuresKHR<Format>(ApiDumpInstance::current(), commandBuffer, infoCount, pInfos, ppBuildRangeInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBuildAccelerationStructuresKHR(commandBuffer, infoCount, pInfos, ppBuildRangeInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBuildAccelerationStructuresKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBuildAccelerationStructuresKHR(commandBuffer, infoCount, pInfos, ppBuildRangeInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22321,6 +28145,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdBuildAccelerationStructuresIndirectKHR<Format>(ApiDumpInstance::current(), commandBuffer, infoCount, pInfos, pIndirectDeviceAddresses, pIndirectStrides, ppMaxPrimitiveCounts);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdBuildAccelerationStructuresIndirectKHR(commandBuffer, infoCount, pInfos, pIndirectDeviceAddresses, pIndirectStrides, ppMaxPrimitiveCounts);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdBuildAccelerationStructuresIndirectKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdBuildAccelerationStructuresIndirectKHR(commandBuffer, infoCount, pInfos, pIndirectDeviceAddresses, pIndirectStrides, ppMaxPrimitiveCounts);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22351,6 +28183,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkBuildAccelerationStructuresKHR<Format>(ApiDumpInstance::current(), device, deferredOperation, infoCount, pInfos, ppBuildRangeInfos);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->BuildAccelerationStructuresKHR(device, deferredOperation, infoCount, pInfos, ppBuildRangeInfos);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkBuildAccelerationStructuresKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->BuildAccelerationStructuresKHR(device, deferredOperation, infoCount, pInfos, ppBuildRangeInfos);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22383,6 +28223,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCopyAccelerationStructureKHR<Format>(ApiDumpInstance::current(), device, deferredOperation, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CopyAccelerationStructureKHR(device, deferredOperation, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCopyAccelerationStructureKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CopyAccelerationStructureKHR(device, deferredOperation, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22415,6 +28263,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCopyAccelerationStructureToMemoryKHR<Format>(ApiDumpInstance::current(), device, deferredOperation, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CopyAccelerationStructureToMemoryKHR(device, deferredOperation, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCopyAccelerationStructureToMemoryKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CopyAccelerationStructureToMemoryKHR(device, deferredOperation, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22447,6 +28303,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCopyMemoryToAccelerationStructureKHR<Format>(ApiDumpInstance::current(), device, deferredOperation, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CopyMemoryToAccelerationStructureKHR(device, deferredOperation, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCopyMemoryToAccelerationStructureKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CopyMemoryToAccelerationStructureKHR(device, deferredOperation, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22479,6 +28343,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkWriteAccelerationStructuresPropertiesKHR<Format>(ApiDumpInstance::current(), device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->WriteAccelerationStructuresPropertiesKHR(device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkWriteAccelerationStructuresPropertiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->WriteAccelerationStructuresPropertiesKHR(device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22511,6 +28383,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyAccelerationStructureKHR<Format>(ApiDumpInstance::current(), commandBuffer, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyAccelerationStructureKHR(commandBuffer, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyAccelerationStructureKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyAccelerationStructureKHR(commandBuffer, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22541,6 +28421,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyAccelerationStructureToMemoryKHR<Format>(ApiDumpInstance::current(), commandBuffer, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyAccelerationStructureToMemoryKHR(commandBuffer, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyAccelerationStructureToMemoryKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyAccelerationStructureToMemoryKHR(commandBuffer, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22571,6 +28459,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdCopyMemoryToAccelerationStructureKHR<Format>(ApiDumpInstance::current(), commandBuffer, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdCopyMemoryToAccelerationStructureKHR(commandBuffer, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdCopyMemoryToAccelerationStructureKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdCopyMemoryToAccelerationStructureKHR(commandBuffer, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22601,6 +28497,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetAccelerationStructureDeviceAddressKHR<Format>(ApiDumpInstance::current(), device, pInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkDeviceAddress result = device_dispatch_table(device)->GetAccelerationStructureDeviceAddressKHR(device, pInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetAccelerationStructureDeviceAddressKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkDeviceAddress result = device_dispatch_table(device)->GetAccelerationStructureDeviceAddressKHR(device, pInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22633,6 +28537,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdWriteAccelerationStructuresPropertiesKHR<Format>(ApiDumpInstance::current(), commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdWriteAccelerationStructuresPropertiesKHR(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdWriteAccelerationStructuresPropertiesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdWriteAccelerationStructuresPropertiesKHR(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22663,6 +28575,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetDeviceAccelerationStructureCompatibilityKHR<Format>(ApiDumpInstance::current(), device, pVersionInfo, pCompatibility);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetDeviceAccelerationStructureCompatibilityKHR(device, pVersionInfo, pCompatibility);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetDeviceAccelerationStructureCompatibilityKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetDeviceAccelerationStructureCompatibilityKHR(device, pVersionInfo, pCompatibility);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22693,6 +28613,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetAccelerationStructureBuildSizesKHR<Format>(ApiDumpInstance::current(), device, buildType, pBuildInfo, pMaxPrimitiveCounts, pSizeInfo);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(device)->GetAccelerationStructureBuildSizesKHR(device, buildType, pBuildInfo, pMaxPrimitiveCounts, pSizeInfo);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetAccelerationStructureBuildSizesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(device)->GetAccelerationStructureBuildSizesKHR(device, buildType, pBuildInfo, pMaxPrimitiveCounts, pSizeInfo);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22723,6 +28651,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdTraceRaysKHR<Format>(ApiDumpInstance::current(), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdTraceRaysKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdTraceRaysKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdTraceRaysKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22753,6 +28689,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCreateRayTracingPipelinesKHR<Format>(ApiDumpInstance::current(), device, deferredOperation, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->CreateRayTracingPipelinesKHR(device, deferredOperation, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCreateRayTracingPipelinesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->CreateRayTracingPipelinesKHR(device, deferredOperation, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22785,6 +28729,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetRayTracingCaptureReplayShaderGroupHandlesKHR<Format>(ApiDumpInstance::current(), device, pipeline, firstGroup, groupCount, dataSize, pData);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkResult result = device_dispatch_table(device)->GetRayTracingCaptureReplayShaderGroupHandlesKHR(device, pipeline, firstGroup, groupCount, dataSize, pData);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetRayTracingCaptureReplayShaderGroupHandlesKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkResult result = device_dispatch_table(device)->GetRayTracingCaptureReplayShaderGroupHandlesKHR(device, pipeline, firstGroup, groupCount, dataSize, pData);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22817,6 +28769,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdTraceRaysIndirectKHR<Format>(ApiDumpInstance::current(), commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, indirectDeviceAddress);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdTraceRaysIndirectKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, indirectDeviceAddress);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdTraceRaysIndirectKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdTraceRaysIndirectKHR(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, indirectDeviceAddress);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22847,6 +28807,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkGetRayTracingShaderGroupStackSizeKHR<Format>(ApiDumpInstance::current(), device, pipeline, group, groupShader);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+VkDeviceSize result = device_dispatch_table(device)->GetRayTracingShaderGroupStackSizeKHR(device, pipeline, group, groupShader);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkGetRayTracingShaderGroupStackSizeKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return result;
+} // stat_mode fast path
 VkDeviceSize result = device_dispatch_table(device)->GetRayTracingShaderGroupStackSizeKHR(device, pipeline, group, groupShader);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22879,6 +28847,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdSetRayTracingPipelineStackSizeKHR<Format>(ApiDumpInstance::current(), commandBuffer, pipelineStackSize);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdSetRayTracingPipelineStackSizeKHR(commandBuffer, pipelineStackSize);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdSetRayTracingPipelineStackSizeKHR", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdSetRayTracingPipelineStackSizeKHR(commandBuffer, pipelineStackSize);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22909,6 +28885,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawMeshTasksEXT<Format>(ApiDumpInstance::current(), commandBuffer, groupCountX, groupCountY, groupCountZ);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawMeshTasksEXT(commandBuffer, groupCountX, groupCountY, groupCountZ);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawMeshTasksEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawMeshTasksEXT(commandBuffer, groupCountX, groupCountY, groupCountZ);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22939,6 +28923,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawMeshTasksIndirectEXT<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset, drawCount, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawMeshTasksIndirectEXT(commandBuffer, buffer, offset, drawCount, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawMeshTasksIndirectEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawMeshTasksIndirectEXT(commandBuffer, buffer, offset, drawCount, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
@@ -22969,6 +28961,14 @@ ApiDumpInstance::current().startApiTimer();
                             dump_params_vkCmdDrawMeshTasksIndirectCountEXT<Format>(ApiDumpInstance::current(), commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
                         }
                     }
+if (ApiDumpInstance::current().settings().statMode()) {
+struct timespec _stat_t0, _stat_t1;
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);
+device_dispatch_table(commandBuffer)->CmdDrawMeshTasksIndirectCountEXT(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
+clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);
+ApiDumpInstance::current().recordApiStat("vkCmdDrawMeshTasksIndirectCountEXT", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));
+return;
+} // stat_mode fast path
 device_dispatch_table(commandBuffer)->CmdDrawMeshTasksIndirectCountEXT(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
 if (ApiDumpInstance::current().shouldDumpOutput()) {
 if (ApiDumpInstance::current().settings().apiDurationOnly()) {
