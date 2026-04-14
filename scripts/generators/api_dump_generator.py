@@ -429,8 +429,9 @@ class ApiDumpGenerator(BaseGenerator):
             self.write('if (ApiDumpInstance::current().settings().apiDurationOnly()) {')
             self.write('auto api_duration = ApiDumpInstance::current().getApiDuration();')
             self.write('if (ApiDumpInstance::current().settings().showApiDuration() || ApiDumpInstance::current().settings().apiDurationOnly()) {')
-            self.write(f'ApiDumpInstance::current().settings().stream() << "{command.name} - API Duration: " << api_duration.count() << " us" << std::endl;')
+            self.write(f'ApiDumpInstance::current().settings().stream() << "{command.name} - API Duration: " << api_duration.count() << " us" << "\\n";')
             self.write('}')
+            self.write('flush(ApiDumpInstance::current().settings());')
             self.write('} else {')
             if command.returnType != 'void':
                 if self.get_unaliased_type(command.returnType) in self.vulkan_defined_types:
@@ -503,8 +504,9 @@ class ApiDumpGenerator(BaseGenerator):
             self.write('if (ApiDumpInstance::current().settings().apiDurationOnly()) {')
             self.write('auto api_duration = ApiDumpInstance::current().getApiDuration();')
             self.write('if (ApiDumpInstance::current().settings().showApiDuration() || ApiDumpInstance::current().settings().apiDurationOnly()) {')
-            self.write(f'ApiDumpInstance::current().settings().stream() << "{command.name} - API Duration: " << api_duration.count() << " us" << std::endl;')
+            self.write(f'ApiDumpInstance::current().settings().stream() << "{command.name} - API Duration: " << api_duration.count() << " us" << "\\n";')
             self.write('}')
+            self.write('flush(ApiDumpInstance::current().settings());')
             self.write('} else {')
             if command.returnType != 'void':
                 return_type = self.get_unaliased_type(command.returnType)
@@ -513,7 +515,7 @@ class ApiDumpGenerator(BaseGenerator):
                 else:
                     self.write(f'dump_return_value<Format>(ApiDumpInstance::current().settings(), "{command.returnType}", result);')
             self.write("auto api_duration = ApiDumpInstance::current().getApiDuration();")
-            self.write("if (ApiDumpInstance::current().settings().showApiDuration()) ApiDumpInstance::current().settings().stream() << \"API Duration: \" << api_duration.count() << \" us\" << std::endl;")
+            self.write("if (ApiDumpInstance::current().settings().showApiDuration()) ApiDumpInstance::current().settings().stream() << \"API Duration: \" << api_duration.count() << \" us\" << \"\\n\";")
 
             self.write(f'''dump_pre_function_formatting<Format>(ApiDumpInstance::current().settings());
                 dump_params_{command.name}<Format>(ApiDumpInstance::current(), {command_param_usage_text(command)});
