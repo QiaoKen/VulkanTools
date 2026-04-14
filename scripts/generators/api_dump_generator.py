@@ -389,6 +389,17 @@ class ApiDumpGenerator(BaseGenerator):
                 self.write('auto dispatch_key = get_dispatch_key(instance);')
 
             return_str = f'{command.returnType} result = ' if command.returnType != 'void' else ''
+            self.write(f'if (ApiDumpInstance::current().settings().statMode()) {{')
+            self.write('struct timespec _stat_t0, _stat_t1;')
+            self.write('clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);')
+            self.write(f'{return_str}instance_dispatch_table({command.params[0].name})->{command.name[2:]}({command_param_usage_text(command)});')
+            self.write('clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);')
+            self.write(f'ApiDumpInstance::current().recordApiStat("{command.name}", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));')
+            if command.returnType != 'void':
+                self.write('return result;')
+            else:
+                self.write('return;')
+            self.write('} // stat_mode fast path')
             self.write(f'{return_str}instance_dispatch_table({command.params[0].name})->{command.name[2:]}({command_param_usage_text(command)});')
             if command.name in BLOCKING_API_CALLS:
                 self.write('std::lock_guard<std::mutex> lg(ApiDumpInstance::current().outputMutex());')
@@ -466,6 +477,17 @@ class ApiDumpGenerator(BaseGenerator):
                 self.write("ApiDumpInstance::current().startApiTimer();")
 
             return_str = f'{command.returnType} result = ' if command.returnType != 'void' else ''
+            self.write(f'if (ApiDumpInstance::current().settings().statMode()) {{')
+            self.write('struct timespec _stat_t0, _stat_t1;')
+            self.write('clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t0);')
+            self.write(f'{return_str}device_dispatch_table({command.params[0].name})->{command.name[2:]}({command_param_usage_text(command)});')
+            self.write('clock_gettime(CLOCK_THREAD_CPUTIME_ID, &_stat_t1);')
+            self.write(f'ApiDumpInstance::current().recordApiStat("{command.name}", (uint64_t)(_stat_t1.tv_sec - _stat_t0.tv_sec) * 1000000000ULL + (uint64_t)(_stat_t1.tv_nsec - _stat_t0.tv_nsec));')
+            if command.returnType != 'void':
+                self.write('return result;')
+            else:
+                self.write('return;')
+            self.write('} // stat_mode fast path')
             self.write(f'{return_str}device_dispatch_table({command.params[0].name})->{command.name[2:]}({command_param_usage_text(command)});')
             if command.name in BLOCKING_API_CALLS:
                 self.write('std::lock_guard<std::mutex> lg(ApiDumpInstance::current().outputMutex());')
